@@ -54,7 +54,7 @@
         </button>
         <div class="collapse navbar-collapse" id="menu">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Marcações</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'marcacoes:agenda' %}">Marcações</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Clientes</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Serviços</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Funcionários</a></li>
@@ -65,6 +65,13 @@
 </nav>
 
 <div class="container">
+
+    {% if messages %}
+        {% for m in messages %}
+            <div class="alert alert-{{ m.tags }} border border-2 border-dark">{{ m }}</div>
+        {% endfor %}
+    {% endif %}
+
     {% block conteudo %}{% endblock %}
 </div>
 

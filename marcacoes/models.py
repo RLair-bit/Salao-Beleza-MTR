@@ -8,6 +8,20 @@ from funcionarios.models import Funcionario
 from servicos.models import Servico
 
 
+class Posto(models.Model):
+    numero = models.PositiveIntegerField("Número", unique=True)
+    descricao = models.CharField("Descrição", max_length=80, blank=True)
+    ativo = models.BooleanField("Ativo", default=True)
+
+    class Meta:
+        verbose_name = "Posto"
+        verbose_name_plural = "Postos"
+        ordering = ["numero"]
+
+    def __str__(self):
+        return f"Mesa {self.numero}"
+
+
 class Marcacao(models.Model):
     ESTADOS = [
         ("marcada", "Marcada"),
@@ -16,9 +30,14 @@ class Marcacao(models.Model):
         ("faltou", "Faltou"),
     ]
 
-    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, related_name="marcacoes")
-    funcionario = models.ForeignKey(Funcionario, on_delete=models.PROTECT, related_name="marcacoes")
-    servico = models.ForeignKey(Servico, on_delete=models.PROTECT, related_name="marcacoes")
+    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT,
+                                related_name="marcacoes", verbose_name="Cliente")
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.PROTECT,
+                                    related_name="marcacoes", verbose_name="Funcionário")
+    servico = models.ForeignKey(Servico, on_delete=models.PROTECT,
+                                related_name="marcacoes", verbose_name="Serviço")
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True,
+                              related_name="marcacoes", verbose_name="Mesa / Posto")
     inicio = models.DateTimeField("Data e hora")
     estado = models.CharField("Estado", max_length=10, choices=ESTADOS, default="marcada")
     notas = models.TextField("Notas", blank=True)
@@ -39,25 +58,3 @@ class Marcacao(models.Model):
     def clean(self):
         if not (self.inicio and self.servico_id and self.funcionario_id):
             return
-        if self.estado == "cancelada":
-            return
-
-        margem = timedelta(hours=12)
-        possiveis = (
-            Marcacao.objects
-            .filter(funcionario_id=self.funcionario_id,
-                    inicio__gte=self.inicio - margem,
-                    inicio__lte=self.inicio + margem)
-            .exclude(pk=self.pk)
-            .exclude(estado="cancelada")
-        )
-        for m in possiveis:
-            if self.inicio < m.fim and m.inicio < self.fim:
-                raise ValidationError(
-                    f"{self.funcionario} já tem uma marcação das "
-                    f"{m.inicio:%H:%M} às {m.fim:%H:%M}."
-                )
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        return super().save(*args, **kwargs)
