@@ -48,8 +48,10 @@ Já funcional:
 - **Área de administração** com todos os modelos registados, incluindo filtros, pesquisa e navegação por datas.
 - **Regra de negócio das marcações** implementada e testada: o sistema recusa marcações sobrepostas para o mesmo funcionário, com base na duração do serviço.
 - **Estrutura base da interface** (template principal, barra de navegação e página inicial em Bootstrap).
+- **Módulo de Marcações** funcional: agenda diária com filtro por data e formulário de nova marcação, fora da área de administração.
+- **Postos de trabalho** (8 mesas), com validação que impede duas marcações na mesma mesa à mesma hora.
 
-Em desenvolvimento: as páginas destinadas à receção, para que a gestão diária deixe de depender da área de administração.
+Em desenvolvimento: as páginas de gestão de clientes, serviços e funcionários, para que toda a gestão diária deixe de depender da área de administração.
 
 ---
 
@@ -119,6 +121,9 @@ pip install -r requirements.txt
 # 4. Aplicar as migrações à base de dados
 python manage.py migrate
 
+# 4.1 Carregar os dados de exemplo (opcional)
+python manage.py loaddata dados_exemplo.json
+
 # 5. Criar um utilizador administrador
 python manage.py createsuperuser
 
@@ -162,6 +167,7 @@ Salao-Beleza-MTR/
 ├── marcacoes/          # App: marcações (módulo central)
 ├── relatorios/         # App: relatório de atendimentos
 ├── templates/          # Templates HTML partilhados
+├── dados_exemplo.json  # Dados de teste partilhados pela equipa
 ├── requirements.txt
 └── manage.py
 ```
@@ -177,13 +183,15 @@ Salao-Beleza-MTR/
 - [x] Área de administração
 - [x] Validação de marcações sobrepostas
 - [x] Estrutura base da interface
+- [x] Agenda e formulário de Marcações
+- [x] Postos de trabalho e validação de ocupação
+- [x] Dados de exemplo partilhados
 
 **Em curso**
 
 - [ ] Páginas de Clientes (listar, criar, editar, pesquisar)
 - [ ] Páginas de Serviços e Preçário
 - [ ] Páginas de Funcionários
-- [ ] Agenda e formulário de Marcações
 - [ ] Autenticação de utilizadores da receção
 - [ ] Relatório de atendimentos
 - [ ] Mapa do Salão
