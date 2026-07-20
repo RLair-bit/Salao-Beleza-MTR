@@ -1,0 +1,33 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.Python
+
+# ---- Ambiente virtual ----
+venv/
+env/
+.venv/
+
+# ---- Django ----
+*.log
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+
+# ---- Segredos / configuração local ----
+# Passwords, tokens e chaves NUNCA vão para o GitHub.
+# Guarda-os num ficheiro .env (que fica ignorado abaixo).
+.env
+*.env
+local_settings.py
+
+# ---- Editores / IDEs ----
+.vscode/
+.idea/
+*.swp
+
+# ---- Sistema operativo ----
+.DS_Store
+Thumbs.db
