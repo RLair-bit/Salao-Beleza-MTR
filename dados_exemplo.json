@@ -1,0 +1,194 @@
+[
+{
+  "model": "clientes.cliente",
+  "pk": 1,
+  "fields": {
+    "nome": "Maria Santos",
+    "telefone": "912345678",
+    "email": "",
+    "observacoes": "",
+    "criado_em": "2026-07-20T21:19:27.641Z"
+  }
+},
+{
+  "model": "clientes.cliente",
+  "pk": 2,
+  "fields": {
+    "nome": "Joao Pereira",
+    "telefone": "913456789",
+    "email": "",
+    "observacoes": "",
+    "criado_em": "2026-07-20T21:19:27.645Z"
+  }
+},
+{
+  "model": "clientes.cliente",
+  "pk": 3,
+  "fields": {
+    "nome": "Sofia Alves",
+    "telefone": "914567890",
+    "email": "",
+    "observacoes": "",
+    "criado_em": "2026-07-20T21:19:27.648Z"
+  }
+},
+{
+  "model": "servicos.servico",
+  "pk": 1,
+  "fields": {
+    "nome": "Corte",
+    "preco": "15.00",
+    "duracao_min": 30,
+    "ativo": true
+  }
+},
+{
+  "model": "servicos.servico",
+  "pk": 2,
+  "fields": {
+    "nome": "Coloracao",
+    "preco": "45.00",
+    "duracao_min": 90,
+    "ativo": true
+  }
+},
+{
+  "model": "servicos.servico",
+  "pk": 3,
+  "fields": {
+    "nome": "Manicure",
+    "preco": "12.00",
+    "duracao_min": 45,
+    "ativo": true
+  }
+},
+{
+  "model": "servicos.servico",
+  "pk": 4,
+  "fields": {
+    "nome": "Penteado",
+    "preco": "25.00",
+    "duracao_min": 60,
+    "ativo": true
+  }
+},
+{
+  "model": "funcionarios.funcionario",
+  "pk": 1,
+  "fields": {
+    "nome": "Ana Silva",
+    "telefone": "",
+    "funcao": "Cabeleireira",
+    "ativo": true,
+    "servicos": []
+  }
+},
+{
+  "model": "funcionarios.funcionario",
+  "pk": 2,
+  "fields": {
+    "nome": "Bruno Costa",
+    "telefone": "",
+    "funcao": "Barbeiro",
+    "ativo": true,
+    "servicos": []
+  }
+},
+{
+  "model": "funcionarios.funcionario",
+  "pk": 3,
+  "fields": {
+    "nome": "Carla Mendes",
+    "telefone": "",
+    "funcao": "Manicure",
+    "ativo": true,
+    "servicos": []
+  }
+},
+{
+  "model": "marcacoes.posto",
+  "pk": 1,
+  "fields": {
+    "numero": 1,
+    "descricao": "",
+    "ativo": true
+  }
+},
+{
+  "model": "marcacoes.posto",
+  "pk": 2,
+  "fields": {
+    "numero": 2,
+    "descricao": "",
+    "ativo": true
+  }
+},
+{
+  "model": "marcacoes.posto",
+  "pk": 3,
+  "fields": {
+    "numero": 3,
+    "descricao": "",
+    "ativo": true
+  }
+},
+{
+  "model": "marcacoes.posto",
+  "pk": 4,
+  "fields": {
+    "numero": 4,
+    "descricao": "",
+    "ativo": true
+  }
+},
+{
+  "model": "marcacoes.posto",
+  "pk": 5,
+  "fields": {
+    "numero": 5,
+    "descricao": "",
+    "ativo": true
+  }
+},
+{
+  "model": "marcacoes.posto",
+  "pk": 6,
+  "fields": {
+    "numero": 6,
+    "descricao": "",
+    "ativo": true
+  }
+},
+{
+  "model": "marcacoes.posto",
+  "pk": 7,
+  "fields": {
+    "numero": 7,
+    "descricao": "",
+    "ativo": true
+  }
+},
+{
+  "model": "marcacoes.posto",
+  "pk": 8,
+  "fields": {
+    "numero": 8,
+    "descricao": "",
+    "ativo": true
+  }
+},
+{
+  "model": "marcacoes.marcacao",
+  "pk": 1,
+  "fields": {
+    "cliente": 1,
+    "funcionario": 1,
+    "servico": 3,
+    "posto": 2,
+    "inicio": "2026-07-22T15:30:00Z",
+    "estado": "marcada",
+    "notas": "",
+    "criado_em": "2026-07-20T21:24:06.778Z"
+  }
+}
+]
