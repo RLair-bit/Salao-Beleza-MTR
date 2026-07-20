@@ -49,7 +49,7 @@ Já funcional:
 - **Regra de negócio das marcações** implementada e testada: o sistema recusa marcações sobrepostas para o mesmo funcionário e posto de trabalho com base na duração do serviço.
 - **Estrutura base da interface** (template principal, barra de navegação e página inicial em Bootstrap).
 - **Módulo de Marcações** funcional: agenda diária com filtro por data e formulário de nova marcação, fora da área de administração.
-- **Postos de trabalho** (8 mesas/cadeiras), com validação que impede duas marcações na mesma mesa à mesma hora.
+- **Postos de trabalho** (8 mesas), com validação que impede duas marcações na mesma mesa à mesma hora.
 
 Em desenvolvimento: as páginas de gestão de clientes, serviços e funcionários, para que toda a gestão diária deixe de depender da área de administração.
 
