@@ -2,8 +2,8 @@
 
 Aplicação web para a receção de um salão de beleza gerir clientes, funcionários, serviços e marcações, com relatórios de atendimento.
 
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-5-092E20?logo=django&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-6.0-092E20?logo=django&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white)
 ![Estado](https://img.shields.io/badge/estado-em%20desenvolvimento-yellow)
@@ -13,6 +13,7 @@ Aplicação web para a receção de um salão de beleza gerir clientes, funcion�
 ## Índice
 
 - [Sobre o projeto](#sobre-o-projeto)
+- [Estado atual](#estado-atual)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias](#tecnologias)
 - [Porquê estas tecnologias](#porquê-estas-tecnologias)
@@ -20,7 +21,7 @@ Aplicação web para a receção de um salão de beleza gerir clientes, funcion�
 - [Como executar](#como-executar)
 - [Configuração da base de dados](#configuração-da-base-de-dados)
 - [Estrutura do projeto](#estrutura-do-projeto)
-- [Estado e roadmap](#estado-e-roadmap)
+- [Roadmap](#roadmap)
 - [Equipa](#equipa)
 - [Licença](#licença)
 
@@ -35,6 +36,20 @@ O objetivo é criar uma aplicação de **gestão de salão de beleza**, pensada 
 - **Público-alvo:** receção do salão (rececionista e responsável)
 - **Módulo central:** Marcações
 - **Formador:** Tiago Dias
+
+---
+
+## Estado atual
+
+Já funcional:
+
+- Projeto Django configurado e ligado a uma base de dados MySQL.
+- **Modelos de dados** das quatro entidades principais: Cliente, Serviço, Funcionário e Marcação.
+- **Área de administração** com todos os modelos registados, incluindo filtros, pesquisa e navegação por datas.
+- **Regra de negócio das marcações** implementada e testada: o sistema recusa marcações sobrepostas para o mesmo funcionário, com base na duração do serviço.
+- **Estrutura base da interface** (template principal, barra de navegação e página inicial em Bootstrap).
+
+Em desenvolvimento: as páginas destinadas à receção, para que a gestão diária deixe de depender da área de administração.
 
 ---
 
@@ -56,9 +71,9 @@ O objetivo é criar uma aplicação de **gestão de salão de beleza**, pensada 
 
 | Camada | Tecnologia |
 |---|---|
-| Linguagem | Python 3.12 |
-| Framework | Django 5 |
-| Base de dados | MySQL 8 |
+| Linguagem | Python 3 |
+| Framework | Django 6 |
+| Base de dados | MySQL 8 (via PyMySQL) |
 | Interface | HTML + Bootstrap 5 |
 | Controlo de versões | Git + GitHub |
 
@@ -80,7 +95,7 @@ O objetivo é criar uma aplicação de **gestão de salão de beleza**, pensada 
 
 - [Python 3.10+](https://www.python.org/)
 - [MySQL 8](https://dev.mysql.com/downloads/)
-- [Git](https://git-scm.com/)
+- [Git](https://git-scm.com/) ou [GitHub Desktop](https://desktop.github.com/)
 
 ---
 
@@ -88,7 +103,7 @@ O objetivo é criar uma aplicação de **gestão de salão de beleza**, pensada 
 
 ```bash
 # 1. Clonar o repositório
-git clone https://github.com/[o-teu-user]/Salao-Beleza-MTR.git
+git clone https://github.com/RLair-bit/Salao-Beleza-MTR.git
 cd Salao-Beleza-MTR
 
 # 2. Criar e ativar o ambiente virtual
@@ -111,36 +126,26 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-A aplicação fica disponível em **http://localhost:8000** e a área de administração em **http://localhost:8000/admin**.
+A aplicação fica disponível em **http://127.0.0.1:8000** e a área de administração em **http://127.0.0.1:8000/admin**.
 
-> Se ainda não existir um `requirements.txt`, gerar um com `pip freeze > requirements.txt` depois de instalar as dependências (`pip install django mysqlclient`).
+> A base de dados tem de ser criada previamente (ver secção seguinte). Cada elemento da equipa tem a sua própria base de dados local: o que se partilha neste repositório é o código, não os dados.
 
 ---
 
 ## Configuração da base de dados
 
-Criar a base de dados no MySQL:
+No MySQL, criar a base de dados e o utilizador da aplicação:
 
 ```sql
 CREATE DATABASE salao_beleza CHARACTER SET utf8mb4;
+CREATE USER 'salao'@'localhost' IDENTIFIED BY 'salao2026';
+GRANT ALL PRIVILEGES ON salao_beleza.* TO 'salao'@'localhost';
+FLUSH PRIVILEGES;
 ```
 
-Configurar em `salao/settings.py`:
+Estas credenciais correspondem às que estão definidas em `salao/settings.py` e devem ser iguais em todas as máquinas da equipa, para que o ficheiro não tenha de ser alterado por cada pessoa.
 
-```python
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "salao_beleza",
-        "USER": "[utilizador]",
-        "PASSWORD": "[password]",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
-    }
-}
-```
-
-> **Importante:** as credenciais não devem ser enviadas para o repositório. Guardar num ficheiro `.env` local, já ignorado pelo `.gitignore`.
+> **Nota:** trata-se de uma base de dados local de desenvolvimento, sem dados reais. Numa fase posterior, as credenciais serão movidas para um ficheiro `.env` fora do repositório.
 
 ---
 
@@ -157,22 +162,29 @@ Salao-Beleza-MTR/
 ├── marcacoes/          # App: marcações (módulo central)
 ├── relatorios/         # App: relatório de atendimentos
 ├── templates/          # Templates HTML partilhados
-├── static/             # CSS, imagens, JS
 ├── requirements.txt
 └── manage.py
 ```
 
 ---
 
-## Estado e roadmap
+## Roadmap
 
-Prioridade inicial: fluxo de marcações a funcionar de ponta a ponta (criar marcação, ver na lista).
+**Concluído**
 
-- [ ] Cadastro de Clientes
-- [ ] Serviços e Preçário
-- [ ] Cadastro de Funcionários
-- [ ] **Marcações** (módulo central)
-- [ ] Cadastro de Utilizadores e autenticação
+- [x] Configuração do projeto e ligação ao MySQL
+- [x] Modelos de dados (Cliente, Serviço, Funcionário, Marcação)
+- [x] Área de administração
+- [x] Validação de marcações sobrepostas
+- [x] Estrutura base da interface
+
+**Em curso**
+
+- [ ] Páginas de Clientes (listar, criar, editar, pesquisar)
+- [ ] Páginas de Serviços e Preçário
+- [ ] Páginas de Funcionários
+- [ ] Agenda e formulário de Marcações
+- [ ] Autenticação de utilizadores da receção
 - [ ] Relatório de atendimentos
 - [ ] Mapa do Salão
 
@@ -182,9 +194,9 @@ Prioridade inicial: fluxo de marcações a funcionar de ponta a ponta (criar mar
 
 | Nome | Responsabilidades | GitHub |
 |---|---|---|
-| Ticiana | [a definir — ex.: modelos e base de dados] | [@user] |
-| Micaele | [a definir — ex.: módulo de marcações] | [@user] |
-| Rita | Gestão do repositório GitHub (por enquanto); [restante a definir] | [@user] |
+| Rita | Marcações, estrutura base da interface e gestão do repositório | [@RLair-bit](https://github.com/RLair-bit) |
+| Ticiana | Clientes, Serviços e Preçário, relatório de atendimentos | [@ticianacbd](https://github.com/ticianacbd) |
+| Micaele | Funcionários, autenticação de utilizadores, mapa do salão | [@micanatahajlucas-ux](https://github.com/micanatahajlucas-ux) |
 
 ---
 
