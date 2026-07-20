@@ -46,7 +46,7 @@ Já funcional:
 - Projeto Django configurado e ligado a uma base de dados MySQL.
 - **Modelos de dados** das quatro entidades principais: Cliente, Serviço, Funcionário e Marcação.
 - **Área de administração** com todos os modelos registados, incluindo filtros, pesquisa e navegação por datas.
-- **Regra de negócio das marcações** implementada e testada: o sistema recusa marcações sobrepostas para o mesmo funcionário, com base na duração do serviço.
+- **Regra de negócio das marcações** implementada e testada: o sistema recusa marcações sobrepostas para o mesmo funcionário e posto de trabalho com base na duração do serviço.
 - **Estrutura base da interface** (template principal, barra de navegação e página inicial em Bootstrap).
 - **Módulo de Marcações** funcional: agenda diária com filtro por data e formulário de nova marcação, fora da área de administração.
 - **Postos de trabalho** (8 mesas), com validação que impede duas marcações na mesma mesa à mesma hora.
