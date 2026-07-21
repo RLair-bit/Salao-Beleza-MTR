@@ -1,10 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import FuncionarioForm
 from .models import Funcionario
 
 
+@login_required
 def lista(request):
     procura = request.GET.get("q", "")
     funcionarios = Funcionario.objects.prefetch_related("servicos")
@@ -18,7 +20,7 @@ def lista(request):
         {"funcionarios": funcionarios, "procura": procura},
     )
 
-
+@login_required
 def criar(request):
     form = FuncionarioForm(request.POST or None)
 
@@ -33,7 +35,7 @@ def criar(request):
         {"form": form, "titulo": "Novo funcionário"},
     )
 
-
+@login_required
 def editar(request, pk):
     funcionario = get_object_or_404(Funcionario, pk=pk)
     form = FuncionarioForm(request.POST or None, instance=funcionario)
@@ -49,7 +51,7 @@ def editar(request, pk):
         {"form": form, "titulo": f"Editar {funcionario.nome}"},
     )
 
-
+@login_required
 def eliminar(request, pk):
     funcionario = get_object_or_404(Funcionario, pk=pk)
 

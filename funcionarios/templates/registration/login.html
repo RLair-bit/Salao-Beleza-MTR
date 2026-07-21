@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block titulo %}Entrar{% endblock %}
+
+{% block conteudo %}
+<div class="row justify-content-center">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header fw-bold">
+                Entrar
+            </div>
+
+            <div class="card-body">
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    Utilizador ou password incorretos.
+                </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label" for="id_username">
+                            Utilizador
+                        </label>
+
+                        <input type="text"
+                               name="username"
+                               id="id_username"
+                               class="form-control"
+                               autofocus
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="id_password">
+                            Password
+                        </label>
+
+                        <input type="password"
+                               name="password"
+                               id="id_password"
+                               class="form-control"
+                               required>
+                    </div>
+
+                    <button class="btn btn-primary w-100">
+                        Entrar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
