@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 
+from funcionarios.models import Funcionario
+
 from .forms import MarcacaoForm
 from .models import Marcacao
 
@@ -37,7 +39,23 @@ def agenda(request):
         .filter(inicio__gte=inicio_dia, inicio__lt=fim_dia)
         .select_related("cliente", "funcionario", "servico", "posto")
     )
-    return render(request, "marcacoes/agenda.html", {"marcacoes": marcacoes, "dia": dia})
+
+    escolhido = request.GET.get("funcionario", "")
+    if escolhido.isdigit():
+        marcacoes = marcacoes.filter(funcionario_id=int(escolhido))
+    else:
+        escolhido = ""
+
+    return render(request, "marcacoes/agenda.html", {
+        "marcacoes": marcacoes,
+        "dia": dia,
+        "dia_anterior": dia - timedelta(days=1),
+        "dia_seguinte": dia + timedelta(days=1),
+        "hoje": timezone.localdate(),
+        "funcionarios": Funcionario.objects.filter(ativo=True),
+        "escolhido": escolhido,
+        "total": marcacoes.count(),
+    })
 
 
 def criar(request):
