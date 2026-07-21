@@ -9,15 +9,30 @@ from .models import Funcionario
 @login_required
 def lista(request):
     procura = request.GET.get("q", "")
-    funcionarios = Funcionario.objects.prefetch_related("servicos").order_by("nome")
+    estado = request.GET.get("estado", "")
+
+    funcionarios = (
+        Funcionario.objects
+        .prefetch_related("servicos")
+        .order_by("nome")
+    )
 
     if procura:
         funcionarios = funcionarios.filter(nome__icontains=procura)
 
+    if estado == "ativo":
+        funcionarios = funcionarios.filter(ativo=True)
+    elif estado == "inativo":
+        funcionarios = funcionarios.filter(ativo=False)
+
     return render(
         request,
         "funcionarios/lista.html",
-        {"funcionarios": funcionarios, "procura": procura},
+        {
+            "funcionarios": funcionarios,
+            "procura": procura,
+            "estado": estado,
+        },
     )
 
 @login_required

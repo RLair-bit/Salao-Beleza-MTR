@@ -11,12 +11,38 @@
     </a>
 </div>
 
-<form method="get" class="mb-4">
-    <input type="text"
-           name="q"
-           value="{{ procura }}"
-           class="form-control"
-           placeholder="Procurar por nome...">
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-7">
+        <input type="text"
+               name="q"
+               value="{{ procura }}"
+               class="form-control"
+               placeholder="Procurar por nome...">
+    </div>
+
+    <div class="col-md-3">
+        <select name="estado" class="form-select">
+            <option value="" {% if not estado %}selected{% endif %}>
+                Todos os estados
+            </option>
+
+            <option value="ativo"
+                    {% if estado == "ativo" %}selected{% endif %}>
+                Apenas ativos
+            </option>
+
+            <option value="inativo"
+                    {% if estado == "inativo" %}selected{% endif %}>
+                Apenas inativos
+            </option>
+        </select>
+    </div>
+
+    <div class="col-md-2 d-grid">
+        <button class="btn btn-primary">
+            Filtrar
+        </button>
+    </div>
 </form>
 
 <div class="card">
