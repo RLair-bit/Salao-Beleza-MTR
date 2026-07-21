@@ -43,20 +43,53 @@ O objetivo é criar uma aplicação de **gestão de salão de beleza**, pensada 
 
 ## Estado atual
 
-Já funcional:
+**Base do sistema**
 
 - Projeto Django configurado e ligado a uma base de dados MySQL.
-- **Modelos de dados** das cinco entidades: Cliente, Serviço, Funcionário, Marcação e Posto.
-- **Área de administração** com todos os modelos registados, incluindo filtros, pesquisa e navegação por datas.
-- **Módulo de Marcações**, fora da área de administração: agenda diária com filtro por data, criação, edição e alteração de estado (marcada, realizada, faltou, cancelada).
-- **Regras de negócio implementadas e testadas:** o sistema recusa marcações sobrepostas para o mesmo funcionário e para a mesma mesa, com base na duração do serviço.
-- **Postos de trabalho** correspondentes às oito mesas do salão.
-- **Módulo de Funcionários**, com associação aos serviços que cada profissional presta.
-- **Testes automáticos** que validam as regras de negócio.
-- **Interface** com barra de navegação, página inicial e tema visual próprio.
-- **Atalho de arranque** para Windows, com ícone, que inicia o servidor e abre a aplicação.
+- Modelos de dados das cinco entidades: Cliente, Serviço, Funcionário, Marcação e Posto.
+- Área de administração com todos os modelos registados, incluindo filtros, pesquisa e navegação por datas.
+- Interface comum a toda a aplicação, com barra de navegação, mensagens de confirmação e tema visual próprio.
 
-Em desenvolvimento: páginas de gestão de clientes e de serviços, autenticação de utilizadores, relatório de atendimentos e mapa de ocupação do salão.
+**Marcações**
+
+- Agenda diária com navegação entre dias, filtro por funcionário e contagem de marcações.
+- Criação e edição de marcações, com escolha de cliente, funcionário, serviço, mesa e horário.
+- Alteração de estado a partir da agenda: realizada, faltou ou cancelada.
+- **Regras de negócio implementadas e testadas:** o sistema recusa marcações sobrepostas para o mesmo funcionário e para a mesma mesa, com base na duração do serviço.
+- Testes automáticos que verificam estas regras.
+
+**Clientes**
+
+- Registo, edição e listagem de clientes, com pesquisa por nome.
+- Mensagens de confirmação nas operações efetuadas.
+
+**Funcionários**
+
+- Registo, edição e listagem de profissionais, com pesquisa e ordenação alfabética.
+- Filtro por estado ativo ou inativo e associação aos serviços que cada profissional presta.
+- Proteção contra eliminação de funcionários com marcações associadas.
+- Página de detalhe com dados profissionais, serviços prestados, total de marcações e próximas marcações.
+
+**Acesso ao sistema**
+
+- Página de entrada com autenticação, saída de sessão e redirecionamento adequado em ambos os casos.
+- Páginas protegidas, acessíveis apenas a utilizadores autenticados.
+
+**Mapa do Salão**
+
+- Vista das oito mesas do salão, com seleção da data a consultar.
+- Identificação das mesas livres e ocupadas, com as respetivas marcações.
+- Cartões de resumo com o total de mesas, mesas ocupadas, mesas livres e número de marcações do dia.
+
+**Painel inicial**
+
+- Página de entrada da aplicação com os indicadores do dia: marcações agendadas, já realizadas, receita e próximas marcações.
+
+**Arranque em Windows**
+
+- Ficheiro de atalho com ícone que ativa o ambiente, inicia o servidor e abre a aplicação no browser.
+
+Em desenvolvimento: módulo de serviços e preçário, relatório de atendimentos e manual de utilização.
 
 ---
 
@@ -81,7 +114,7 @@ Em desenvolvimento: páginas de gestão de clientes e de serviços, autenticaç�
 | Linguagem | Python 3 |
 | Framework | Django 6 |
 | Base de dados | MySQL 8 (via PyMySQL) |
-| Interface | HTML + Bootstrap 5 |
+| Interface | HTML + Bootstrap 5 e Bootstrap Icons |
 | Controlo de versões | Git + GitHub |
 
 ---
@@ -140,6 +173,8 @@ A aplicação fica disponível em **http://127.0.0.1:8000** e a área de adminis
 
 > Em Windows, depois desta configuração inicial, a aplicação pode ser iniciada com um duplo clique no ficheiro `MTR-Gestão.bat`, que ativa o ambiente, arranca o servidor e abre o browser automaticamente.
 
+> O acesso à aplicação exige autenticação. Utilizar a conta de administração criada no passo 5, ou outra criada a partir da área de administração.
+
 ---
 
 ## Configuração da base de dados
@@ -186,9 +221,10 @@ Salao-Beleza-MTR/
 │   ├── settings.py
 │   └── urls.py
 ├── clientes/           # App: cadastro de clientes
-├── funcionarios/       # App: cadastro de funcionários
+├── funcionarios/       # App: cadastro de funcionários e autenticação
 ├── servicos/           # App: serviços e preçário
 ├── marcacoes/          # App: marcações e postos (módulo central)
+├── mapa/               # App: mapa de ocupação das mesas
 ├── relatorios/         # App: relatório de atendimentos
 ├── templates/          # Templates HTML partilhados
 ├── dados_exemplo.json  # Dados de teste partilhados pela equipa
@@ -207,21 +243,25 @@ Salao-Beleza-MTR/
 - [x] Modelos de dados (Cliente, Serviço, Funcionário, Marcação, Posto)
 - [x] Área de administração
 - [x] Validação de marcações sobrepostas (funcionário e mesa)
-- [x] Estrutura base da interface
+- [x] Estrutura base da interface e identidade visual
 - [x] Agenda, criação, edição e estados das Marcações
-- [x] Páginas de Funcionários
+- [x] Navegação por dias e filtro por funcionário na agenda
+- [x] Páginas de Clientes (listar, criar, editar, pesquisar)
+- [x] Páginas de Funcionários, com detalhe e filtros
+- [x] Autenticação de utilizadores e proteção das páginas
+- [x] Mapa de ocupação das mesas
+- [x] Painel inicial com indicadores do dia
 - [x] Testes automáticos das regras de negócio
 - [x] Dados de exemplo partilhados
 - [x] Atalho de arranque com ícone
 
 **Em curso**
 
-- [ ] Páginas de Clientes
 - [ ] Páginas de Serviços e Preçário
-- [ ] Autenticação de utilizadores da receção
-- [ ] Relatório de atendimentos
-- [ ] Mapa do Salão
+- [ ] Relatório de atendimentos por período
+- [ ] Eliminação de clientes
 - [ ] Manual de utilização
+- [ ] Preparação da apresentação final
 
 ---
 
@@ -229,7 +269,7 @@ Salao-Beleza-MTR/
 
 | Nome | Responsabilidades | GitHub |
 |---|---|---|
-| Rita | Marcações, estrutura base da interface e gestão do repositório | [@RLair-bit](https://github.com/RLair-bit) |
+| Rita | Marcações, painel inicial, estrutura base da interface, testes e gestão do repositório | [@RLair-bit](https://github.com/RLair-bit) |
 | Ticiana | Clientes, Serviços e Preçário, relatório de atendimentos | [@ticianacbd](https://github.com/ticianacbd) |
 | Micaele | Funcionários, autenticação de utilizadores, mapa do salão | [@micanatahajlucas-ux](https://github.com/micanatahajlucas-ux) |
 
