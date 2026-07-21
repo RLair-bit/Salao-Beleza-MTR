@@ -29,6 +29,7 @@
                 <th>Mesa</th>
                 <th>Funcionário</th>
                 <th>Estado</th>
+                <th class="text-end">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +40,39 @@
                 <td>{{ m.servico.nome }}</td>
                 <td>{{ m.posto|default:"—" }}</td>
                 <td>{{ m.funcionario }}</td>
-                <td><span class="badge text-bg-light border border-dark">{{ m.get_estado_display }}</span></td>
+                <td>
+                    {% if m.estado == "realizada" %}
+                        <span class="badge text-bg-success">Realizada</span>
+                    {% elif m.estado == "cancelada" %}
+                        <span class="badge text-bg-secondary">Cancelada</span>
+                    {% elif m.estado == "faltou" %}
+                        <span class="badge text-bg-warning">Faltou</span>
+                    {% else %}
+                        <span class="badge text-bg-light border border-dark">Marcada</span>
+                    {% endif %}
+                </td>
+                <td class="text-end text-nowrap">
+                    <a class="btn btn-sm btn-outline-dark"
+                       href="{% url 'marcacoes:editar' m.pk %}">Editar</a>
+
+                    {% if m.estado == "marcada" %}
+                        <form method="post" class="d-inline"
+                              action="{% url 'marcacoes:mudar_estado' m.pk 'realizada' %}">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-outline-success">Realizada</button>
+                        </form>
+                        <form method="post" class="d-inline"
+                              action="{% url 'marcacoes:mudar_estado' m.pk 'faltou' %}">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-outline-warning">Faltou</button>
+                        </form>
+                        <form method="post" class="d-inline"
+                              action="{% url 'marcacoes:mudar_estado' m.pk 'cancelada' %}">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-outline-danger">Cancelar</button>
+                        </form>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>

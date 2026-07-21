@@ -2,11 +2,21 @@ from datetime import datetime, time, timedelta
 
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 
 from .forms import MarcacaoForm
 from .models import Marcacao
+
+
+def _dia_de(marcacao):
+    """Devolve o dia da marcação no formato usado pelo filtro da agenda."""
+    inicio = marcacao.inicio
+    if settings.USE_TZ:
+        inicio = timezone.localtime(inicio)
+    return inicio.strftime("%Y-%m-%d")
 
 
 def agenda(request):
@@ -25,7 +35,7 @@ def agenda(request):
     marcacoes = (
         Marcacao.objects
         .filter(inicio__gte=inicio_dia, inicio__lt=fim_dia)
-        .select_related("cliente", "funcionario", "servico")
+        .select_related("cliente", "funcionario", "servico", "posto")
     )
     return render(request, "marcacoes/agenda.html", {"marcacoes": marcacoes, "dia": dia})
 
@@ -37,3 +47,30 @@ def criar(request):
         messages.success(request, "Marcação criada com sucesso.")
         return redirect("marcacoes:agenda")
     return render(request, "marcacoes/form.html", {"form": form, "titulo": "Nova marcação"})
+
+
+def editar(request, pk):
+    marcacao = get_object_or_404(Marcacao, pk=pk)
+    form = MarcacaoForm(request.POST or None, instance=marcacao)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Marcação atualizada.")
+        return redirect(f"{reverse('marcacoes:agenda')}?dia={_dia_de(marcacao)}")
+    return render(request, "marcacoes/form.html",
+                  {"form": form, "titulo": "Editar marcação"})
+
+
+def mudar_estado(request, pk, estado):
+    marcacao = get_object_or_404(Marcacao, pk=pk)
+    validos = dict(Marcacao.ESTADOS)
+    dia = _dia_de(marcacao)
+
+    if request.method == "POST" and estado in validos:
+        marcacao.estado = estado
+        try:
+            marcacao.save()
+            messages.success(request, f"Marcação alterada para {validos[estado]}.")
+        except ValidationError as e:
+            messages.error(request, e.messages[0])
+
+    return redirect(f"{reverse('marcacoes:agenda')}?dia={dia}")

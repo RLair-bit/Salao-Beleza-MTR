@@ -58,3 +58,31 @@ class Marcacao(models.Model):
     def clean(self):
         if not (self.inicio and self.servico_id and self.funcionario_id):
             return
+        if self.estado == "cancelada":
+            return
+
+        margem = timedelta(hours=12)
+        possiveis = (
+            Marcacao.objects
+            .filter(inicio__gte=self.inicio - margem, inicio__lte=self.inicio + margem)
+            .exclude(pk=self.pk)
+            .exclude(estado="cancelada")
+            .select_related("servico", "funcionario", "posto")
+        )
+        for m in possiveis:
+            if not (self.inicio < m.fim and m.inicio < self.fim):
+                continue
+            if m.funcionario_id == self.funcionario_id:
+                raise ValidationError(
+                    f"{self.funcionario} já tem uma marcação das "
+                    f"{m.inicio:%H:%M} às {m.fim:%H:%M}."
+                )
+            if self.posto_id and m.posto_id == self.posto_id:
+                raise ValidationError(
+                    f"A {m.posto} já está ocupada das "
+                    f"{m.inicio:%H:%M} às {m.fim:%H:%M}."
+                )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
