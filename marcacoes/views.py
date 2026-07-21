@@ -12,6 +12,10 @@ from funcionarios.models import Funcionario
 from .forms import MarcacaoForm
 from .models import Marcacao
 
+from django.db.models import Sum
+
+from clientes.models import Cliente
+from servicos.models import Servico
 
 def _dia_de(marcacao):
     """Devolve o dia da marcação no formato usado pelo filtro da agenda."""
@@ -92,3 +96,31 @@ def mudar_estado(request, pk, estado):
             messages.error(request, e.messages[0])
 
     return redirect(f"{reverse('marcacoes:agenda')}?dia={dia}")
+
+def painel(request):
+    hoje = timezone.localdate()
+    inicio = datetime.combine(hoje, time.min)
+    fim = inicio + timedelta(days=1)
+    if settings.USE_TZ:
+        inicio = timezone.make_aware(inicio)
+        fim = timezone.make_aware(fim)
+
+    do_dia = (Marcacao.objects
+              .filter(inicio__gte=inicio, inicio__lt=fim)
+              .exclude(estado="cancelada")
+              .select_related("cliente", "funcionario", "servico", "posto"))
+
+    realizadas = do_dia.filter(estado="realizada")
+    agora = timezone.now()
+    proximas = [m for m in do_dia if m.inicio >= agora and m.estado == "marcada"][:5]
+
+    return render(request, "home.html", {
+        "hoje": hoje,
+        "total_dia": do_dia.count(),
+        "n_realizadas": realizadas.count(),
+        "receita": realizadas.aggregate(t=Sum("servico__preco"))["t"] or 0,
+        "proximas": proximas,
+        "n_clientes": Cliente.objects.count(),
+        "n_servicos": Servico.objects.filter(ativo=True).count(),
+        "n_funcionarios": Funcionario.objects.filter(ativo=True).count(),
+    })
