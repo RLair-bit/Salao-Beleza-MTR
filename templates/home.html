@@ -7,21 +7,33 @@
 </div>
 
 <div class="row g-3">
-    <div class="col-md-3"><div class="card"><div class="card-body">
-        <h5 class="card-title">Marcações</h5>
-        <p class="card-text text-muted small">Agenda e novos agendamentos.</p>
-    </div></div></div>
-    <div class="col-md-3"><div class="card"><div class="card-body">
-        <h5 class="card-title">Clientes</h5>
-        <p class="card-text text-muted small">Registo e consulta de clientes.</p>
-    </div></div></div>
-    <div class="col-md-3"><div class="card"><div class="card-body">
-        <h5 class="card-title">Serviços</h5>
-        <p class="card-text text-muted small">Serviços e preçário.</p>
-    </div></div></div>
-    <div class="col-md-3"><div class="card"><div class="card-body">
-        <h5 class="card-title">Funcionários</h5>
-        <p class="card-text text-muted small">Profissionais do salão.</p>
-    </div></div></div>
+    <div class="col-md-3">
+        <a class="text-decoration-none text-reset" href="{% url 'marcacoes:agenda' %}">
+            <div class="card h-100"><div class="card-body">
+                <h5 class="card-title">Marcações</h5>
+                <p class="card-text text-muted small">Agenda e novos agendamentos.</p>
+            </div></div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <h5 class="card-title">Clientes</h5>
+            <p class="card-text text-muted small">Registo e consulta de clientes.</p>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <h5 class="card-title">Serviços</h5>
+            <p class="card-text text-muted small">Serviços e preçário.</p>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <a class="text-decoration-none text-reset" href="{% url 'funcionarios:lista' %}">
+            <div class="card h-100"><div class="card-body">
+                <h5 class="card-title">Funcionários</h5>
+                <p class="card-text text-muted small">Profissionais do salão.</p>
+            </div></div>
+        </a>
+    </div>
 </div>
 {% endblock %}
