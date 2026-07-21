@@ -1,5 +1,6 @@
 from datetime import datetime, time, timedelta
 
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
