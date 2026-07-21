@@ -16,7 +16,8 @@ class ClienteForm(forms.ModelForm):
 
             "telefone": forms.TextInput(attrs={
                 "class": "form-control",
-                "placeholder": "(11) 99999-9999",
+                "placeholder": "999-999-999",
+                "inputmode": "numeric",
             }),
 
             "email": forms.EmailInput(attrs={

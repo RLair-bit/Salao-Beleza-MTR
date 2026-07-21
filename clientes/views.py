@@ -1,3 +1,5 @@
+from django.contrib import messages
+
 from django.shortcuts import redirect, render
 
 from clientes.forms import ClienteForm
@@ -7,23 +9,34 @@ from .models import Cliente
 
 # Create your views here.
 def listar(request):
-    clientes = Cliente.objects.all()
-    context = {
-        'clientes': clientes,
-    }
-    return render(request, 'clientes/lista.html', context)
+    q = request.GET.get("q", "")
+    if q:
+        clientes = Cliente.objects.filter(nome__icontains=q)
+    else:
+        clientes = Cliente.objects.all()
+
+    return render(request, "clientes/lista.html", {"clientes": clientes, "procura": q})
+
 
 def criar(request):
     form = ClienteForm(request.POST or None)
-    if form.is_valid():
+    if request.method == "POST" and form.is_valid():
         form.save()
-        return redirect('clientes:lista')
-    return render(request, 'clientes/criar.html', {'form': form})
+        messages.success(request, "Cliente criado com sucesso.")
+        return redirect("clientes:listar")
+
+    return render(request, "clientes/form.html", {"form": form, "titulo": "Novo cliente"})
+
 
 def editar(request, pk):
     cliente = Cliente.objects.get(pk=pk)
+    if not cliente:
+        messages.error(request, "Cliente não encontrado.")
+        return redirect("clientes:listar")
+
     form = ClienteForm(request.POST or None, instance=cliente)
-    if form.is_valid():
+    if request.method == "POST" and form.is_valid():
         form.save()
-        return redirect('clientes:lista')
-    return render(request, 'clientes/editar.html', {'form': form, 'cliente': cliente})
+        messages.success(request, "Cliente atualizado com sucesso.")
+        return redirect("clientes:listar")
+    return render(request, "clientes/form.html", {"form": form, "cliente": cliente})
