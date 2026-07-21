@@ -1,12 +1,13 @@
 from datetime import datetime, time, timedelta
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils import timezone
 
 from marcacoes.models import Marcacao, Posto
 
-
+@login_required
 def mapa(request):
     try:
         dia = datetime.strptime(request.GET["dia"], "%Y-%m-%d").date()
