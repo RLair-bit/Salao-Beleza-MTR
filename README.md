@@ -6,6 +6,7 @@ Aplicação web para a receção de um salão de beleza gerir clientes, funcion�
 ![Django](https://img.shields.io/badge/Django-6.0-092E20?logo=django&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white)
+![Testes](https://img.shields.io/badge/testes-5%20a%20passar-16a34a)
 ![Estado](https://img.shields.io/badge/estado-em%20desenvolvimento-yellow)
 
 ---
@@ -20,6 +21,7 @@ Aplicação web para a receção de um salão de beleza gerir clientes, funcion�
 - [Pré-requisitos](#pré-requisitos)
 - [Como executar](#como-executar)
 - [Configuração da base de dados](#configuração-da-base-de-dados)
+- [Testes](#testes)
 - [Estrutura do projeto](#estrutura-do-projeto)
 - [Roadmap](#roadmap)
 - [Equipa](#equipa)
@@ -44,14 +46,17 @@ O objetivo é criar uma aplicação de **gestão de salão de beleza**, pensada 
 Já funcional:
 
 - Projeto Django configurado e ligado a uma base de dados MySQL.
-- **Modelos de dados** das quatro entidades principais: Cliente, Serviço, Funcionário e Marcação.
+- **Modelos de dados** das cinco entidades: Cliente, Serviço, Funcionário, Marcação e Posto.
 - **Área de administração** com todos os modelos registados, incluindo filtros, pesquisa e navegação por datas.
-- **Regra de negócio das marcações** implementada e testada: o sistema recusa marcações sobrepostas para o mesmo funcionário e posto de trabalho com base na duração do serviço.
-- **Estrutura base da interface** (template principal, barra de navegação e página inicial em Bootstrap).
-- **Módulo de Marcações** funcional: agenda diária com filtro por data e formulário de nova marcação, fora da área de administração.
-- **Postos de trabalho** (8 mesas/cadeiras), com validação que impede duas marcações na mesma mesa à mesma hora.
+- **Módulo de Marcações**, fora da área de administração: agenda diária com filtro por data, criação, edição e alteração de estado (marcada, realizada, faltou, cancelada).
+- **Regras de negócio implementadas e testadas:** o sistema recusa marcações sobrepostas para o mesmo funcionário e para a mesma mesa, com base na duração do serviço.
+- **Postos de trabalho** correspondentes às oito mesas do salão.
+- **Módulo de Funcionários**, com associação aos serviços que cada profissional presta.
+- **Testes automáticos** que validam as regras de negócio.
+- **Interface** com barra de navegação, página inicial e tema visual próprio.
+- **Atalho de arranque** para Windows, com ícone, que inicia o servidor e abre a aplicação.
 
-Em desenvolvimento: as páginas de gestão de clientes, serviços e funcionários, para que toda a gestão diária deixe de depender da área de administração.
+Em desenvolvimento: páginas de gestão de clientes e de serviços, autenticação de utilizadores, relatório de atendimentos e mapa de ocupação do salão.
 
 ---
 
@@ -61,11 +66,11 @@ Em desenvolvimento: as páginas de gestão de clientes, serviços e funcionário
 - **Cadastro de Funcionários** — profissionais do salão e os serviços que prestam.
 - **Cadastro de Utilizadores** — contas de acesso à aplicação (receção e administração), com autenticação.
 - **Serviços e Preçário** — serviços oferecidos, com preço e duração estimada.
-- **Marcações** — agendar um serviço para um cliente com um funcionário, numa data e hora.
+- **Marcações** — agendar um serviço para um cliente, com funcionário, mesa, data e hora.
 - **Mapa do Salão** — visualização dos postos de trabalho e respetiva ocupação.
 - **Relatório de atendimentos** — resumo dos atendimentos realizados num período à escolha.
 
-> **Regra de negócio principal:** o sistema impede que o mesmo funcionário seja marcado para dois clientes à mesma hora, tendo em conta a duração definida para cada serviço.
+> **Regras de negócio principais:** o sistema impede que o mesmo funcionário seja marcado para dois clientes à mesma hora, e que a mesma mesa seja ocupada por duas marcações em simultâneo. Ambas têm em conta a duração definida para cada serviço.
 
 ---
 
@@ -133,7 +138,7 @@ python manage.py runserver
 
 A aplicação fica disponível em **http://127.0.0.1:8000** e a área de administração em **http://127.0.0.1:8000/admin**.
 
-> A base de dados tem de ser criada previamente (ver secção seguinte). Cada elemento da equipa tem a sua própria base de dados local: o que se partilha neste repositório é o código, não os dados.
+> Em Windows, depois desta configuração inicial, a aplicação pode ser iniciada com um duplo clique no ficheiro `MTR-Gestão.bat`, que ativa o ambiente, arranca o servidor e abre o browser automaticamente.
 
 ---
 
@@ -154,6 +159,25 @@ Estas credenciais correspondem às que estão definidas em `salao/settings.py` e
 
 ---
 
+## Testes
+
+O projeto inclui testes automáticos que verificam as regras de negócio das marcações: aceitação de marcações válidas, recusa de sobreposições por funcionário e por mesa, aceitação de marcações consecutivas e libertação do horário quando uma marcação é cancelada.
+
+Para os executar:
+
+```bash
+python manage.py test
+```
+
+O Django cria uma base de dados temporária, corre os testes e elimina-a no fim. É necessário dar previamente permissão ao utilizador da aplicação sobre essa base:
+
+```sql
+GRANT ALL PRIVILEGES ON `test\_salao\_beleza`.* TO 'salao'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+---
+
 ## Estrutura do projeto
 
 ```
@@ -164,10 +188,11 @@ Salao-Beleza-MTR/
 ├── clientes/           # App: cadastro de clientes
 ├── funcionarios/       # App: cadastro de funcionários
 ├── servicos/           # App: serviços e preçário
-├── marcacoes/          # App: marcações (módulo central)
+├── marcacoes/          # App: marcações e postos (módulo central)
 ├── relatorios/         # App: relatório de atendimentos
 ├── templates/          # Templates HTML partilhados
 ├── dados_exemplo.json  # Dados de teste partilhados pela equipa
+├── MTR-Gestão.bat      # Atalho de arranque para Windows
 ├── requirements.txt
 └── manage.py
 ```
@@ -179,22 +204,24 @@ Salao-Beleza-MTR/
 **Concluído**
 
 - [x] Configuração do projeto e ligação ao MySQL
-- [x] Modelos de dados (Cliente, Serviço, Funcionário, Marcação)
+- [x] Modelos de dados (Cliente, Serviço, Funcionário, Marcação, Posto)
 - [x] Área de administração
-- [x] Validação de marcações sobrepostas
+- [x] Validação de marcações sobrepostas (funcionário e mesa)
 - [x] Estrutura base da interface
-- [x] Agenda e formulário de Marcações
-- [x] Postos de trabalho e validação de ocupação
+- [x] Agenda, criação, edição e estados das Marcações
+- [x] Páginas de Funcionários
+- [x] Testes automáticos das regras de negócio
 - [x] Dados de exemplo partilhados
+- [x] Atalho de arranque com ícone
 
 **Em curso**
 
-- [ ] Páginas de Clientes (listar, criar, editar, pesquisar)
+- [ ] Páginas de Clientes
 - [ ] Páginas de Serviços e Preçário
-- [ ] Páginas de Funcionários
 - [ ] Autenticação de utilizadores da receção
 - [ ] Relatório de atendimentos
 - [ ] Mapa do Salão
+- [ ] Manual de utilização
 
 ---
 
