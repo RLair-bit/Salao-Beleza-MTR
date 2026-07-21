@@ -1,9 +1,67 @@
 {% extends "base.html" %}
 
 {% block conteudo %}
-<div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
-    <h1 class="display-6">Gestão do Salão</h1>
-    <p class="text-muted">Sistema de gestão de clientes, serviços e marcações.</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-1">Gestão do Salão</h1>
+        <p class="text-muted mb-0">{{ hoje|date:"l, d \d\e F \d\e Y" }}</p>
+    </div>
+    <a class="btn btn-primary" href="{% url 'marcacoes:criar' %}">Nova marcação</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Marcações hoje</div>
+            <div class="display-6 fw-bold">{{ total_dia }}</div>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Já realizadas</div>
+            <div class="display-6 fw-bold">{{ n_realizadas }}</div>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Receita do dia</div>
+            <div class="display-6 fw-bold">{{ receita }} €</div>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Registados</div>
+            <div class="small mt-2">
+                <div>{{ n_clientes }} cliente{{ n_clientes|pluralize }}</div>
+                <div>{{ n_servicos }} serviço{{ n_servicos|pluralize }}</div>
+                <div>{{ n_funcionarios }} funcionário{{ n_funcionarios|pluralize }}</div>
+            </div>
+        </div></div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+        <span>A seguir, hoje</span>
+        <a class="btn btn-sm btn-outline-dark" href="{% url 'marcacoes:agenda' %}">Ver agenda</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <tbody>
+            {% for m in proximas %}
+                <tr>
+                    <td class="fw-bold text-nowrap">{{ m.inicio|date:"H:i" }}</td>
+                    <td>{{ m.cliente }}</td>
+                    <td>{{ m.servico.nome }}</td>
+                    <td>{{ m.posto|default:"—" }}</td>
+                    <td class="text-muted">{{ m.funcionario }}</td>
+                </tr>
+            {% empty %}
+                <tr><td class="text-muted">Não há mais marcações para hoje.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="row g-3">
@@ -14,18 +72,6 @@
                 <p class="card-text text-muted small">Agenda e novos agendamentos.</p>
             </div></div>
         </a>
-    </div>
-    <div class="col-md-3">
-        <div class="card h-100"><div class="card-body">
-            <h5 class="card-title">Clientes</h5>
-            <p class="card-text text-muted small">Registo e consulta de clientes.</p>
-        </div></div>
-    </div>
-    <div class="col-md-3">
-        <div class="card h-100"><div class="card-body">
-            <h5 class="card-title">Serviços</h5>
-            <p class="card-text text-muted small">Serviços e preçário.</p>
-        </div></div>
     </div>
     <div class="col-md-3">
         <a class="text-decoration-none text-reset" href="{% url 'funcionarios:lista' %}">
