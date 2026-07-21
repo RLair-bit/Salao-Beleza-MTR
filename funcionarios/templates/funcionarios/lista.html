@@ -80,17 +80,22 @@
                     {% endif %}
                 </td>
 
-                <td class="text-end">
-                    <a class="btn btn-sm btn-outline-dark"
-                       href="{% url 'funcionarios:editar' f.pk %}">
-                        Editar
-                    </a>
+               <td class="text-end">
+    <a class="btn btn-sm btn-outline-primary"
+       href="{% url 'funcionarios:detalhe' f.pk %}">
+        Ver
+    </a>
 
-                    <a class="btn btn-sm btn-outline-danger"
-                       href="{% url 'funcionarios:eliminar' f.pk %}">
-                        Eliminar
-                    </a>
-                </td>
+    <a class="btn btn-sm btn-outline-dark"
+       href="{% url 'funcionarios:editar' f.pk %}">
+        Editar
+    </a>
+
+    <a class="btn btn-sm btn-outline-danger"
+       href="{% url 'funcionarios:eliminar' f.pk %}">
+        Eliminar
+    </a>
+</td>
             </tr>
 
             {% empty %}

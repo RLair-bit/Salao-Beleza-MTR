@@ -5,6 +5,43 @@
 <h1 class="h3 mb-3">
     Mapa do Salão — {{ dia|date:"d/m/Y" }}
 </h1>
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="text-muted small">Total de mesas</div>
+                <div class="fs-3 fw-bold">{{ total_mesas }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="text-muted small">Mesas ocupadas</div>
+                <div class="fs-3 fw-bold">{{ mesas_ocupadas }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="text-muted small">Mesas livres</div>
+                <div class="fs-3 fw-bold">{{ mesas_livres }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <div class="text-muted small">Marcações do dia</div>
+                <div class="fs-3 fw-bold">{{ total_marcacoes }}</div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <form method="get" class="row g-2 align-items-end mb-4">
     <div class="col-auto">

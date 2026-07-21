@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 
 from .forms import FuncionarioForm
 from .models import Funcionario
@@ -35,6 +36,35 @@ def lista(request):
         },
     )
 
+
+@login_required
+def detalhe(request, pk):
+    funcionario = get_object_or_404(
+        Funcionario.objects.prefetch_related("servicos"),
+        pk=pk,
+    )
+
+    total_marcacoes = funcionario.marcacoes.count()
+
+    proximas_marcacoes = (
+        funcionario.marcacoes
+        .filter(inicio__gte=timezone.now())
+        .exclude(estado="cancelada")
+        .select_related("cliente", "servico", "posto")
+        .order_by("inicio")[:5]
+    )
+
+    return render(
+        request,
+        "funcionarios/detalhe.html",
+        {
+            "funcionario": funcionario,
+            "total_marcacoes": total_marcacoes,
+            "proximas_marcacoes": proximas_marcacoes,
+        },
+    )
+
+
 @login_required
 def criar(request):
     form = FuncionarioForm(request.POST or None)
@@ -47,13 +77,21 @@ def criar(request):
     return render(
         request,
         "funcionarios/form.html",
-        {"form": form, "titulo": "Novo funcionário"},
+        {
+            "form": form,
+            "titulo": "Novo funcionário",
+        },
     )
+
 
 @login_required
 def editar(request, pk):
     funcionario = get_object_or_404(Funcionario, pk=pk)
-    form = FuncionarioForm(request.POST or None, instance=funcionario)
+
+    form = FuncionarioForm(
+        request.POST or None,
+        instance=funcionario,
+    )
 
     if request.method == "POST" and form.is_valid():
         form.save()
@@ -63,8 +101,12 @@ def editar(request, pk):
     return render(
         request,
         "funcionarios/form.html",
-        {"form": form, "titulo": f"Editar {funcionario.nome}"},
+        {
+            "form": form,
+            "titulo": f"Editar {funcionario.nome}",
+        },
     )
+
 
 @login_required
 def eliminar(request, pk):
@@ -77,8 +119,8 @@ def eliminar(request, pk):
         except Exception:
             messages.error(
                 request,
-                "Não é possível eliminar: este funcionário tem marcações associadas. "
-                "Em alternativa, desativa-o.",
+                "Não é possível eliminar: este funcionário tem "
+                "marcações associadas. Em alternativa, desativa-o.",
             )
 
         return redirect("funcionarios:lista")
@@ -86,5 +128,7 @@ def eliminar(request, pk):
     return render(
         request,
         "funcionarios/confirmar_eliminar.html",
-        {"funcionario": funcionario},
+        {
+            "funcionario": funcionario,
+        },
     )

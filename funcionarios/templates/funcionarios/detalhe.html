@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block titulo %}Detalhes do funcionário{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">{{ funcionario.nome }}</h1>
+        <p class="text-muted mb-0">Detalhes do funcionário</p>
+    </div>
+
+    <a class="btn btn-outline-dark"
+       href="{% url 'funcionarios:lista' %}">
+        Voltar
+    </a>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header fw-bold">
+                Informações profissionais
+            </div>
+
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="text-muted small">Nome</div>
+                        <div class="fw-bold">{{ funcionario.nome }}</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="text-muted small">Telefone</div>
+                        <div>
+                            {{ funcionario.telefone|default:"Não indicado" }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="text-muted small">Função</div>
+                        <div>
+                            {{ funcionario.funcao|default:"Não indicada" }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="text-muted small">Estado</div>
+
+                        {% if funcionario.ativo %}
+                            <span class="badge text-bg-light border border-dark">
+                                Ativo
+                            </span>
+                        {% else %}
+                            <span class="badge text-bg-secondary">
+                                Inativo
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="text-muted small mb-2">
+                    Serviços que presta
+                </div>
+
+                {% for servico in funcionario.servicos.all %}
+                    <span class="badge text-bg-light border border-dark me-1 mb-1">
+                        {{ servico }}
+                    </span>
+                {% empty %}
+                    <p class="mb-0">Nenhum serviço associado.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card text-center h-100">
+            <div class="card-header fw-bold">
+                Marcações
+            </div>
+
+            <div class="card-body d-flex flex-column justify-content-center">
+                <div class="display-5 fw-bold">
+                    {{ total_marcacoes }}
+                </div>
+
+                <div class="text-muted">
+    {% if total_marcacoes == 1 %}
+        marcação associada
+    {% else %}
+        marcações associadas
+    {% endif %}
+</div>
+        </div>
+    </div>
+</div>
+<div class="card mt-3">
+    <div class="card-header fw-bold">
+        Próximas marcações
+    </div>
+
+    <div class="card-body p-0">
+        {% if proximas_marcacoes %}
+            <div class="table-responsive">
+                <table class="table table-striped align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Cliente</th>
+                            <th>Serviço</th>
+                            <th>Mesa/Posto</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for marcacao in proximas_marcacoes %}
+                        <tr>
+                            <td>
+                                {{ marcacao.inicio|date:"d/m/Y" }}
+                            </td>
+
+                            <td>
+                                {{ marcacao.inicio|date:"H:i" }}
+                                –
+                                {{ marcacao.fim|date:"H:i" }}
+                            </td>
+
+                            <td>
+                                {{ marcacao.cliente }}
+                            </td>
+
+                            <td>
+                                {{ marcacao.servico }}
+                            </td>
+
+                            <td>
+                                {{ marcacao.posto|default:"Não definido" }}
+                            </td>
+
+                            <td>
+                                <span class="badge text-bg-light border border-dark">
+                                    {{ marcacao.get_estado_display }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-muted m-3">
+                Não existem marcações futuras para esta funcionária.
+            </p>
+        {% endif %}
+    </div>
+</div>
+<div class="mt-3">
+    <a class="btn btn-primary"
+       href="{% url 'funcionarios:editar' funcionario.pk %}">
+        Editar funcionário
+    </a>
+
+    <a class="btn btn-outline-danger"
+       href="{% url 'funcionarios:eliminar' funcionario.pk %}">
+        Eliminar
+    </a>
+</div>
+{% endblock %}

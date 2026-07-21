@@ -7,6 +7,7 @@ from django.utils import timezone
 
 from marcacoes.models import Marcacao, Posto
 
+
 @login_required
 def mapa(request):
     try:
@@ -32,10 +33,25 @@ def mapa(request):
 
     for posto in Posto.objects.all():
         do_posto = [m for m in marcacoes if m.posto_id == posto.id]
-        mesas.append({"posto": posto, "marcacoes": do_posto})
+        mesas.append({
+            "posto": posto,
+            "marcacoes": do_posto,
+        })
+
+    total_mesas = len(mesas)
+    mesas_ocupadas = sum(1 for m in mesas if m["marcacoes"])
+    mesas_livres = total_mesas - mesas_ocupadas
+    total_marcacoes = sum(len(m["marcacoes"]) for m in mesas)
 
     return render(
         request,
         "mapa/mapa.html",
-        {"dia": dia, "mesas": mesas},
+        {
+            "dia": dia,
+            "mesas": mesas,
+            "total_mesas": total_mesas,
+            "mesas_ocupadas": mesas_ocupadas,
+            "mesas_livres": mesas_livres,
+            "total_marcacoes": total_marcacoes,
+        },
     )
