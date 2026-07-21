@@ -1,6 +1,6 @@
 from django.contrib import messages
 
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from clientes.forms import ClienteForm
 
@@ -29,10 +29,7 @@ def criar(request):
 
 
 def editar(request, pk):
-    cliente = Cliente.objects.get(pk=pk)
-    if not cliente:
-        messages.error(request, "Cliente não encontrado.")
-        return redirect("clientes:listar")
+    cliente = get_object_or_404(Cliente, pk=pk)
 
     form = ClienteForm(request.POST or None, instance=cliente)
     if request.method == "POST" and form.is_valid():
@@ -40,3 +37,13 @@ def editar(request, pk):
         messages.success(request, "Cliente atualizado com sucesso.")
         return redirect("clientes:listar")
     return render(request, "clientes/form.html", {"form": form, "cliente": cliente})
+
+def excluir(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+
+    if request.method == "POST":
+        cliente.delete()
+        messages.success(request, "Cliente excluído com sucesso.")
+        return redirect("clientes:listar")
+
+    return render(request, "clientes/confirmar_exclusao.html", {"cliente": cliente})
