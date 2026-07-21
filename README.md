@@ -254,6 +254,7 @@ Salao-Beleza-MTR/
 - [x] Testes automáticos das regras de negócio
 - [x] Dados de exemplo partilhados
 - [x] Atalho de arranque com ícone
+- [X] Páginas de Clientes
 
 **Em curso**
 
