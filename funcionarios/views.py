@@ -9,7 +9,7 @@ from .models import Funcionario
 @login_required
 def lista(request):
     procura = request.GET.get("q", "")
-    funcionarios = Funcionario.objects.prefetch_related("servicos")
+    funcionarios = Funcionario.objects.prefetch_related("servicos").order_by("nome")
 
     if procura:
         funcionarios = funcionarios.filter(nome__icontains=procura)
