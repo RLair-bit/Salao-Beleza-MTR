@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "funcionarios",
     "marcacoes",
     "relatorios",
+    "mapa",
 ]
 
 MIDDLEWARE = [

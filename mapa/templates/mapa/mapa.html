@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block titulo %}Mapa do Salão{% endblock %}
+
+{% block conteudo %}
+<h1 class="h3 mb-3">
+    Mapa do Salão — {{ dia|date:"d/m/Y" }}
+</h1>
+
+<form method="get" class="row g-2 align-items-end mb-4">
+    <div class="col-auto">
+        <label class="form-label" for="dia">Dia</label>
+
+        <input type="date"
+               id="dia"
+               name="dia"
+               value="{{ dia|date:'Y-m-d' }}"
+               class="form-control">
+    </div>
+
+    <div class="col-auto">
+        <button class="btn btn-primary">
+            Ver
+        </button>
+    </div>
+</form>
+
+<div class="row g-3">
+    {% for m in mesas %}
+    <div class="col-md-3">
+        <div class="card h-100 {% if m.marcacoes %}border-primary border-2{% endif %}">
+            <div class="card-header fw-bold d-flex justify-content-between">
+                <span>{{ m.posto }}</span>
+
+                {% if m.marcacoes %}
+                    <span class="badge text-bg-primary">
+                        {{ m.marcacoes|length }}
+                    </span>
+                {% else %}
+                    <span class="badge text-bg-light border">
+                        Livre
+                    </span>
+                {% endif %}
+            </div>
+
+            <div class="card-body p-2">
+                {% for a in m.marcacoes %}
+                <div class="border-bottom pb-2 mb-2 small">
+                    <b>
+                        {{ a.inicio|date:"H:i" }} – {{ a.fim|date:"H:i" }}
+                    </b>
+                    <br>
+
+                    {{ a.cliente }}
+                    <br>
+
+                    <span class="text-muted">
+                        {{ a.servico.nome }} · {{ a.funcionario }}
+                    </span>
+                </div>
+
+                {% empty %}
+                <div class="text-muted small">
+                    Sem marcações neste dia.
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
