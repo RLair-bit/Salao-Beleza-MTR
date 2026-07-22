@@ -4,6 +4,13 @@
 {% block titulo %}{{ titulo }}{% endblock %}
 
 {% block conteudo %}
+{% trans "Selecione o funcionário, o serviço e o dia." as t_selecione %}
+{% trans "A procurar horários disponíveis..." as t_procurando %}
+{% trans "Não existem horários disponíveis neste dia." as t_sem_horarios %}
+{% trans "Não foi possível consultar os horários." as t_erro %}
+{% trans "Horário selecionado" as t_horario_selecionado %}
+{% trans "Nenhum horário selecionado." as t_nenhum_selecionado %}
+
 <div class="row justify-content-center">
     <div class="col-lg-7">
         <div class="card">
@@ -15,6 +22,10 @@
                 <form method="post" novalidate>
                     {% csrf_token %}
 
+                    {% for campo_oculto in form.hidden_fields %}
+                        {{ campo_oculto }}
+                    {% endfor %}
+
                     {% if form.non_field_errors %}
                         <div class="alert alert-danger" role="alert">
                             {% for erro in form.non_field_errors %}
@@ -23,7 +34,7 @@
                         </div>
                     {% endif %}
 
-                    {% for campo in form %}
+                    {% for campo in form.visible_fields %}
                         <div class="mb-3">
                             <label
                                 class="form-label"
@@ -46,6 +57,74 @@
                                 </div>
                             {% endfor %}
                         </div>
+
+                        {% if campo.name == "posto" %}
+                            <div class="card bg-light mb-4">
+                                <div class="card-header fw-bold">
+                                    {% trans "Escolher data e horário" %}
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row g-2 align-items-end">
+                                        <div class="col-md-8">
+                                            <label
+                                                class="form-label"
+                                                for="id_dia_horarios"
+                                            >
+                                                {% trans "Dia pretendido" %}
+                                            </label>
+
+                                            <input
+                                                type="date"
+                                                id="id_dia_horarios"
+                                                class="form-control"
+                                            >
+                                        </div>
+
+                                        <div class="col-md-4 d-grid">
+                                            <button
+                                                type="button"
+                                                id="btn_consultar_horarios"
+                                                class="btn btn-primary"
+                                            >
+                                                {% trans "Ver horários" %}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        id="mensagem_horarios"
+                                        class="small text-muted mt-3"
+                                    >
+                                        {% trans "Escolha o funcionário, o serviço e o dia." %}
+                                    </div>
+
+                                    <div
+                                        id="lista_horarios"
+                                        class="d-flex flex-wrap gap-2 mt-3"
+                                    ></div>
+
+                                    <div class="border rounded p-3 mt-3 bg-white">
+                                        <div class="small text-muted">
+                                            {% trans "Horário selecionado" %}
+                                        </div>
+
+                                        <div
+                                            id="horario_selecionado"
+                                            class="fw-bold mt-1"
+                                        >
+                                            {% trans "Nenhum horário selecionado." %}
+                                        </div>
+                                    </div>
+
+                                    {% for erro in form.inicio.errors %}
+                                        <div class="text-danger small mt-2">
+                                            {{ erro }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
                     {% endfor %}
 
                     <button type="submit" class="btn btn-primary">
@@ -63,4 +142,300 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const funcionario = document.getElementById("id_funcionario");
+    const servico = document.getElementById("id_servico");
+    const posto = document.getElementById("id_posto");
+    const inicio = document.getElementById("id_inicio");
+
+    const diaHorarios = document.getElementById(
+        "id_dia_horarios"
+    );
+
+    const botaoConsultar = document.getElementById(
+        "btn_consultar_horarios"
+    );
+
+    const listaHorarios = document.getElementById(
+        "lista_horarios"
+    );
+
+    const mensagemHorarios = document.getElementById(
+        "mensagem_horarios"
+    );
+
+    const horarioSelecionado = document.getElementById(
+        "horario_selecionado"
+    );
+
+    const urlHorarios =
+        "{% url 'marcacoes:horarios_disponiveis' %}";
+
+    const marcacaoId =
+        "{{ form.instance.pk|default:'' }}";
+
+    const textoSelecione =
+        "{{ t_selecione|escapejs }}";
+
+    const textoProcurando =
+        "{{ t_procurando|escapejs }}";
+
+    const textoSemHorarios =
+        "{{ t_sem_horarios|escapejs }}";
+
+    const textoErro =
+        "{{ t_erro|escapejs }}";
+
+    const textoHorarioSelecionado =
+        "{{ t_horario_selecionado|escapejs }}";
+
+    const textoNenhumSelecionado =
+        "{{ t_nenhum_selecionado|escapejs }}";
+
+    function formatarDataHora(valor) {
+        if (!valor || !valor.includes("T")) {
+            return textoNenhumSelecionado;
+        }
+
+        const partes = valor.split("T");
+        const data = partes[0];
+        const hora = partes[1].substring(0, 5);
+
+        const partesData = data.split("-");
+        const dataFormatada =
+            `${partesData[2]}/${partesData[1]}/${partesData[0]}`;
+
+        return `${dataFormatada} às ${hora}`;
+    }
+
+    function mostrarHorarioSelecionado() {
+        if (!inicio.value) {
+            horarioSelecionado.textContent =
+                textoNenhumSelecionado;
+
+            return;
+        }
+
+        horarioSelecionado.textContent =
+            formatarDataHora(inicio.value);
+    }
+
+    function preencherDiaInicial() {
+        if (inicio.value && inicio.value.length >= 10) {
+            diaHorarios.value =
+                inicio.value.substring(0, 10);
+
+            mostrarHorarioSelecionado();
+            return;
+        }
+
+        const hoje = new Date();
+        const ano = hoje.getFullYear();
+
+        const mes = String(
+            hoje.getMonth() + 1
+        ).padStart(2, "0");
+
+        const dia = String(
+            hoje.getDate()
+        ).padStart(2, "0");
+
+        diaHorarios.value =
+            `${ano}-${mes}-${dia}`;
+    }
+
+    function limparHorarios(limparSelecao = false) {
+        listaHorarios.innerHTML = "";
+
+        mensagemHorarios.textContent =
+            textoSelecione;
+
+        mensagemHorarios.className =
+            "small text-muted mt-3";
+
+        if (limparSelecao) {
+            inicio.value = "";
+
+            horarioSelecionado.textContent =
+                textoNenhumSelecionado;
+        }
+    }
+
+    async function consultarHorarios() {
+        limparHorarios(false);
+
+        const funcionarioId = funcionario.value;
+        const servicoId = servico.value;
+        const postoId = posto.value;
+        const dia = diaHorarios.value;
+
+        if (!funcionarioId || !servicoId || !dia) {
+            mensagemHorarios.textContent =
+                textoSelecione;
+
+            mensagemHorarios.className =
+                "small text-danger mt-3";
+
+            return;
+        }
+
+        mensagemHorarios.textContent =
+            textoProcurando;
+
+        mensagemHorarios.className =
+            "small text-muted mt-3";
+
+        botaoConsultar.disabled = true;
+
+        const parametros = new URLSearchParams({
+            funcionario: funcionarioId,
+            servico: servicoId,
+            posto: postoId,
+            dia: dia,
+        });
+
+        if (marcacaoId) {
+            parametros.append(
+                "marcacao",
+                marcacaoId
+            );
+        }
+
+        try {
+            const resposta = await fetch(
+                `${urlHorarios}?${parametros.toString()}`
+            );
+
+            const dados = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(
+                    dados.erro || textoErro
+                );
+            }
+
+            if (dados.horarios.length === 0) {
+                mensagemHorarios.textContent =
+                    textoSemHorarios;
+
+                mensagemHorarios.className =
+                    "small text-warning mt-3";
+
+                return;
+            }
+
+            mensagemHorarios.textContent =
+                `${dados.horarios.length} horário(s) disponível(is).`;
+
+            mensagemHorarios.className =
+                "small text-success mt-3";
+
+            dados.horarios.forEach(function (horario) {
+                const botao =
+                    document.createElement("button");
+
+                botao.type = "button";
+
+                botao.className =
+                    "btn btn-outline-success btn-sm";
+
+                botao.textContent =
+                    `${horario.inicio} – ${horario.fim}`;
+
+                if (inicio.value === horario.valor) {
+                    botao.className =
+                        "btn btn-success btn-sm";
+
+                    botao.textContent =
+                        `${horario.inicio} – ${horario.fim} ✓`;
+                }
+
+                botao.addEventListener(
+                    "click",
+                    function () {
+                        inicio.value = horario.valor;
+
+                        document
+                            .querySelectorAll(
+                                "#lista_horarios button"
+                            )
+                            .forEach(function (outroBotao) {
+                                outroBotao.className =
+                                    "btn btn-outline-success btn-sm";
+
+                                outroBotao.textContent =
+                                    outroBotao.dataset.textoOriginal;
+                            });
+
+                        botao.className =
+                            "btn btn-success btn-sm";
+
+                        botao.textContent =
+                            `${horario.inicio} – ${horario.fim} ✓`;
+
+                        horarioSelecionado.textContent =
+                            formatarDataHora(
+                                horario.valor
+                            );
+
+                        mensagemHorarios.textContent =
+                            `${textoHorarioSelecionado}: ${horario.inicio}`;
+                    }
+                );
+
+                botao.dataset.textoOriginal =
+                    `${horario.inicio} – ${horario.fim}`;
+
+                listaHorarios.appendChild(botao);
+            });
+        } catch (erro) {
+            mensagemHorarios.textContent =
+                erro.message || textoErro;
+
+            mensagemHorarios.className =
+                "small text-danger mt-3";
+        } finally {
+            botaoConsultar.disabled = false;
+        }
+    }
+
+    preencherDiaInicial();
+    mostrarHorarioSelecionado();
+
+    botaoConsultar.addEventListener(
+        "click",
+        consultarHorarios
+    );
+
+    funcionario.addEventListener(
+        "change",
+        function () {
+            limparHorarios(true);
+        }
+    );
+
+    servico.addEventListener(
+        "change",
+        function () {
+            limparHorarios(true);
+        }
+    );
+
+    posto.addEventListener(
+        "change",
+        function () {
+            limparHorarios(true);
+        }
+    );
+
+    diaHorarios.addEventListener(
+        "change",
+        function () {
+            limparHorarios(true);
+        }
+    );
+});
+</script>
 {% endblock %}

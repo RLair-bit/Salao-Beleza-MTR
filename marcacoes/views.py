@@ -1,133 +1,465 @@
 from datetime import datetime, time, timedelta
 
-from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.db.models import Q, Sum
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 
+from clientes.models import Cliente
 from funcionarios.models import Funcionario
+from servicos.models import Servico
 
 from .forms import MarcacaoForm
 from .models import Marcacao
 
-from django.db.models import Sum
 
-from clientes.models import Cliente
-from servicos.models import Servico
+def _tornar_aware(valor):
+    """
+    Acrescenta o fuso horário definido no Django a uma data
+    que ainda não tenha informação de fuso horário.
+    """
+    if settings.USE_TZ and timezone.is_naive(valor):
+        return timezone.make_aware(
+            valor,
+            timezone.get_current_timezone(),
+        )
+
+    return valor
+
 
 def _dia_de(marcacao):
-    """Devolve o dia da marcação no formato usado pelo filtro da agenda."""
+    """
+    Devolve o dia da marcação no formato usado pelo filtro
+    da agenda.
+    """
     inicio = marcacao.inicio
+
     if settings.USE_TZ:
         inicio = timezone.localtime(inicio)
+
     return inicio.strftime("%Y-%m-%d")
 
 
 @login_required
 def agenda(request):
     dia_txt = request.GET.get("dia")
+
     try:
-        dia = datetime.strptime(dia_txt, "%Y-%m-%d").date() if dia_txt else timezone.localdate()
+        if dia_txt:
+            dia = datetime.strptime(
+                dia_txt,
+                "%Y-%m-%d",
+            ).date()
+        else:
+            dia = timezone.localdate()
     except ValueError:
         dia = timezone.localdate()
 
-    inicio_dia = datetime.combine(dia, time.min)
+    inicio_dia = _tornar_aware(
+        datetime.combine(dia, time.min)
+    )
+
     fim_dia = inicio_dia + timedelta(days=1)
-    if settings.USE_TZ:
-        inicio_dia = timezone.make_aware(inicio_dia)
-        fim_dia = timezone.make_aware(fim_dia)
 
     marcacoes = (
         Marcacao.objects
-        .filter(inicio__gte=inicio_dia, inicio__lt=fim_dia)
-        .select_related("cliente", "funcionario", "servico", "posto")
+        .filter(
+            inicio__gte=inicio_dia,
+            inicio__lt=fim_dia,
+        )
+        .select_related(
+            "cliente",
+            "funcionario",
+            "servico",
+            "posto",
+        )
     )
 
     escolhido = request.GET.get("funcionario", "")
+
     if escolhido.isdigit():
-        marcacoes = marcacoes.filter(funcionario_id=int(escolhido))
+        marcacoes = marcacoes.filter(
+            funcionario_id=int(escolhido)
+        )
     else:
         escolhido = ""
 
-    return render(request, "marcacoes/agenda.html", {
-        "marcacoes": marcacoes,
-        "dia": dia,
-        "dia_anterior": dia - timedelta(days=1),
-        "dia_seguinte": dia + timedelta(days=1),
-        "hoje": timezone.localdate(),
-        "funcionarios": Funcionario.objects.filter(ativo=True),
-        "escolhido": escolhido,
-        "total": marcacoes.count(),
-    })
+    return render(
+        request,
+        "marcacoes/agenda.html",
+        {
+            "marcacoes": marcacoes,
+            "dia": dia,
+            "dia_anterior": dia - timedelta(days=1),
+            "dia_seguinte": dia + timedelta(days=1),
+            "hoje": timezone.localdate(),
+            "funcionarios": Funcionario.objects.filter(
+                ativo=True
+            ),
+            "escolhido": escolhido,
+            "total": marcacoes.count(),
+        },
+    )
+
+
+@login_required
+def horarios_disponiveis(request):
+    """
+    Calcula os horários disponíveis entre as 09:00 e as
+    19:00, em intervalos de 30 minutos.
+    """
+    funcionario_txt = request.GET.get("funcionario", "")
+    servico_txt = request.GET.get("servico", "")
+    posto_txt = request.GET.get("posto", "")
+    dia_txt = request.GET.get("dia", "")
+    marcacao_txt = request.GET.get("marcacao", "")
+
+    if not funcionario_txt.isdigit():
+        return JsonResponse(
+            {"erro": "Selecione um funcionário."},
+            status=400,
+        )
+
+    if not servico_txt.isdigit():
+        return JsonResponse(
+            {"erro": "Selecione um serviço."},
+            status=400,
+        )
+
+    try:
+        dia = datetime.strptime(
+            dia_txt,
+            "%Y-%m-%d",
+        ).date()
+    except ValueError:
+        return JsonResponse(
+            {"erro": "Selecione uma data válida."},
+            status=400,
+        )
+
+    funcionario_id = int(funcionario_txt)
+    servico_id = int(servico_txt)
+
+    posto_id = (
+        int(posto_txt)
+        if posto_txt.isdigit()
+        else None
+    )
+
+    marcacao_id = (
+        int(marcacao_txt)
+        if marcacao_txt.isdigit()
+        else None
+    )
+
+    funcionario_existe = Funcionario.objects.filter(
+        pk=funcionario_id
+    ).exists()
+
+    if not funcionario_existe:
+        return JsonResponse(
+            {"erro": "Funcionário não encontrado."},
+            status=404,
+        )
+
+    servico = Servico.objects.filter(
+        pk=servico_id
+    ).first()
+
+    if servico is None:
+        return JsonResponse(
+            {"erro": "Serviço não encontrado."},
+            status=404,
+        )
+
+    if servico.duracao_min <= 0:
+        return JsonResponse(
+            {"erro": "A duração do serviço é inválida."},
+            status=400,
+        )
+
+    abertura = _tornar_aware(
+        datetime.combine(dia, time(9, 0))
+    )
+
+    fecho = _tornar_aware(
+        datetime.combine(dia, time(19, 0))
+    )
+
+    filtro_recursos = Q(
+        funcionario_id=funcionario_id
+    )
+
+    if posto_id is not None:
+        filtro_recursos |= Q(
+            posto_id=posto_id
+        )
+
+    marcacoes_existentes = (
+        Marcacao.objects
+        .filter(filtro_recursos)
+        .filter(
+            inicio__gte=abertura - timedelta(hours=12),
+            inicio__lt=fecho,
+        )
+        .exclude(estado="cancelada")
+        .select_related(
+            "servico",
+            "funcionario",
+            "posto",
+        )
+    )
+
+    if marcacao_id is not None:
+        marcacoes_existentes = (
+            marcacoes_existentes.exclude(
+                pk=marcacao_id
+            )
+        )
+
+    marcacoes_existentes = list(
+        marcacoes_existentes
+    )
+
+    duracao = timedelta(
+        minutes=servico.duracao_min
+    )
+
+    intervalo = timedelta(minutes=30)
+    horario_atual = abertura
+    horarios = []
+
+    if settings.USE_TZ:
+        agora = timezone.localtime(
+            timezone.now()
+        )
+    else:
+        agora = timezone.now()
+
+    while horario_atual + duracao <= fecho:
+        fim_horario = horario_atual + duracao
+
+        horario_passado = (
+            dia == timezone.localdate()
+            and horario_atual <= agora
+        )
+
+        conflito = False
+
+        if not horario_passado:
+            for marcacao in marcacoes_existentes:
+                existe_sobreposicao = (
+                    horario_atual < marcacao.fim
+                    and marcacao.inicio < fim_horario
+                )
+
+                if not existe_sobreposicao:
+                    continue
+
+                mesmo_funcionario = (
+                    marcacao.funcionario_id
+                    == funcionario_id
+                )
+
+                mesmo_posto = (
+                    posto_id is not None
+                    and marcacao.posto_id == posto_id
+                )
+
+                if mesmo_funcionario or mesmo_posto:
+                    conflito = True
+                    break
+
+        if not horario_passado and not conflito:
+            horarios.append(
+                {
+                    "valor": horario_atual.strftime(
+                        "%Y-%m-%dT%H:%M"
+                    ),
+                    "inicio": horario_atual.strftime(
+                        "%H:%M"
+                    ),
+                    "fim": fim_horario.strftime(
+                        "%H:%M"
+                    ),
+                }
+            )
+
+        horario_atual += intervalo
+
+    return JsonResponse(
+        {
+            "horarios": horarios,
+            "duracao": servico.duracao_min,
+        }
+    )
 
 
 @login_required
 def criar(request):
     form = MarcacaoForm(request.POST or None)
+
     if request.method == "POST" and form.is_valid():
         form.save()
-        messages.success(request, "Marcação criada com sucesso.")
+
+        messages.success(
+            request,
+            "Marcação criada com sucesso.",
+        )
+
         return redirect("marcacoes:agenda")
-    return render(request, "marcacoes/form.html", {"form": form, "titulo": "Nova marcação"})
+
+    return render(
+        request,
+        "marcacoes/form.html",
+        {
+            "form": form,
+            "titulo": "Nova marcação",
+        },
+    )
 
 
 @login_required
 def editar(request, pk):
-    marcacao = get_object_or_404(Marcacao, pk=pk)
-    form = MarcacaoForm(request.POST or None, instance=marcacao)
+    marcacao = get_object_or_404(
+        Marcacao,
+        pk=pk,
+    )
+
+    form = MarcacaoForm(
+        request.POST or None,
+        instance=marcacao,
+    )
+
     if request.method == "POST" and form.is_valid():
         form.save()
-        messages.success(request, "Marcação atualizada.")
-        return redirect(f"{reverse('marcacoes:agenda')}?dia={_dia_de(marcacao)}")
-    return render(request, "marcacoes/form.html",
-                  {"form": form, "titulo": "Editar marcação"})
+
+        messages.success(
+            request,
+            "Marcação atualizada.",
+        )
+
+        return redirect(
+            f"{reverse('marcacoes:agenda')}"
+            f"?dia={_dia_de(marcacao)}"
+        )
+
+    return render(
+        request,
+        "marcacoes/form.html",
+        {
+            "form": form,
+            "titulo": "Editar marcação",
+        },
+    )
 
 
 @login_required
 def mudar_estado(request, pk, estado):
-    marcacao = get_object_or_404(Marcacao, pk=pk)
-    validos = dict(Marcacao.ESTADOS)
+    marcacao = get_object_or_404(
+        Marcacao,
+        pk=pk,
+    )
+
+    estados_validos = dict(Marcacao.ESTADOS)
     dia = _dia_de(marcacao)
 
-    if request.method == "POST" and estado in validos:
+    if (
+        request.method == "POST"
+        and estado in estados_validos
+    ):
         marcacao.estado = estado
+
         try:
             marcacao.save()
-            messages.success(request, f"Marcação alterada para {validos[estado]}.")
-        except ValidationError as e:
-            messages.error(request, e.messages[0])
 
-    return redirect(f"{reverse('marcacoes:agenda')}?dia={dia}")
+            messages.success(
+                request,
+                (
+                    "Marcação alterada para "
+                    f"{estados_validos[estado]}."
+                ),
+            )
+        except ValidationError as erro:
+            messages.error(
+                request,
+                erro.messages[0],
+            )
+
+    return redirect(
+        f"{reverse('marcacoes:agenda')}?dia={dia}"
+    )
+
 
 @login_required
 def painel(request):
     hoje = timezone.localdate()
-    inicio = datetime.combine(hoje, time.min)
+
+    inicio = _tornar_aware(
+        datetime.combine(hoje, time.min)
+    )
+
     fim = inicio + timedelta(days=1)
-    if settings.USE_TZ:
-        inicio = timezone.make_aware(inicio)
-        fim = timezone.make_aware(fim)
 
-    do_dia = (Marcacao.objects
-              .filter(inicio__gte=inicio, inicio__lt=fim)
-              .exclude(estado="cancelada")
-              .select_related("cliente", "funcionario", "servico", "posto"))
+    do_dia = (
+        Marcacao.objects
+        .filter(
+            inicio__gte=inicio,
+            inicio__lt=fim,
+        )
+        .exclude(estado="cancelada")
+        .select_related(
+            "cliente",
+            "funcionario",
+            "servico",
+            "posto",
+        )
+    )
 
-    realizadas = do_dia.filter(estado="realizada")
-    por_fechar = [m for m in do_dia if m.estado == "marcada"]
-    atrasadas = [m for m in por_fechar if m.em_atraso]
+    realizadas = do_dia.filter(
+        estado="realizada"
+    )
 
-    return render(request, "home.html", {
-        "hoje": hoje,
-        "total_dia": do_dia.count(),
-        "n_realizadas": realizadas.count(),
-        "receita": realizadas.aggregate(t=Sum("servico__preco"))["t"] or 0,
-        "proximas": por_fechar[:8],
-        "n_atrasadas": len(atrasadas),
-        "n_clientes": Cliente.objects.count(),
-        "n_servicos": Servico.objects.filter(ativo=True).count(),
-        "n_funcionarios": Funcionario.objects.filter(ativo=True).count(),
-    })
+    por_fechar = [
+        marcacao
+        for marcacao in do_dia
+        if marcacao.estado == "marcada"
+    ]
+
+    atrasadas = [
+        marcacao
+        for marcacao in por_fechar
+        if marcacao.em_atraso
+    ]
+
+    return render(
+        request,
+        "home.html",
+        {
+            "hoje": hoje,
+            "total_dia": do_dia.count(),
+            "n_realizadas": realizadas.count(),
+            "receita": (
+                realizadas.aggregate(
+                    total=Sum("servico__preco")
+                )["total"]
+                or 0
+            ),
+            "proximas": por_fechar[:8],
+            "n_atrasadas": len(atrasadas),
+            "n_clientes": Cliente.objects.count(),
+            "n_servicos": Servico.objects.filter(
+                ativo=True
+            ).count(),
+            "n_funcionarios": (
+                Funcionario.objects.filter(
+                    ativo=True
+                ).count()
+            ),
+        },
+    )
