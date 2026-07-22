@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 11:11+0000\n"
+"POT-Creation-Date: 2026-07-22 15:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: configuracoes/models.py:47
+#| msgid "Gestão do Salão"
+msgid "Nome do salão"
+msgstr "Salon name"
+
+#: configuracoes/models.py:48
+msgid "Telefone"
+msgstr "Phone"
+
+#: configuracoes/models.py:49
+msgid "Email"
+msgstr "Email"
+
+#: configuracoes/models.py:50
+msgid "Morada"
+msgstr "Address"
+
+#: configuracoes/models.py:51
+msgid "Hora de abertura"
+msgstr "Opening time"
+
+#: configuracoes/models.py:52
+msgid "Hora de fecho"
+msgstr "Closing time"
+
+#: configuracoes/models.py:53
+msgid "Idioma"
+msgstr "Language"
+
+#: configuracoes/models.py:54
+#| msgid "Funcionário"
+msgid "Fuso horário"
+msgstr "Time zone"
 
 #: configuracoes/templates/configuracoes/editar.html:4 templates/base.html:73
 msgid "Configurações"
@@ -240,7 +274,6 @@ msgid "Marcar como realizada"
 msgstr "Mark as completed"
 
 #: templates/home.html:83
-#| msgid "Não há mais marcações para hoje."
 msgid "Não há marcações por fechar hoje."
 msgstr "No appointments to close today."
 

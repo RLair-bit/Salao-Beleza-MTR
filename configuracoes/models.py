@@ -1,6 +1,7 @@
 from datetime import time
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Configuracao(models.Model):
@@ -43,14 +44,14 @@ class Configuracao(models.Model):
         ]),
     ]
 
-    nome_salao = models.CharField("Nome do salão", max_length=100, default="Salão de Beleza")
-    telefone = models.CharField("Telefone", max_length=30, blank=True)
-    email = models.EmailField("Email", blank=True)
-    morada = models.CharField("Morada", max_length=200, blank=True)
-    hora_abertura = models.TimeField("Hora de abertura", default=time(9, 0))
-    hora_fecho = models.TimeField("Hora de fecho", default=time(19, 0))
-    idioma = models.CharField("Idioma", max_length=5, choices=IDIOMAS, default="pt-pt")
-    fuso_horario = models.CharField("Fuso horário", max_length=40, choices=FUSOS, default="Europe/Lisbon")
+    nome_salao = models.CharField(_("Nome do salão"), max_length=100, default="Salão de Beleza")
+    telefone = models.CharField(_("Telefone"), max_length=30, blank=True)
+    email = models.EmailField(_("Email"), blank=True)
+    morada = models.CharField(_("Morada"), max_length=200, blank=True)
+    hora_abertura = models.TimeField(_("Hora de abertura"), default=time(9, 0))
+    hora_fecho = models.TimeField(_("Hora de fecho"), default=time(19, 0))
+    idioma = models.CharField(_("Idioma"), max_length=5, choices=IDIOMAS, default="pt-pt")
+    fuso_horario = models.CharField(_("Fuso horário"), max_length=40, choices=FUSOS, default="Europe/Lisbon")
     atualizado_em = models.DateTimeField(auto_now=True)
 
     class Meta:
