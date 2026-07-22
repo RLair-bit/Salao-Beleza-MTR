@@ -1,63 +1,86 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block conteudo %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h1 class="h3 mb-1">Gestão do Salão</h1>
-        <p class="text-muted mb-0">{{ hoje|date:"l, d \d\e F \d\e Y" }}</p>
+        <h1 class="h3 mb-1">{% trans "Gestão do Salão" %}</h1>
+        <p class="text-muted mb-0">{{ hoje|date:"l, j F Y"|capfirst }}</p>
     </div>
-    <a class="btn btn-primary" href="{% url 'marcacoes:criar' %}">Nova marcação</a>
+    <a class="btn btn-primary" href="{% url 'marcacoes:criar' %}">{% trans "Nova marcação" %}</a>
 </div>
 
 <div class="row g-3 mb-4">
     <div class="col-md-3">
         <div class="card h-100"><div class="card-body">
-            <div class="text-muted small">Marcações hoje</div>
+            <div class="text-muted small">{% trans "Marcações hoje" %}</div>
             <div class="display-6 fw-bold">{{ total_dia }}</div>
         </div></div>
     </div>
     <div class="col-md-3">
         <div class="card h-100"><div class="card-body">
-            <div class="text-muted small">Já realizadas</div>
+            <div class="text-muted small">{% trans "Já realizadas" %}</div>
             <div class="display-6 fw-bold">{{ n_realizadas }}</div>
         </div></div>
     </div>
     <div class="col-md-3">
         <div class="card h-100"><div class="card-body">
-            <div class="text-muted small">Receita do dia</div>
+            <div class="text-muted small">{% trans "Receita do dia" %}</div>
             <div class="display-6 fw-bold">{{ receita }} €</div>
         </div></div>
     </div>
     <div class="col-md-3">
         <div class="card h-100"><div class="card-body">
-            <div class="text-muted small">Registados</div>
+            <div class="text-muted small">{% trans "Registados" %}</div>
             <div class="small mt-2">
-                <div>{{ n_clientes }} cliente{{ n_clientes|pluralize }}</div>
-                <div>{{ n_servicos }} serviço{{ n_servicos|pluralize }}</div>
-                <div>{{ n_funcionarios }} funcionário{{ n_funcionarios|pluralize }}</div>
+                <div>{% blocktrans count n=n_clientes %}{{ n }} cliente{% plural %}{{ n }} clientes{% endblocktrans %}</div>
+                <div>{% blocktrans count n=n_servicos %}{{ n }} serviço{% plural %}{{ n }} serviços{% endblocktrans %}</div>
+                <div>{% blocktrans count n=n_funcionarios %}{{ n }} funcionário{% plural %}{{ n }} funcionários{% endblocktrans %}</div>
             </div>
         </div></div>
     </div>
 </div>
 
+{% if n_atrasadas %}
+<div class="alert alert-warning d-flex align-items-center" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+    <div>
+        {% blocktrans count n=n_atrasadas %}<strong>{{ n }}</strong> marcação já passou da hora e continua por fechar.{% plural %}<strong>{{ n }}</strong> marcações já passaram da hora e continuam por fechar.{% endblocktrans %}
+    </div>
+</div>
+{% endif %}
+
 <div class="card mb-4">
     <div class="card-header fw-bold d-flex justify-content-between align-items-center">
-        <span>A seguir, hoje</span>
-        <a class="btn btn-sm btn-outline-dark" href="{% url 'marcacoes:agenda' %}">Ver agenda</a>
+        <span>{% trans "A seguir, hoje" %}</span>
+        <a class="btn btn-sm btn-outline-dark" href="{% url 'marcacoes:agenda' %}">{% trans "Ver agenda" %}</a>
     </div>
     <div class="table-responsive">
         <table class="table align-middle mb-0">
             <tbody>
             {% for m in proximas %}
-                <tr>
+                <tr class="{% if m.em_atraso %}table-warning{% endif %}">
                     <td class="fw-bold text-nowrap">{{ m.inicio|date:"H:i" }}</td>
                     <td>{{ m.cliente }}</td>
                     <td>{{ m.servico.nome }}</td>
                     <td>{{ m.posto|default:"—" }}</td>
                     <td class="text-muted">{{ m.funcionario }}</td>
+                    <td class="text-end">
+                        {% if m.em_atraso %}
+                            <span class="badge text-bg-warning"><i class="bi bi-exclamation-triangle"></i> {% trans "Em atraso" %}</span>
+                        {% elif m.a_decorrer %}
+                            <span class="badge text-bg-primary"><i class="bi bi-hourglass-split"></i> {% trans "A decorrer" %}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end">
+                        <form method="post" class="d-inline" action="{% url 'marcacoes:mudar_estado' m.pk 'realizada' %}">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-success" title="{% trans 'Marcar como realizada' %}"><i class="bi bi-check-lg"></i></button>
+                        </form>
+                    </td>
                 </tr>
             {% empty %}
-                <tr><td class="text-muted">Não há mais marcações para hoje.</td></tr>
+                <tr><td colspan="7" class="text-muted">{% trans "Não há marcações por fechar hoje." %}</td></tr>
             {% endfor %}
             </tbody>
         </table>
@@ -68,16 +91,16 @@
     <div class="col-md-3">
         <a class="text-decoration-none text-reset" href="{% url 'marcacoes:agenda' %}">
             <div class="card h-100"><div class="card-body">
-                <h5 class="card-title">Marcações</h5>
-                <p class="card-text text-muted small">Agenda e novos agendamentos.</p>
+                <h5 class="card-title">{% trans "Marcações" %}</h5>
+                <p class="card-text text-muted small">{% trans "Agenda e novos agendamentos." %}</p>
             </div></div>
         </a>
     </div>
     <div class="col-md-3">
         <a class="text-decoration-none text-reset" href="{% url 'funcionarios:lista' %}">
             <div class="card h-100"><div class="card-body">
-                <h5 class="card-title">Funcionários</h5>
-                <p class="card-text text-muted small">Profissionais do salão.</p>
+                <h5 class="card-title">{% trans "Funcionários" %}</h5>
+                <p class="card-text text-muted small">{% trans "Profissionais do salão." %}</p>
             </div></div>
         </a>
     </div>

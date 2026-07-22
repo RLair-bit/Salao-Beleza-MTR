@@ -1,45 +1,46 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block titulo %}Agenda{% endblock %}
+{% block titulo %}{% trans "Agenda" %}{% endblock %}
 
 {% block conteudo %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">Agenda de {{ dia|date:"d/m/Y" }}</h1>
-    <a class="btn btn-primary" href="{% url 'marcacoes:criar' %}">Nova marcação</a>
+    <h1 class="h3 mb-0">{% blocktrans with data=dia|date:"d/m/Y" %}Agenda de {{ data }}{% endblocktrans %}</h1>
+    <a class="btn btn-primary" href="{% url 'marcacoes:criar' %}">{% trans "Nova marcação" %}</a>
 </div>
 
 <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
     <div class="btn-group">
         <a class="btn btn-outline-dark"
            href="?dia={{ dia_anterior|date:'Y-m-d' }}{% if escolhido %}&funcionario={{ escolhido }}{% endif %}">
-            &larr; Dia anterior
+            &larr; {% trans "Dia anterior" %}
         </a>
         <a class="btn btn-outline-dark{% if dia == hoje %} active{% endif %}"
            href="?{% if escolhido %}funcionario={{ escolhido }}{% endif %}">
-            Hoje
+            {% trans "Hoje" %}
         </a>
         <a class="btn btn-outline-dark"
            href="?dia={{ dia_seguinte|date:'Y-m-d' }}{% if escolhido %}&funcionario={{ escolhido }}{% endif %}">
-            Dia seguinte &rarr;
+            {% trans "Dia seguinte" %} &rarr;
         </a>
     </div>
 
     <form method="get" class="d-flex flex-wrap gap-2 align-items-center ms-auto">
         <input type="date" name="dia" value="{{ dia|date:'Y-m-d' }}" class="form-control">
         <select name="funcionario" class="form-select">
-            <option value="">Todos os funcionários</option>
+            <option value="">{% trans "Todos os funcionários" %}</option>
             {% for f in funcionarios %}
                 <option value="{{ f.pk }}" {% if escolhido == f.pk|stringformat:"s" %}selected{% endif %}>
                     {{ f.nome }}
                 </option>
             {% endfor %}
         </select>
-        <button class="btn btn-outline-dark">Ver</button>
+        <button class="btn btn-outline-dark">{% trans "Ver" %}</button>
     </form>
 </div>
 
 <p class="text-muted small">
-    {{ total }} marcaç{{ total|pluralize:"ão,ões" }} neste dia{% if escolhido %} para o funcionário selecionado{% endif %}.
+    {% blocktrans count total=total %}{{ total }} marcação neste dia{% plural %}{{ total }} marcações neste dia{% endblocktrans %}{% if escolhido %} {% trans "para o funcionário selecionado" %}{% endif %}.
 </p>
 
 {% if marcacoes %}
@@ -48,13 +49,13 @@
     <table class="table table-hover align-middle mb-0">
         <thead>
             <tr>
-                <th>Hora</th>
-                <th>Cliente</th>
-                <th>Serviço</th>
-                <th>Mesa</th>
-                <th>Funcionário</th>
-                <th>Estado</th>
-                <th class="text-end">Ações</th>
+                <th>{% trans "Hora" %}</th>
+                <th>{% trans "Cliente" %}</th>
+                <th>{% trans "Serviço" %}</th>
+                <th>{% trans "Mesa" %}</th>
+                <th>{% trans "Funcionário" %}</th>
+                <th>{% trans "Estado" %}</th>
+                <th class="text-end">{% trans "Ações" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -67,34 +68,34 @@
                 <td>{{ m.funcionario }}</td>
                 <td>
                     {% if m.estado == "realizada" %}
-                        <span class="badge text-bg-success">Realizada</span>
+                        <span class="badge text-bg-success">{% trans "Realizada" %}</span>
                     {% elif m.estado == "cancelada" %}
-                        <span class="badge text-bg-secondary">Cancelada</span>
+                        <span class="badge text-bg-secondary">{% trans "Cancelada" %}</span>
                     {% elif m.estado == "faltou" %}
-                        <span class="badge text-bg-warning">Faltou</span>
+                        <span class="badge text-bg-warning">{% trans "Faltou" %}</span>
                     {% else %}
-                        <span class="badge text-bg-light border border-dark">Marcada</span>
+                        <span class="badge text-bg-light border border-dark">{% trans "Marcada" %}</span>
                     {% endif %}
                 </td>
                 <td class="text-end text-nowrap">
                     <a class="btn btn-sm btn-outline-dark"
-                       href="{% url 'marcacoes:editar' m.pk %}">Editar</a>
+                       href="{% url 'marcacoes:editar' m.pk %}">{% trans "Editar" %}</a>
 
                     {% if m.estado == "marcada" %}
                         <form method="post" class="d-inline"
                               action="{% url 'marcacoes:mudar_estado' m.pk 'realizada' %}">
                             {% csrf_token %}
-                            <button class="btn btn-sm btn-outline-success">Realizada</button>
+                            <button class="btn btn-sm btn-outline-success">{% trans "Realizada" %}</button>
                         </form>
                         <form method="post" class="d-inline"
                               action="{% url 'marcacoes:mudar_estado' m.pk 'faltou' %}">
                             {% csrf_token %}
-                            <button class="btn btn-sm btn-outline-warning">Faltou</button>
+                            <button class="btn btn-sm btn-outline-warning">{% trans "Faltou" %}</button>
                         </form>
                         <form method="post" class="d-inline"
                               action="{% url 'marcacoes:mudar_estado' m.pk 'cancelada' %}">
                             {% csrf_token %}
-                            <button class="btn btn-sm btn-outline-danger">Cancelar</button>
+                            <button class="btn btn-sm btn-outline-danger">{% trans "Cancelar" %}</button>
                         </form>
                     {% endif %}
                 </td>
@@ -105,6 +106,6 @@
   </div>
 </div>
 {% else %}
-<div class="alert alert-light border border-2 border-dark">Não há marcações para este dia.</div>
+<div class="alert alert-light border border-2 border-dark">{% trans "Não há marcações para este dia." %}</div>
 {% endif %}
 {% endblock %}

@@ -117,15 +117,16 @@ def painel(request):
               .select_related("cliente", "funcionario", "servico", "posto"))
 
     realizadas = do_dia.filter(estado="realizada")
-    agora = timezone.now()
-    proximas = [m for m in do_dia if m.inicio >= agora and m.estado == "marcada"][:5]
+    por_fechar = [m for m in do_dia if m.estado == "marcada"]
+    atrasadas = [m for m in por_fechar if m.em_atraso]
 
     return render(request, "home.html", {
         "hoje": hoje,
         "total_dia": do_dia.count(),
         "n_realizadas": realizadas.count(),
         "receita": realizadas.aggregate(t=Sum("servico__preco"))["t"] or 0,
-        "proximas": proximas,
+        "proximas": por_fechar[:8],
+        "n_atrasadas": len(atrasadas),
         "n_clientes": Cliente.objects.count(),
         "n_servicos": Servico.objects.filter(ativo=True).count(),
         "n_funcionarios": Funcionario.objects.filter(ativo=True).count(),

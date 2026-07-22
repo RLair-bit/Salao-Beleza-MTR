@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block titulo %}{{ titulo }}{% endblock %}
 
@@ -26,8 +27,8 @@
                             {% endfor %}
                         </div>
                     {% endfor %}
-                    <button class="btn btn-primary">Guardar</button>
-                    <a class="btn btn-outline-dark" href="{% url 'marcacoes:agenda' %}">Cancelar</a>
+                    <button class="btn btn-primary">{% trans "Guardar" %}</button>
+                    <a class="btn btn-outline-dark" href="{% url 'marcacoes:agenda' %}">{% trans "Cancelar" %}</a>
                 </form>
 
             </div>

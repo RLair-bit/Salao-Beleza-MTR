@@ -4,12 +4,53 @@ from django.db import models
 
 
 class Configuracao(models.Model):
+    IDIOMAS = [
+        ("pt-pt", "Português (Portugal)"),
+        ("es", "Español"),
+        ("en", "English"),
+        ("fr", "Français"),
+    ]
+
+    # Fusos agrupados por continente (rende <optgroup> no formulario)
+    FUSOS = [
+        ("Europa", [
+            ("Europe/Lisbon", "Lisboa (Portugal)"),
+            ("Europe/Madrid", "Madrid (Espanha)"),
+            ("Europe/Paris", "Paris (França)"),
+            ("Europe/London", "Londres (Reino Unido)"),
+        ]),
+        ("África", [
+            ("Africa/Casablanca", "Casablanca (Marrocos)"),
+            ("Africa/Lagos", "Lagos (Nigéria)"),
+            ("Africa/Cairo", "Cairo (Egito)"),
+            ("Africa/Johannesburg", "Joanesburgo (África do Sul)"),
+        ]),
+        ("América", [
+            ("America/Sao_Paulo", "São Paulo (Brasil)"),
+            ("America/New_York", "Nova Iorque (EUA)"),
+            ("America/Mexico_City", "Cidade do México (México)"),
+            ("America/Argentina/Buenos_Aires", "Buenos Aires (Argentina)"),
+        ]),
+        ("Ásia", [
+            ("Asia/Dubai", "Dubai (Emirados)"),
+            ("Asia/Kolkata", "Bombaim (Índia)"),
+            ("Asia/Shanghai", "Xangai (China)"),
+            ("Asia/Tokyo", "Tóquio (Japão)"),
+        ]),
+        ("Oceânia", [
+            ("Australia/Sydney", "Sydney (Austrália)"),
+            ("Pacific/Auckland", "Auckland (Nova Zelândia)"),
+        ]),
+    ]
+
     nome_salao = models.CharField("Nome do salão", max_length=100, default="Salão de Beleza")
     telefone = models.CharField("Telefone", max_length=30, blank=True)
     email = models.EmailField("Email", blank=True)
     morada = models.CharField("Morada", max_length=200, blank=True)
     hora_abertura = models.TimeField("Hora de abertura", default=time(9, 0))
     hora_fecho = models.TimeField("Hora de fecho", default=time(19, 0))
+    idioma = models.CharField("Idioma", max_length=5, choices=IDIOMAS, default="pt-pt")
+    fuso_horario = models.CharField("Fuso horário", max_length=40, choices=FUSOS, default="Europe/Lisbon")
     atualizado_em = models.DateTimeField(auto_now=True)
 
     class Meta:

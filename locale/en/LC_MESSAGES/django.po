@@ -1,0 +1,253 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-22 11:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: configuracoes/templates/configuracoes/editar.html:4 templates/base.html:73
+msgid "Configurações"
+msgstr "Settings"
+
+#: configuracoes/templates/configuracoes/editar.html:9
+msgid "Configurações do salão"
+msgstr "Salon settings"
+
+#: configuracoes/templates/configuracoes/editar.html:23
+#: marcacoes/templates/marcacoes/form.html:30
+msgid "Guardar"
+msgstr "Save"
+
+#: configuracoes/templates/configuracoes/editar.html:25
+#: marcacoes/templates/marcacoes/agenda.html:98
+#: marcacoes/templates/marcacoes/form.html:31
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: configuracoes/views.py:16
+msgid "Configurações guardadas com sucesso."
+msgstr "Settings saved successfully."
+
+#: marcacoes/templates/marcacoes/agenda.html:4
+msgid "Agenda"
+msgstr "Schedule"
+
+#: marcacoes/templates/marcacoes/agenda.html:8
+#, python-format
+msgid "Agenda de %(data)s"
+msgstr "Schedule for %(data)s"
+
+#: marcacoes/templates/marcacoes/agenda.html:9 templates/home.html:10
+msgid "Nova marcação"
+msgstr "New appointment"
+
+#: marcacoes/templates/marcacoes/agenda.html:16
+msgid "Dia anterior"
+msgstr "Previous day"
+
+#: marcacoes/templates/marcacoes/agenda.html:20
+msgid "Hoje"
+msgstr "Today"
+
+#: marcacoes/templates/marcacoes/agenda.html:24
+msgid "Dia seguinte"
+msgstr "Next day"
+
+#: marcacoes/templates/marcacoes/agenda.html:31
+msgid "Todos os funcionários"
+msgstr "All staff"
+
+#: marcacoes/templates/marcacoes/agenda.html:38
+msgid "Ver"
+msgstr "View"
+
+#: marcacoes/templates/marcacoes/agenda.html:43
+#, python-format
+msgid "%(total)s marcação neste dia"
+msgid_plural "%(total)s marcações neste dia"
+msgstr[0] "%(total)s appointment this day"
+msgstr[1] "%(total)s appointments this day"
+
+#: marcacoes/templates/marcacoes/agenda.html:43
+msgid "para o funcionário selecionado"
+msgstr "for the selected staff member"
+
+#: marcacoes/templates/marcacoes/agenda.html:52
+msgid "Hora"
+msgstr "Time"
+
+#: marcacoes/templates/marcacoes/agenda.html:53
+msgid "Cliente"
+msgstr "Client"
+
+#: marcacoes/templates/marcacoes/agenda.html:54
+msgid "Serviço"
+msgstr "Service"
+
+#: marcacoes/templates/marcacoes/agenda.html:55
+msgid "Mesa"
+msgstr "Station"
+
+#: marcacoes/templates/marcacoes/agenda.html:56
+msgid "Funcionário"
+msgstr "Staff member"
+
+#: marcacoes/templates/marcacoes/agenda.html:57
+msgid "Estado"
+msgstr "Status"
+
+#: marcacoes/templates/marcacoes/agenda.html:58
+msgid "Ações"
+msgstr "Actions"
+
+#: marcacoes/templates/marcacoes/agenda.html:71
+#: marcacoes/templates/marcacoes/agenda.html:88
+msgid "Realizada"
+msgstr "Completed"
+
+#: marcacoes/templates/marcacoes/agenda.html:73
+msgid "Cancelada"
+msgstr "Cancelled"
+
+#: marcacoes/templates/marcacoes/agenda.html:75
+#: marcacoes/templates/marcacoes/agenda.html:93
+msgid "Faltou"
+msgstr "No-show"
+
+#: marcacoes/templates/marcacoes/agenda.html:77
+msgid "Marcada"
+msgstr "Booked"
+
+#: marcacoes/templates/marcacoes/agenda.html:82
+msgid "Editar"
+msgstr "Edit"
+
+#: marcacoes/templates/marcacoes/agenda.html:109
+msgid "Não há marcações para este dia."
+msgstr "No appointments for this day."
+
+#: templates/base.html:60 templates/home.html:94
+msgid "Marcações"
+msgstr "Appointments"
+
+#: templates/base.html:61
+msgid "Clientes"
+msgstr "Clients"
+
+#: templates/base.html:62
+msgid "Serviços"
+msgstr "Services"
+
+#: templates/base.html:63 templates/home.html:102
+msgid "Funcionários"
+msgstr "Staff"
+
+#: templates/base.html:64
+msgid "Mapa do Salão"
+msgstr "Salon Map"
+
+#: templates/base.html:78
+msgid "Sair"
+msgstr "Log out"
+
+#: templates/base.html:82
+msgid "Entrar"
+msgstr "Log in"
+
+#: templates/home.html:7
+msgid "Gestão do Salão"
+msgstr "Salon Management"
+
+#: templates/home.html:16
+msgid "Marcações hoje"
+msgstr "Appointments today"
+
+#: templates/home.html:22
+msgid "Já realizadas"
+msgstr "Completed"
+
+#: templates/home.html:28
+msgid "Receita do dia"
+msgstr "Today's revenue"
+
+#: templates/home.html:34
+msgid "Registados"
+msgstr "Registered"
+
+#: templates/home.html:36
+#, python-format
+msgid "%(n)s cliente"
+msgid_plural "%(n)s clientes"
+msgstr[0] "%(n)s client"
+msgstr[1] "%(n)s clients"
+
+#: templates/home.html:37
+#, python-format
+msgid "%(n)s serviço"
+msgid_plural "%(n)s serviços"
+msgstr[0] "%(n)s service"
+msgstr[1] "%(n)s services"
+
+#: templates/home.html:38
+#, python-format
+msgid "%(n)s funcionário"
+msgid_plural "%(n)s funcionários"
+msgstr[0] "%(n)s staff member"
+msgstr[1] "%(n)s staff members"
+
+#: templates/home.html:48
+#, python-format
+msgid ""
+"<strong>%(n)s</strong> marcação já passou da hora e continua por fechar."
+msgid_plural ""
+"<strong>%(n)s</strong> marcações já passaram da hora e continuam por fechar."
+msgstr[0] ""
+"<strong>%(n)s</strong> appointment is past its time and still open."
+msgstr[1] ""
+"<strong>%(n)s</strong> appointments are past their time and still open."
+
+#: templates/home.html:55
+msgid "A seguir, hoje"
+msgstr "Up next today"
+
+#: templates/home.html:56
+msgid "Ver agenda"
+msgstr "View schedule"
+
+#: templates/home.html:70
+msgid "Em atraso"
+msgstr "Overdue"
+
+#: templates/home.html:72
+msgid "A decorrer"
+msgstr "In progress"
+
+#: templates/home.html:78
+msgid "Marcar como realizada"
+msgstr "Mark as completed"
+
+#: templates/home.html:83
+#| msgid "Não há mais marcações para hoje."
+msgid "Não há marcações por fechar hoje."
+msgstr "No appointments to close today."
+
+#: templates/home.html:95
+msgid "Agenda e novos agendamentos."
+msgstr "Schedule and new bookings."
+
+#: templates/home.html:103
+msgid "Profissionais do salão."
+msgstr "Salon professionals."

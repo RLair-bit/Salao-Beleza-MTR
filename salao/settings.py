@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'configuracoes.middleware.ConfiguracaoMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -121,6 +122,15 @@ TIME_ZONE = "Europe/Lisbon"
 USE_I18N = True
 
 USE_TZ = True
+
+LANGUAGES = [
+    ("pt-pt", "Português"),
+    ("es", "Español"),
+    ("en", "English"),
+    ("fr", "Français"),
+]
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 
 # Static files (CSS, JavaScript, Images)

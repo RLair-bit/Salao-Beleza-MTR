@@ -1,4 +1,5 @@
 from datetime import timedelta
+from django.utils import timezone
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -54,6 +55,15 @@ class Marcacao(models.Model):
     @property
     def fim(self):
         return self.inicio + timedelta(minutes=self.servico.duracao_min)
+
+    @property
+    def a_decorrer(self):
+        agora = timezone.now()
+        return self.estado == "marcada" and self.inicio <= agora < self.fim
+
+    @property
+    def em_atraso(self):
+        return self.estado == "marcada" and self.fim <= timezone.now()
 
     def clean(self):
         if not (self.inicio and self.servico_id and self.funcionario_id):
