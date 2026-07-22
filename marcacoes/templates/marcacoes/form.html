@@ -7,30 +7,58 @@
 <div class="row justify-content-center">
     <div class="col-lg-7">
         <div class="card">
-            <div class="card-header fw-bold">{{ titulo }}</div>
+            <div class="card-header fw-bold">
+                {{ titulo }}
+            </div>
+
             <div class="card-body">
-
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {% for erro in form.non_field_errors %}<div>{{ erro }}</div>{% endfor %}
-                    </div>
-                {% endif %}
-
                 <form method="post" novalidate>
                     {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for erro in form.non_field_errors %}
+                                <div>{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
                     {% for campo in form %}
                         <div class="mb-3">
-                            <label class="form-label" for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+                            <label
+                                class="form-label"
+                                for="{{ campo.id_for_label }}"
+                            >
+                                {{ campo.label }}
+                            </label>
+
                             {{ campo }}
+
+                            {% if campo.help_text %}
+                                <div class="form-text">
+                                    {{ campo.help_text }}
+                                </div>
+                            {% endif %}
+
                             {% for erro in campo.errors %}
-                                <div class="text-danger small mt-1">{{ erro }}</div>
+                                <div class="text-danger small mt-1">
+                                    {{ erro }}
+                                </div>
                             {% endfor %}
                         </div>
                     {% endfor %}
-                    <button class="btn btn-primary">{% trans "Guardar" %}</button>
-                    <a class="btn btn-outline-dark" href="{% url 'marcacoes:agenda' %}">{% trans "Cancelar" %}</a>
-                </form>
 
+                    <button type="submit" class="btn btn-primary">
+                        {% trans "Guardar" %}
+                    </button>
+
+                    <a
+                        class="btn btn-outline-dark"
+                        href="{% url 'marcacoes:agenda' %}"
+                    >
+                        {% trans "Cancelar" %}
+                    </a>
+                </form>
             </div>
         </div>
     </div>
