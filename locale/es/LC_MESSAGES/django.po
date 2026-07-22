@@ -187,7 +187,7 @@ msgstr "Servicios"
 
 #: templates/base.html:63 templates/home.html:102
 msgid "Funcionários"
-msgstr "Empleados"
+msgstr "Personal"
 
 #: templates/base.html:64
 msgid "Mapa do Salão"
@@ -199,7 +199,7 @@ msgstr "Salir"
 
 #: templates/base.html:82
 msgid "Entrar"
-msgstr "Entrar"
+msgstr "Iniciar sesión"
 
 #: templates/home.html:7
 msgid "Gestão do Salão"
@@ -283,3 +283,144 @@ msgstr "Agenda y nuevas citas."
 #: templates/home.html:103
 msgid "Profissionais do salão."
 msgstr "Profesionales del salón."
+
+msgid "Novo funcionário"
+msgstr "Nuevo empleado"
+
+msgid "Procurar por nome..."
+msgstr "Buscar por nombre..."
+
+msgid "Todos os estados"
+msgstr "Todos los estados"
+
+msgid "Apenas ativos"
+msgstr "Solo activos"
+
+msgid "Apenas inativos"
+msgstr "Solo inactivos"
+
+msgid "Filtrar"
+msgstr "Filtrar"
+
+msgid "Nome"
+msgstr "Nombre"
+
+msgid "Função"
+msgstr "Función"
+
+msgid "Ativo"
+msgstr "Activo"
+
+msgid "Inativo"
+msgstr "Inactivo"
+
+msgid "Eliminar"
+msgstr "Eliminar"
+
+msgid "Ainda não há funcionários registados."
+msgstr "Todavía no hay empleados registrados."
+
+msgid "Detalhes do funcionário"
+msgstr "Detalles del empleado"
+
+msgid "Não indicado"
+msgstr "No indicado"
+
+msgid "Não indicada"
+msgstr "No indicada"
+
+msgid "Não definido"
+msgstr "No definido"
+
+msgid "Voltar"
+msgstr "Volver"
+
+msgid "Informações profissionais"
+msgstr "Información profesional"
+
+msgid "Serviços que presta"
+msgstr "Servicios que presta"
+
+msgid "Nenhum serviço associado."
+msgstr "Ningún servicio asociado."
+
+msgid "Próximas marcações"
+msgstr "Próximas citas"
+
+msgid "Data"
+msgstr "Fecha"
+
+msgid "Horário"
+msgstr "Horario"
+
+msgid "Mesa/Posto"
+msgstr "Mesa/Puesto"
+
+msgid "Não existem marcações futuras para esta funcionária."
+msgstr "No existen próximas citas para esta empleada."
+
+msgid "Editar funcionário"
+msgstr "Editar empleado"
+
+msgid "Eliminar funcionário"
+msgstr "Eliminar empleado"
+
+msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
+msgstr "¿Estás seguro de que quieres eliminar <b>%(nome)s</b>?"
+
+msgid "Sim, eliminar"
+msgstr "Sí, eliminar"
+
+msgid "Utilizador ou password incorretos."
+msgstr "Usuario o contraseña incorrectos."
+
+msgid "Utilizador"
+msgstr "Usuario"
+
+msgid "Password"
+msgstr "Contraseña"
+
+msgid "Mapa do Salão — %(data)s"
+msgstr "Mapa del salón — %(data)s"
+
+msgid "Total de mesas"
+msgstr "Total de mesas"
+
+msgid "Mesas ocupadas"
+msgstr "Mesas ocupadas"
+
+msgid "Mesas livres"
+msgstr "Mesas libres"
+
+msgid "Marcações do dia"
+msgstr "Citas del día"
+
+msgid "Dia"
+msgstr "Día"
+
+msgid "Livre"
+msgstr "Libre"
+
+msgid "Sem marcações neste dia."
+msgstr "No hay citas este día."
+
+msgid "Funcionário criado com sucesso."
+msgstr "Empleado creado correctamente."
+
+msgid "Funcionário atualizado."
+msgstr "Empleado actualizado."
+
+msgid "Funcionário eliminado."
+msgstr "Empleado eliminado."
+
+msgid ""
+"Não é possível eliminar: este funcionário tem marcações associadas. Em "
+"alternativa, desativa-o."
+msgstr ""
+"No se puede eliminar: este empleado tiene citas asociadas. Como alternativa,"
+" desactívalo."
+
+msgid "marcação associada"
+msgid_plural "marcações associadas"
+msgstr[0] "cita asociada"
+msgstr[1] "citas asociadas"

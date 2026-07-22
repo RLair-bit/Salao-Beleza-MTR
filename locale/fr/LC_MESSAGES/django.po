@@ -199,7 +199,7 @@ msgstr "Déconnexion"
 
 #: templates/base.html:82
 msgid "Entrar"
-msgstr "Connexion"
+msgstr "Se connecter"
 
 #: templates/home.html:7
 msgid "Gestão do Salão"
@@ -284,3 +284,144 @@ msgstr "Agenda et nouveaux rendez-vous."
 #: templates/home.html:103
 msgid "Profissionais do salão."
 msgstr "Professionnels du salon."
+
+msgid "Novo funcionário"
+msgstr "Nouveau membre du personnel"
+
+msgid "Procurar por nome..."
+msgstr "Rechercher par nom..."
+
+msgid "Todos os estados"
+msgstr "Tous les statuts"
+
+msgid "Apenas ativos"
+msgstr "Actifs uniquement"
+
+msgid "Apenas inativos"
+msgstr "Inactifs uniquement"
+
+msgid "Filtrar"
+msgstr "Filtrer"
+
+msgid "Nome"
+msgstr "Nom"
+
+msgid "Função"
+msgstr "Fonction"
+
+msgid "Ativo"
+msgstr "Actif"
+
+msgid "Inativo"
+msgstr "Inactif"
+
+msgid "Eliminar"
+msgstr "Supprimer"
+
+msgid "Ainda não há funcionários registados."
+msgstr "Aucun membre du personnel n'est encore enregistré."
+
+msgid "Detalhes do funcionário"
+msgstr "Détails du membre du personnel"
+
+msgid "Não indicado"
+msgstr "Non indiqué"
+
+msgid "Não indicada"
+msgstr "Non indiquée"
+
+msgid "Não definido"
+msgstr "Non défini"
+
+msgid "Voltar"
+msgstr "Retour"
+
+msgid "Informações profissionais"
+msgstr "Informations professionnelles"
+
+msgid "Serviços que presta"
+msgstr "Services proposés"
+
+msgid "Nenhum serviço associado."
+msgstr "Aucun service associé."
+
+msgid "Próximas marcações"
+msgstr "Prochains rendez-vous"
+
+msgid "Data"
+msgstr "Date"
+
+msgid "Horário"
+msgstr "Horaire"
+
+msgid "Mesa/Posto"
+msgstr "Table/Poste"
+
+msgid "Não existem marcações futuras para esta funcionária."
+msgstr "Il n'y a aucun rendez-vous à venir pour cette employée."
+
+msgid "Editar funcionário"
+msgstr "Modifier le membre du personnel"
+
+msgid "Eliminar funcionário"
+msgstr "Supprimer le membre du personnel"
+
+msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
+msgstr "Êtes-vous sûr de vouloir supprimer <b>%(nome)s</b> ?"
+
+msgid "Sim, eliminar"
+msgstr "Oui, supprimer"
+
+msgid "Utilizador ou password incorretos."
+msgstr "Nom d'utilisateur ou mot de passe incorrect."
+
+msgid "Utilizador"
+msgstr "Utilisateur"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Mapa do Salão — %(data)s"
+msgstr "Plan du salon — %(data)s"
+
+msgid "Total de mesas"
+msgstr "Nombre total de tables"
+
+msgid "Mesas ocupadas"
+msgstr "Tables occupées"
+
+msgid "Mesas livres"
+msgstr "Tables libres"
+
+msgid "Marcações do dia"
+msgstr "Rendez-vous du jour"
+
+msgid "Dia"
+msgstr "Jour"
+
+msgid "Livre"
+msgstr "Libre"
+
+msgid "Sem marcações neste dia."
+msgstr "Aucun rendez-vous ce jour-là."
+
+msgid "Funcionário criado com sucesso."
+msgstr "Membre du personnel créé avec succès."
+
+msgid "Funcionário atualizado."
+msgstr "Membre du personnel mis à jour."
+
+msgid "Funcionário eliminado."
+msgstr "Membre du personnel supprimé."
+
+msgid ""
+"Não é possível eliminar: este funcionário tem marcações associadas. Em "
+"alternativa, desativa-o."
+msgstr ""
+"Impossible de supprimer : ce membre du personnel a des rendez-vous associés."
+" Vous pouvez le désactiver à la place."
+
+msgid "marcação associada"
+msgid_plural "marcações associadas"
+msgstr[0] "rendez-vous associé"
+msgstr[1] "rendez-vous associés"

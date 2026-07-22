@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from .forms import FuncionarioForm
 from .models import Funcionario
@@ -71,7 +72,7 @@ def criar(request):
 
     if request.method == "POST" and form.is_valid():
         form.save()
-        messages.success(request, "Funcionário criado com sucesso.")
+        messages.success(request, _("Funcionário criado com sucesso."))
         return redirect("funcionarios:lista")
 
     return render(
@@ -95,7 +96,7 @@ def editar(request, pk):
 
     if request.method == "POST" and form.is_valid():
         form.save()
-        messages.success(request, "Funcionário atualizado.")
+        messages.success(request, _("Funcionário atualizado."))
         return redirect("funcionarios:lista")
 
     return render(
@@ -115,13 +116,13 @@ def eliminar(request, pk):
     if request.method == "POST":
         try:
             funcionario.delete()
-            messages.success(request, "Funcionário eliminado.")
+            messages.success(request, _("Funcionário eliminado."))
         except Exception:
             messages.error(
-                request,
-                "Não é possível eliminar: este funcionário tem "
-                "marcações associadas. Em alternativa, desativa-o.",
-            )
+    request,
+    _("Não é possível eliminar: este funcionário tem "
+      "marcações associadas. Em alternativa, desativa-o."),
+)
 
         return redirect("funcionarios:lista")
 

@@ -1,13 +1,15 @@
 {% extends "base.html" %}
-{% block titulo %}Funcionários{% endblock %}
+{% load i18n %}
+
+{% block titulo %}{% trans "Funcionários" %}{% endblock %}
 
 {% block conteudo %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">Funcionários</h1>
+    <h1 class="h3 mb-0">{% trans "Funcionários" %}</h1>
 
     <a class="btn btn-primary"
        href="{% url 'funcionarios:criar' %}">
-        Novo funcionário
+        {% trans "Novo funcionário" %}
     </a>
 </div>
 
@@ -17,30 +19,30 @@
                name="q"
                value="{{ procura }}"
                class="form-control"
-               placeholder="Procurar por nome...">
+               placeholder="{% trans 'Procurar por nome...' %}">
     </div>
 
     <div class="col-md-3">
         <select name="estado" class="form-select">
             <option value="" {% if not estado %}selected{% endif %}>
-                Todos os estados
+                {% trans "Todos os estados" %}
             </option>
 
             <option value="ativo"
                     {% if estado == "ativo" %}selected{% endif %}>
-                Apenas ativos
+                {% trans "Apenas ativos" %}
             </option>
 
             <option value="inativo"
                     {% if estado == "inativo" %}selected{% endif %}>
-                Apenas inativos
+                {% trans "Apenas inativos" %}
             </option>
         </select>
     </div>
 
     <div class="col-md-2 d-grid">
         <button class="btn btn-primary">
-            Filtrar
+            {% trans "Filtrar" %}
         </button>
     </div>
 </form>
@@ -49,11 +51,11 @@
     <table class="table table-hover align-middle mb-0">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Função</th>
-                <th>Serviços</th>
-                <th>Estado</th>
-                <th class="text-end">Ações</th>
+                <th>{% trans "Nome" %}</th>
+                <th>{% trans "Função" %}</th>
+                <th>{% trans "Serviços" %}</th>
+                <th>{% trans "Estado" %}</th>
+                <th class="text-end">{% trans "Ações" %}</th>
             </tr>
         </thead>
 
@@ -61,7 +63,6 @@
             {% for f in funcionarios %}
             <tr>
                 <td>{{ f.nome }}</td>
-
                 <td>{{ f.funcao|default:"—" }}</td>
 
                 <td class="small">
@@ -71,37 +72,37 @@
                 <td>
                     {% if f.ativo %}
                         <span class="badge text-bg-light border border-dark">
-                            Ativo
+                            {% trans "Ativo" %}
                         </span>
                     {% else %}
                         <span class="badge text-bg-secondary">
-                            Inativo
+                            {% trans "Inativo" %}
                         </span>
                     {% endif %}
                 </td>
 
-               <td class="text-end">
-    <a class="btn btn-sm btn-outline-primary"
-       href="{% url 'funcionarios:detalhe' f.pk %}">
-        Ver
-    </a>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary"
+                       href="{% url 'funcionarios:detalhe' f.pk %}">
+                        {% trans "Ver" %}
+                    </a>
 
-    <a class="btn btn-sm btn-outline-dark"
-       href="{% url 'funcionarios:editar' f.pk %}">
-        Editar
-    </a>
+                    <a class="btn btn-sm btn-outline-dark"
+                       href="{% url 'funcionarios:editar' f.pk %}">
+                        {% trans "Editar" %}
+                    </a>
 
-    <a class="btn btn-sm btn-outline-danger"
-       href="{% url 'funcionarios:eliminar' f.pk %}">
-        Eliminar
-    </a>
-</td>
+                    <a class="btn btn-sm btn-outline-danger"
+                       href="{% url 'funcionarios:eliminar' f.pk %}">
+                        {% trans "Eliminar" %}
+                    </a>
+                </td>
             </tr>
 
             {% empty %}
             <tr>
                 <td colspan="5">
-                    Ainda não há funcionários registados.
+                    {% trans "Ainda não há funcionários registados." %}
                 </td>
             </tr>
             {% endfor %}

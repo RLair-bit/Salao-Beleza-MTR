@@ -284,3 +284,144 @@ msgstr "Agenda e novos agendamentos."
 #: templates/home.html:103
 msgid "Profissionais do salão."
 msgstr "Profissionais do salão."
+
+msgid "Novo funcionário"
+msgstr "Novo funcionário"
+
+msgid "Procurar por nome..."
+msgstr "Procurar por nome..."
+
+msgid "Todos os estados"
+msgstr "Todos os estados"
+
+msgid "Apenas ativos"
+msgstr "Apenas ativos"
+
+msgid "Apenas inativos"
+msgstr "Apenas inativos"
+
+msgid "Filtrar"
+msgstr "Filtrar"
+
+msgid "Nome"
+msgstr "Nome"
+
+msgid "Função"
+msgstr "Função"
+
+msgid "Ativo"
+msgstr "Ativo"
+
+msgid "Inativo"
+msgstr "Inativo"
+
+msgid "Eliminar"
+msgstr "Eliminar"
+
+msgid "Ainda não há funcionários registados."
+msgstr "Ainda não há funcionários registados."
+
+msgid "Detalhes do funcionário"
+msgstr "Detalhes do funcionário"
+
+msgid "Não indicado"
+msgstr "Não indicado"
+
+msgid "Não indicada"
+msgstr "Não indicada"
+
+msgid "Não definido"
+msgstr "Não definido"
+
+msgid "Voltar"
+msgstr "Voltar"
+
+msgid "Informações profissionais"
+msgstr "Informações profissionais"
+
+msgid "Serviços que presta"
+msgstr "Serviços que presta"
+
+msgid "Nenhum serviço associado."
+msgstr "Nenhum serviço associado."
+
+msgid "Próximas marcações"
+msgstr "Próximas marcações"
+
+msgid "Data"
+msgstr "Data"
+
+msgid "Horário"
+msgstr "Horário"
+
+msgid "Mesa/Posto"
+msgstr "Mesa/Posto"
+
+msgid "Não existem marcações futuras para esta funcionária."
+msgstr "Não existem marcações futuras para esta funcionária."
+
+msgid "Editar funcionário"
+msgstr "Editar funcionário"
+
+msgid "Eliminar funcionário"
+msgstr "Eliminar funcionário"
+
+msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
+msgstr "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
+
+msgid "Sim, eliminar"
+msgstr "Sim, eliminar"
+
+msgid "Utilizador ou password incorretos."
+msgstr "Utilizador ou password incorretos."
+
+msgid "Utilizador"
+msgstr "Utilizador"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Mapa do Salão — %(data)s"
+msgstr "Mapa do Salão — %(data)s"
+
+msgid "Total de mesas"
+msgstr "Total de mesas"
+
+msgid "Mesas ocupadas"
+msgstr "Mesas ocupadas"
+
+msgid "Mesas livres"
+msgstr "Mesas livres"
+
+msgid "Marcações do dia"
+msgstr "Marcações do dia"
+
+msgid "Dia"
+msgstr "Dia"
+
+msgid "Livre"
+msgstr "Livre"
+
+msgid "Sem marcações neste dia."
+msgstr "Sem marcações neste dia."
+
+msgid "Funcionário criado com sucesso."
+msgstr "Funcionário criado com sucesso."
+
+msgid "Funcionário atualizado."
+msgstr "Funcionário atualizado."
+
+msgid "Funcionário eliminado."
+msgstr "Funcionário eliminado."
+
+msgid ""
+"Não é possível eliminar: este funcionário tem marcações associadas. Em "
+"alternativa, desativa-o."
+msgstr ""
+"Não é possível eliminar: este funcionário tem marcações associadas. Em "
+"alternativa, desativa-o."
+
+msgid "marcação associada"
+msgid_plural "marcações associadas"
+msgstr[0] "marcação associada"
+msgstr[1] "marcações associadas"

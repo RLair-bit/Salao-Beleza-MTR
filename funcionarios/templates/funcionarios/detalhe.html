@@ -1,16 +1,24 @@
 {% extends "base.html" %}
-{% block titulo %}Detalhes do funcionário{% endblock %}
+{% load i18n %}
+
+{% block titulo %}{% trans "Detalhes do funcionário" %}{% endblock %}
 
 {% block conteudo %}
+{% trans "Não indicado" as t_nao_indicado %}
+{% trans "Não indicada" as t_nao_indicada %}
+{% trans "Não definido" as t_nao_definido %}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <h1 class="h3 mb-1">{{ funcionario.nome }}</h1>
-        <p class="text-muted mb-0">Detalhes do funcionário</p>
+        <p class="text-muted mb-0">
+            {% trans "Detalhes do funcionário" %}
+        </p>
     </div>
 
     <a class="btn btn-outline-dark"
        href="{% url 'funcionarios:lista' %}">
-        Voltar
+        {% trans "Voltar" %}
     </a>
 </div>
 
@@ -18,40 +26,53 @@
     <div class="col-lg-8">
         <div class="card h-100">
             <div class="card-header fw-bold">
-                Informações profissionais
+                {% trans "Informações profissionais" %}
             </div>
 
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="text-muted small">Nome</div>
-                        <div class="fw-bold">{{ funcionario.nome }}</div>
-                    </div>
+                        <div class="text-muted small">
+                            {% trans "Nome" %}
+                        </div>
 
-                    <div class="col-md-6">
-                        <div class="text-muted small">Telefone</div>
-                        <div>
-                            {{ funcionario.telefone|default:"Não indicado" }}
+                        <div class="fw-bold">
+                            {{ funcionario.nome }}
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="text-muted small">Função</div>
+                        <div class="text-muted small">
+                            {% trans "Telefone" %}
+                        </div>
+
                         <div>
-                            {{ funcionario.funcao|default:"Não indicada" }}
+                            {{ funcionario.telefone|default:t_nao_indicado }}
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="text-muted small">Estado</div>
+                        <div class="text-muted small">
+                            {% trans "Função" %}
+                        </div>
+
+                        <div>
+                            {{ funcionario.funcao|default:t_nao_indicada }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="text-muted small">
+                            {% trans "Estado" %}
+                        </div>
 
                         {% if funcionario.ativo %}
                             <span class="badge text-bg-light border border-dark">
-                                Ativo
+                                {% trans "Ativo" %}
                             </span>
                         {% else %}
                             <span class="badge text-bg-secondary">
-                                Inativo
+                                {% trans "Inativo" %}
                             </span>
                         {% endif %}
                     </div>
@@ -60,7 +81,7 @@
                 <hr>
 
                 <div class="text-muted small mb-2">
-                    Serviços que presta
+                    {% trans "Serviços que presta" %}
                 </div>
 
                 {% for servico in funcionario.servicos.all %}
@@ -68,7 +89,9 @@
                         {{ servico }}
                     </span>
                 {% empty %}
-                    <p class="mb-0">Nenhum serviço associado.</p>
+                    <p class="mb-0">
+                        {% trans "Nenhum serviço associado." %}
+                    </p>
                 {% endfor %}
             </div>
         </div>
@@ -77,7 +100,7 @@
     <div class="col-lg-4">
         <div class="card text-center h-100">
             <div class="card-header fw-bold">
-                Marcações
+                {% trans "Marcações" %}
             </div>
 
             <div class="card-body d-flex flex-column justify-content-center">
@@ -86,18 +109,20 @@
                 </div>
 
                 <div class="text-muted">
-    {% if total_marcacoes == 1 %}
-        marcação associada
-    {% else %}
-        marcações associadas
-    {% endif %}
-</div>
+                    {% blocktrans trimmed count n=total_marcacoes %}
+                        marcação associada
+                    {% plural %}
+                        marcações associadas
+                    {% endblocktrans %}
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <div class="card mt-3">
     <div class="card-header fw-bold">
-        Próximas marcações
+        {% trans "Próximas marcações" %}
     </div>
 
     <div class="card-body p-0">
@@ -106,12 +131,12 @@
                 <table class="table table-striped align-middle mb-0">
                     <thead>
                         <tr>
-                            <th>Data</th>
-                            <th>Horário</th>
-                            <th>Cliente</th>
-                            <th>Serviço</th>
-                            <th>Mesa/Posto</th>
-                            <th>Estado</th>
+                            <th>{% trans "Data" %}</th>
+                            <th>{% trans "Horário" %}</th>
+                            <th>{% trans "Cliente" %}</th>
+                            <th>{% trans "Serviço" %}</th>
+                            <th>{% trans "Mesa/Posto" %}</th>
+                            <th>{% trans "Estado" %}</th>
                         </tr>
                     </thead>
 
@@ -137,7 +162,7 @@
                             </td>
 
                             <td>
-                                {{ marcacao.posto|default:"Não definido" }}
+                                {{ marcacao.posto|default:t_nao_definido }}
                             </td>
 
                             <td>
@@ -152,20 +177,21 @@
             </div>
         {% else %}
             <p class="text-muted m-3">
-                Não existem marcações futuras para esta funcionária.
+                {% trans "Não existem marcações futuras para esta funcionária." %}
             </p>
         {% endif %}
     </div>
 </div>
+
 <div class="mt-3">
     <a class="btn btn-primary"
        href="{% url 'funcionarios:editar' funcionario.pk %}">
-        Editar funcionário
+        {% trans "Editar funcionário" %}
     </a>
 
     <a class="btn btn-outline-danger"
        href="{% url 'funcionarios:eliminar' funcionario.pk %}">
-        Eliminar
+        {% trans "Eliminar" %}
     </a>
 </div>
 {% endblock %}

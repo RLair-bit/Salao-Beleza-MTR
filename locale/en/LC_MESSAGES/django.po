@@ -284,3 +284,144 @@ msgstr "Schedule and new bookings."
 #: templates/home.html:103
 msgid "Profissionais do salão."
 msgstr "Salon professionals."
+
+msgid "Novo funcionário"
+msgstr "New staff member"
+
+msgid "Procurar por nome..."
+msgstr "Search by name..."
+
+msgid "Todos os estados"
+msgstr "All statuses"
+
+msgid "Apenas ativos"
+msgstr "Active only"
+
+msgid "Apenas inativos"
+msgstr "Inactive only"
+
+msgid "Filtrar"
+msgstr "Filter"
+
+msgid "Nome"
+msgstr "Name"
+
+msgid "Função"
+msgstr "Role"
+
+msgid "Ativo"
+msgstr "Active"
+
+msgid "Inativo"
+msgstr "Inactive"
+
+msgid "Eliminar"
+msgstr "Delete"
+
+msgid "Ainda não há funcionários registados."
+msgstr "No staff members have been registered yet."
+
+msgid "Detalhes do funcionário"
+msgstr "Staff details"
+
+msgid "Não indicado"
+msgstr "Not provided"
+
+msgid "Não indicada"
+msgstr "Not provided"
+
+msgid "Não definido"
+msgstr "Not defined"
+
+msgid "Voltar"
+msgstr "Back"
+
+msgid "Informações profissionais"
+msgstr "Professional information"
+
+msgid "Serviços que presta"
+msgstr "Services provided"
+
+msgid "Nenhum serviço associado."
+msgstr "No services assigned."
+
+msgid "Próximas marcações"
+msgstr "Upcoming appointments"
+
+msgid "Data"
+msgstr "Date"
+
+msgid "Horário"
+msgstr "Time"
+
+msgid "Mesa/Posto"
+msgstr "Table/Station"
+
+msgid "Não existem marcações futuras para esta funcionária."
+msgstr "There are no upcoming appointments for this staff member."
+
+msgid "Editar funcionário"
+msgstr "Edit staff member"
+
+msgid "Eliminar funcionário"
+msgstr "Delete staff member"
+
+msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
+msgstr "Are you sure you want to delete <b>%(nome)s</b>?"
+
+msgid "Sim, eliminar"
+msgstr "Yes, delete"
+
+msgid "Utilizador ou password incorretos."
+msgstr "Incorrect username or password."
+
+msgid "Utilizador"
+msgstr "Username"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Mapa do Salão — %(data)s"
+msgstr "Salon Map — %(data)s"
+
+msgid "Total de mesas"
+msgstr "Total tables"
+
+msgid "Mesas ocupadas"
+msgstr "Occupied tables"
+
+msgid "Mesas livres"
+msgstr "Available tables"
+
+msgid "Marcações do dia"
+msgstr "Appointments today"
+
+msgid "Dia"
+msgstr "Day"
+
+msgid "Livre"
+msgstr "Available"
+
+msgid "Sem marcações neste dia."
+msgstr "No appointments on this day."
+
+msgid "Funcionário criado com sucesso."
+msgstr "Staff member created successfully."
+
+msgid "Funcionário atualizado."
+msgstr "Staff member updated."
+
+msgid "Funcionário eliminado."
+msgstr "Staff member deleted."
+
+msgid ""
+"Não é possível eliminar: este funcionário tem marcações associadas. Em "
+"alternativa, desativa-o."
+msgstr ""
+"This staff member cannot be deleted because they have associated "
+"appointments. Deactivate them instead."
+
+msgid "marcação associada"
+msgid_plural "marcações associadas"
+msgstr[0] "appointment associated"
+msgstr[1] "appointments associated"
