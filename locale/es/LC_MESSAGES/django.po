@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 15:05+0000\n"
+"POT-Creation-Date: 2026-07-22 15:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,18 +18,114 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: configuracoes/models.py:47
-#| msgid "Gestão do Salão"
-msgid "Nome do salão"
-msgstr "Nombre del salón"
+#: clientes/forms.py:14
+msgid "Nome completo"
+msgstr "Nombre completo"
 
-#: configuracoes/models.py:48
+#: clientes/templates/clientes/confirmar_exclusao.html:4
+#| msgid "Cliente"
+msgid "Excluir Cliente"
+msgstr "Eliminar cliente"
+
+#: clientes/templates/clientes/confirmar_exclusao.html:14
+msgid "Confirmar exclusão"
+msgstr "Confirmar eliminación"
+
+#: clientes/templates/clientes/confirmar_exclusao.html:19
+msgid "Tem a certeza de que pretende excluir este cliente?"
+msgstr "¿Seguro que desea eliminar este cliente?"
+
+#: clientes/templates/clientes/confirmar_exclusao.html:22
+#: clientes/templates/clientes/lista.html:20
+#: funcionarios/templates/funcionarios/detalhe.html:31
+#: funcionarios/templates/funcionarios/lista.html:53
+msgid "Nome"
+msgstr "Nombre"
+
+#: clientes/templates/clientes/confirmar_exclusao.html:25
+#: clientes/templates/clientes/lista.html:21 configuracoes/models.py:48
+#: funcionarios/templates/funcionarios/detalhe.html:36
 msgid "Telefone"
 msgstr "Teléfono"
 
-#: configuracoes/models.py:49
+#: clientes/templates/clientes/confirmar_exclusao.html:28
+#: clientes/templates/clientes/lista.html:22 configuracoes/models.py:49
 msgid "Email"
 msgstr "Correo electrónico"
+
+#: clientes/templates/clientes/confirmar_exclusao.html:34
+msgid "Esta operação não pode ser desfeita."
+msgstr "Esta operación no se puede deshacer."
+
+#: clientes/templates/clientes/confirmar_exclusao.html:43
+#: clientes/templates/clientes/lista.html:39
+msgid "Excluir"
+msgstr "Eliminar"
+
+#: clientes/templates/clientes/confirmar_exclusao.html:47
+#: clientes/templates/clientes/form.html:31
+#: configuracoes/templates/configuracoes/editar.html:25
+#: funcionarios/templates/funcionarios/confirmar_eliminar.html:27
+#: funcionarios/templates/funcionarios/form.html:40
+#: marcacoes/templates/marcacoes/agenda.html:98
+#: marcacoes/templates/marcacoes/form.html:31
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#: clientes/templates/clientes/form.html:27
+msgid "Salvar"
+msgstr "Guardar"
+
+#: clientes/templates/clientes/lista.html:4 templates/base.html:61
+msgid "Clientes"
+msgstr "Clientes"
+
+#: clientes/templates/clientes/lista.html:7
+msgid "Clientes Cadastrados"
+msgstr "Clientes registrados"
+
+#: clientes/templates/clientes/lista.html:13
+#: funcionarios/templates/funcionarios/lista.html:21
+msgid "Procurar por nome..."
+msgstr "Buscar por nombre..."
+
+#: clientes/templates/clientes/lista.html:23
+#: funcionarios/templates/funcionarios/lista.html:57
+#: marcacoes/templates/marcacoes/agenda.html:58
+msgid "Ações"
+msgstr "Acciones"
+
+#: clientes/templates/clientes/lista.html:35
+#: funcionarios/templates/funcionarios/lista.html:92
+#: marcacoes/templates/marcacoes/agenda.html:82
+msgid "Editar"
+msgstr "Editar"
+
+#: clientes/templates/clientes/lista.html:46
+msgid "Nenhum cliente encontrado."
+msgstr "No se encontró ningún cliente."
+
+#: clientes/templates/clientes/lista.html:55
+msgid "Adicionar"
+msgstr "Añadir"
+
+#: clientes/views.py:27
+#| msgid "Configurações guardadas com sucesso."
+msgid "Cliente criado com sucesso."
+msgstr "Cliente creado con éxito."
+
+#: clientes/views.py:39
+#| msgid "Configurações guardadas com sucesso."
+msgid "Cliente atualizado com sucesso."
+msgstr "Cliente actualizado con éxito."
+
+#: clientes/views.py:48
+msgid "Cliente excluído com sucesso."
+msgstr "Cliente eliminado con éxito."
+
+#: configuracoes/models.py:47
+msgid "Nome do salão"
+msgstr "Nombre del salón"
 
 #: configuracoes/models.py:50
 msgid "Morada"
@@ -48,7 +144,6 @@ msgid "Idioma"
 msgstr "Idioma"
 
 #: configuracoes/models.py:54
-#| msgid "Funcionário"
 msgid "Fuso horário"
 msgstr "Zona horaria"
 
@@ -61,19 +156,264 @@ msgid "Configurações do salão"
 msgstr "Configuración del salón"
 
 #: configuracoes/templates/configuracoes/editar.html:23
+#: funcionarios/templates/funcionarios/form.html:35
 #: marcacoes/templates/marcacoes/form.html:30
 msgid "Guardar"
 msgstr "Guardar"
 
-#: configuracoes/templates/configuracoes/editar.html:25
-#: marcacoes/templates/marcacoes/agenda.html:98
-#: marcacoes/templates/marcacoes/form.html:31
-msgid "Cancelar"
-msgstr "Cancelar"
-
 #: configuracoes/views.py:16
 msgid "Configurações guardadas com sucesso."
 msgstr "Configuración guardada con éxito."
+
+#: funcionarios/templates/funcionarios/confirmar_eliminar.html:3
+#: funcionarios/templates/funcionarios/confirmar_eliminar.html:10
+#| msgid "%(n)s funcionário"
+#| msgid_plural "%(n)s funcionários"
+msgid "Eliminar funcionário"
+msgstr "Eliminar empleado"
+
+#: funcionarios/templates/funcionarios/confirmar_eliminar.html:15
+#, python-format
+msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
+msgstr "¿Seguro que quieres eliminar a <b>%(nome)s</b>?"
+
+#: funcionarios/templates/funcionarios/confirmar_eliminar.html:22
+msgid "Sim, eliminar"
+msgstr "Sí, eliminar"
+
+#: funcionarios/templates/funcionarios/detalhe.html:3
+#: funcionarios/templates/funcionarios/detalhe.html:12
+#| msgid "Todos os funcionários"
+msgid "Detalhes do funcionário"
+msgstr "Detalles del empleado"
+
+#: funcionarios/templates/funcionarios/detalhe.html:6
+msgid "Não indicado"
+msgstr "No indicado"
+
+#: funcionarios/templates/funcionarios/detalhe.html:7
+msgid "Não indicada"
+msgstr "No indicada"
+
+#: funcionarios/templates/funcionarios/detalhe.html:8
+msgid "Não definido"
+msgstr "No definido"
+
+#: funcionarios/templates/funcionarios/detalhe.html:17
+msgid "Voltar"
+msgstr "Volver"
+
+#: funcionarios/templates/funcionarios/detalhe.html:25
+msgid "Informações profissionais"
+msgstr "Información profesional"
+
+#: funcionarios/templates/funcionarios/detalhe.html:43
+#: funcionarios/templates/funcionarios/lista.html:54
+msgid "Função"
+msgstr "Función"
+
+#: funcionarios/templates/funcionarios/detalhe.html:50
+#: funcionarios/templates/funcionarios/detalhe.html:114
+#: funcionarios/templates/funcionarios/lista.html:56
+#: marcacoes/templates/marcacoes/agenda.html:57
+msgid "Estado"
+msgstr "Estado"
+
+#: funcionarios/templates/funcionarios/detalhe.html:54
+#: funcionarios/templates/funcionarios/lista.html:75
+msgid "Ativo"
+msgstr "Activo"
+
+#: funcionarios/templates/funcionarios/detalhe.html:58
+#: funcionarios/templates/funcionarios/lista.html:79
+msgid "Inativo"
+msgstr "Inactivo"
+
+#: funcionarios/templates/funcionarios/detalhe.html:67
+#| msgid "Serviços"
+msgid "Serviços que presta"
+msgstr "Servicios que presta"
+
+#: funcionarios/templates/funcionarios/detalhe.html:75
+msgid "Nenhum serviço associado."
+msgstr "Ningún servicio asociado."
+
+#: funcionarios/templates/funcionarios/detalhe.html:84 templates/base.html:60
+#: templates/home.html:94
+msgid "Marcações"
+msgstr "Citas"
+
+#: funcionarios/templates/funcionarios/detalhe.html:93
+msgid "marcação associada"
+msgid_plural "marcações associadas"
+msgstr[0] "cita asociada"
+msgstr[1] "citas asociadas"
+
+#: funcionarios/templates/funcionarios/detalhe.html:100
+#| msgid "Marcações"
+msgid "Próximas marcações"
+msgstr "Próximas citas"
+
+#: funcionarios/templates/funcionarios/detalhe.html:109
+msgid "Data"
+msgstr "Fecha"
+
+#: funcionarios/templates/funcionarios/detalhe.html:110
+#| msgid "Fuso horário"
+msgid "Horário"
+msgstr "Horario"
+
+#: funcionarios/templates/funcionarios/detalhe.html:111
+#: marcacoes/templates/marcacoes/agenda.html:53
+msgid "Cliente"
+msgstr "Cliente"
+
+#: funcionarios/templates/funcionarios/detalhe.html:112
+#: marcacoes/templates/marcacoes/agenda.html:54
+msgid "Serviço"
+msgstr "Servicio"
+
+#: funcionarios/templates/funcionarios/detalhe.html:113
+msgid "Mesa/Posto"
+msgstr "Mesa/Puesto"
+
+#: funcionarios/templates/funcionarios/detalhe.html:155
+#| msgid "Não há marcações para este dia."
+msgid "Não existem marcações futuras para esta funcionária."
+msgstr "No hay citas futuras para esta empleada."
+
+#: funcionarios/templates/funcionarios/detalhe.html:163
+#| msgid "Funcionário"
+msgid "Editar funcionário"
+msgstr "Editar empleado"
+
+#: funcionarios/templates/funcionarios/detalhe.html:168
+#: funcionarios/templates/funcionarios/lista.html:97
+msgid "Eliminar"
+msgstr "Eliminar"
+
+#: funcionarios/templates/funcionarios/lista.html:3
+#: funcionarios/templates/funcionarios/lista.html:7 templates/base.html:63
+#: templates/home.html:102
+msgid "Funcionários"
+msgstr "Empleados"
+
+#: funcionarios/templates/funcionarios/lista.html:11
+#| msgid "Todos os funcionários"
+msgid "Novo funcionário"
+msgstr "Nuevo empleado"
+
+#: funcionarios/templates/funcionarios/lista.html:27
+msgid "Todos os estados"
+msgstr "Todos los estados"
+
+#: funcionarios/templates/funcionarios/lista.html:32
+msgid "Apenas ativos"
+msgstr "Solo activos"
+
+#: funcionarios/templates/funcionarios/lista.html:37
+msgid "Apenas inativos"
+msgstr "Solo inactivos"
+
+#: funcionarios/templates/funcionarios/lista.html:44
+#| msgid "Entrar"
+msgid "Filtrar"
+msgstr "Filtrar"
+
+#: funcionarios/templates/funcionarios/lista.html:55 templates/base.html:62
+msgid "Serviços"
+msgstr "Servicios"
+
+#: funcionarios/templates/funcionarios/lista.html:87
+#: mapa/templates/mapa/mapa.html:60
+#: marcacoes/templates/marcacoes/agenda.html:38
+msgid "Ver"
+msgstr "Ver"
+
+#: funcionarios/templates/funcionarios/lista.html:105
+#| msgid "para o funcionário selecionado"
+msgid "Ainda não há funcionários registados."
+msgstr "Aún no hay empleados registrados."
+
+#: funcionarios/templates/registration/login.html:3
+#: funcionarios/templates/registration/login.html:10
+#: funcionarios/templates/registration/login.html:49 templates/base.html:82
+msgid "Entrar"
+msgstr "Entrar"
+
+#: funcionarios/templates/registration/login.html:16
+msgid "Utilizador ou password incorretos."
+msgstr "Usuario o contraseña incorrectos."
+
+#: funcionarios/templates/registration/login.html:25
+msgid "Utilizador"
+msgstr "Usuario"
+
+#: funcionarios/templates/registration/login.html:38
+msgid "Password"
+msgstr "Contraseña"
+
+#: funcionarios/views.py:75
+msgid "Funcionário criado com sucesso."
+msgstr "Empleado creado con éxito."
+
+#: funcionarios/views.py:99
+#| msgid "Funcionário"
+msgid "Funcionário atualizado."
+msgstr "Empleado actualizado."
+
+#: funcionarios/views.py:119
+#| msgid "para o funcionário selecionado"
+msgid "Funcionário eliminado."
+msgstr "Empleado eliminado."
+
+#: funcionarios/views.py:123
+msgid ""
+"Não é possível eliminar: este funcionário tem marcações associadas. Em "
+"alternativa, desativa-o."
+msgstr ""
+"No se puede eliminar: este empleado tiene citas asociadas. Como alternativa,"
+" desactívalo."
+
+#: mapa/templates/mapa/mapa.html:3 templates/base.html:64
+msgid "Mapa do Salão"
+msgstr "Mapa del salón"
+
+#: mapa/templates/mapa/mapa.html:7
+#, python-format
+#| msgid "Mapa do Salão"
+msgid "Mapa do Salão — %(data)s"
+msgstr "Mapa del salón — %(data)s"
+
+#: mapa/templates/mapa/mapa.html:13
+msgid "Total de mesas"
+msgstr "Total de mesas"
+
+#: mapa/templates/mapa/mapa.html:22
+msgid "Mesas ocupadas"
+msgstr "Mesas ocupadas"
+
+#: mapa/templates/mapa/mapa.html:31
+msgid "Mesas livres"
+msgstr "Mesas libres"
+
+#: mapa/templates/mapa/mapa.html:40
+#| msgid "Marcações hoje"
+msgid "Marcações do dia"
+msgstr "Citas del día"
+
+#: mapa/templates/mapa/mapa.html:49
+msgid "Dia"
+msgstr "Día"
+
+#: mapa/templates/mapa/mapa.html:78
+msgid "Livre"
+msgstr "Libre"
+
+#: mapa/templates/mapa/mapa.html:101
+#| msgid "Não há marcações para este dia."
+msgid "Sem marcações neste dia."
+msgstr "Sin citas este día."
 
 #: marcacoes/templates/marcacoes/agenda.html:4
 msgid "Agenda"
@@ -104,10 +444,6 @@ msgstr "Día siguiente"
 msgid "Todos os funcionários"
 msgstr "Todos los empleados"
 
-#: marcacoes/templates/marcacoes/agenda.html:38
-msgid "Ver"
-msgstr "Ver"
-
 #: marcacoes/templates/marcacoes/agenda.html:43
 #, python-format
 msgid "%(total)s marcação neste dia"
@@ -123,14 +459,6 @@ msgstr "para el empleado seleccionado"
 msgid "Hora"
 msgstr "Hora"
 
-#: marcacoes/templates/marcacoes/agenda.html:53
-msgid "Cliente"
-msgstr "Cliente"
-
-#: marcacoes/templates/marcacoes/agenda.html:54
-msgid "Serviço"
-msgstr "Servicio"
-
 #: marcacoes/templates/marcacoes/agenda.html:55
 msgid "Mesa"
 msgstr "Mesa"
@@ -138,14 +466,6 @@ msgstr "Mesa"
 #: marcacoes/templates/marcacoes/agenda.html:56
 msgid "Funcionário"
 msgstr "Empleado"
-
-#: marcacoes/templates/marcacoes/agenda.html:57
-msgid "Estado"
-msgstr "Estado"
-
-#: marcacoes/templates/marcacoes/agenda.html:58
-msgid "Ações"
-msgstr "Acciones"
 
 #: marcacoes/templates/marcacoes/agenda.html:71
 #: marcacoes/templates/marcacoes/agenda.html:88
@@ -165,41 +485,13 @@ msgstr "No asistió"
 msgid "Marcada"
 msgstr "Reservada"
 
-#: marcacoes/templates/marcacoes/agenda.html:82
-msgid "Editar"
-msgstr "Editar"
-
 #: marcacoes/templates/marcacoes/agenda.html:109
 msgid "Não há marcações para este dia."
 msgstr "No hay citas para este día."
 
-#: templates/base.html:60 templates/home.html:94
-msgid "Marcações"
-msgstr "Citas"
-
-#: templates/base.html:61
-msgid "Clientes"
-msgstr "Clientes"
-
-#: templates/base.html:62
-msgid "Serviços"
-msgstr "Servicios"
-
-#: templates/base.html:63 templates/home.html:102
-msgid "Funcionários"
-msgstr "Personal"
-
-#: templates/base.html:64
-msgid "Mapa do Salão"
-msgstr "Mapa del salón"
-
 #: templates/base.html:78
 msgid "Sair"
 msgstr "Salir"
-
-#: templates/base.html:82
-msgid "Entrar"
-msgstr "Iniciar sesión"
 
 #: templates/home.html:7
 msgid "Gestão do Salão"
@@ -283,144 +575,3 @@ msgstr "Agenda y nuevas citas."
 #: templates/home.html:103
 msgid "Profissionais do salão."
 msgstr "Profesionales del salón."
-
-msgid "Novo funcionário"
-msgstr "Nuevo empleado"
-
-msgid "Procurar por nome..."
-msgstr "Buscar por nombre..."
-
-msgid "Todos os estados"
-msgstr "Todos los estados"
-
-msgid "Apenas ativos"
-msgstr "Solo activos"
-
-msgid "Apenas inativos"
-msgstr "Solo inactivos"
-
-msgid "Filtrar"
-msgstr "Filtrar"
-
-msgid "Nome"
-msgstr "Nombre"
-
-msgid "Função"
-msgstr "Función"
-
-msgid "Ativo"
-msgstr "Activo"
-
-msgid "Inativo"
-msgstr "Inactivo"
-
-msgid "Eliminar"
-msgstr "Eliminar"
-
-msgid "Ainda não há funcionários registados."
-msgstr "Todavía no hay empleados registrados."
-
-msgid "Detalhes do funcionário"
-msgstr "Detalles del empleado"
-
-msgid "Não indicado"
-msgstr "No indicado"
-
-msgid "Não indicada"
-msgstr "No indicada"
-
-msgid "Não definido"
-msgstr "No definido"
-
-msgid "Voltar"
-msgstr "Volver"
-
-msgid "Informações profissionais"
-msgstr "Información profesional"
-
-msgid "Serviços que presta"
-msgstr "Servicios que presta"
-
-msgid "Nenhum serviço associado."
-msgstr "Ningún servicio asociado."
-
-msgid "Próximas marcações"
-msgstr "Próximas citas"
-
-msgid "Data"
-msgstr "Fecha"
-
-msgid "Horário"
-msgstr "Horario"
-
-msgid "Mesa/Posto"
-msgstr "Mesa/Puesto"
-
-msgid "Não existem marcações futuras para esta funcionária."
-msgstr "No existen próximas citas para esta empleada."
-
-msgid "Editar funcionário"
-msgstr "Editar empleado"
-
-msgid "Eliminar funcionário"
-msgstr "Eliminar empleado"
-
-msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
-msgstr "¿Estás seguro de que quieres eliminar <b>%(nome)s</b>?"
-
-msgid "Sim, eliminar"
-msgstr "Sí, eliminar"
-
-msgid "Utilizador ou password incorretos."
-msgstr "Usuario o contraseña incorrectos."
-
-msgid "Utilizador"
-msgstr "Usuario"
-
-msgid "Password"
-msgstr "Contraseña"
-
-msgid "Mapa do Salão — %(data)s"
-msgstr "Mapa del salón — %(data)s"
-
-msgid "Total de mesas"
-msgstr "Total de mesas"
-
-msgid "Mesas ocupadas"
-msgstr "Mesas ocupadas"
-
-msgid "Mesas livres"
-msgstr "Mesas libres"
-
-msgid "Marcações do dia"
-msgstr "Citas del día"
-
-msgid "Dia"
-msgstr "Día"
-
-msgid "Livre"
-msgstr "Libre"
-
-msgid "Sem marcações neste dia."
-msgstr "No hay citas este día."
-
-msgid "Funcionário criado com sucesso."
-msgstr "Empleado creado correctamente."
-
-msgid "Funcionário atualizado."
-msgstr "Empleado actualizado."
-
-msgid "Funcionário eliminado."
-msgstr "Empleado eliminado."
-
-msgid ""
-"Não é possível eliminar: este funcionário tem marcações associadas. Em "
-"alternativa, desativa-o."
-msgstr ""
-"No se puede eliminar: este empleado tiene citas asociadas. Como alternativa,"
-" desactívalo."
-
-msgid "marcação associada"
-msgid_plural "marcações associadas"
-msgstr[0] "cita asociada"
-msgstr[1] "citas asociadas"
