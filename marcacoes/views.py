@@ -26,6 +26,7 @@ def _dia_de(marcacao):
     return inicio.strftime("%Y-%m-%d")
 
 
+@login_required
 def agenda(request):
     dia_txt = request.GET.get("dia")
     try:
@@ -63,6 +64,7 @@ def agenda(request):
     })
 
 
+@login_required
 def criar(request):
     form = MarcacaoForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
@@ -72,6 +74,7 @@ def criar(request):
     return render(request, "marcacoes/form.html", {"form": form, "titulo": "Nova marcação"})
 
 
+@login_required
 def editar(request, pk):
     marcacao = get_object_or_404(Marcacao, pk=pk)
     form = MarcacaoForm(request.POST or None, instance=marcacao)
@@ -83,6 +86,7 @@ def editar(request, pk):
                   {"form": form, "titulo": "Editar marcação"})
 
 
+@login_required
 def mudar_estado(request, pk, estado):
     marcacao = get_object_or_404(Marcacao, pk=pk)
     validos = dict(Marcacao.ESTADOS)
@@ -98,6 +102,7 @@ def mudar_estado(request, pk, estado):
 
     return redirect(f"{reverse('marcacoes:agenda')}?dia={dia}")
 
+@login_required
 def painel(request):
     hoje = timezone.localdate()
     inicio = datetime.combine(hoje, time.min)
