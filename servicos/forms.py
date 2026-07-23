@@ -7,7 +7,7 @@ class ServicoForm(forms.ModelForm):
 
     class Meta:
         model = Servico
-        fields = ["nome", "descricao", "preco"]
+        fields = ["nome", "preco", "duracao_min", "ativo"]
 
         widgets = {
             "nome": forms.TextInput(attrs={

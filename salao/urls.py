@@ -10,6 +10,7 @@ urlpatterns = [
     path("funcionarios/", include("funcionarios.urls")),
     path("contas/", include("django.contrib.auth.urls")),
     path("mapa/", include("mapa.urls")),
+    path("servicos/", include("servicos.urls")),
     path("configuracoes/", include("configuracoes.urls")),
     path("", painel, name="home"),
 ]
