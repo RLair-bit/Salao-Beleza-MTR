@@ -1,48 +1,148 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block titulo %}{{ titulo }}{% endblock %}
+{% block titulo %}
+    {{ titulo }}
+{% endblock %}
 
 {% block conteudo %}
+
 <div class="row justify-content-center">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header fw-bold">
-                {{ titulo }}
+    <div class="col-lg-7">
+
+        <div class="card border border-2 border-dark">
+
+            <div class="card-header bg-primary border-bottom border-2 border-dark">
+                <strong>
+                    <i class="bi bi-person-badge"></i>
+                    {{ titulo }}
+                </strong>
             </div>
 
             <div class="card-body">
-                <form method="post" novalidate>
+
+                {% if funcionario and funcionario.foto %}
+                    <div class="text-center mb-4">
+
+                        <p class="fw-semibold mb-2">
+                            {% trans "Fotografia atual" %}
+                        </p>
+
+                        <img
+                            src="{{ funcionario.foto.url }}"
+                            alt="{% trans 'Fotografia da funcionária' %}"
+                            class="rounded-circle border border-2 border-dark"
+                            style="
+                                width: 150px;
+                                height: 150px;
+                                object-fit: cover;
+                            "
+                        >
+
+                    </div>
+                {% endif %}
+
+                <form
+                    method="post"
+                    enctype="multipart/form-data"
+                    novalidate
+                >
                     {% csrf_token %}
 
-                    {% for campo in form %}
-                        <div class="mb-3">
-                            <label class="form-label"
-                                   for="{{ campo.id_for_label }}">
-                                {{ campo.label }}
-                            </label>
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for erro in form.non_field_errors %}
+                                <div>{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
-                            {{ campo }}
+                    {% for campo in form %}
+
+                        <div class="mb-3">
+
+                            {% if campo.field.widget.input_type == "checkbox" %}
+
+                                {% if campo.name == "servicos" %}
+
+                                    <label class="form-label fw-semibold">
+                                        {{ campo.label }}
+                                    </label>
+
+                                    <div class="border rounded p-3 bg-light">
+                                        {{ campo }}
+                                    </div>
+
+                                {% else %}
+
+                                    <div class="form-check">
+                                        {{ campo }}
+
+                                        <label
+                                            class="form-check-label"
+                                            for="{{ campo.id_for_label }}"
+                                        >
+                                            {{ campo.label }}
+                                        </label>
+                                    </div>
+
+                                {% endif %}
+
+                            {% else %}
+
+                                <label
+                                    class="form-label fw-semibold"
+                                    for="{{ campo.id_for_label }}"
+                                >
+                                    {{ campo.label }}
+                                </label>
+
+                                {{ campo }}
+
+                            {% endif %}
+
+                            {% if campo.help_text %}
+                                <div class="form-text">
+                                    {{ campo.help_text }}
+                                </div>
+                            {% endif %}
 
                             {% for erro in campo.errors %}
                                 <div class="text-danger small mt-1">
                                     {{ erro }}
                                 </div>
                             {% endfor %}
+
                         </div>
+
                     {% endfor %}
 
-                    <button class="btn btn-primary">
-                        {% trans "Guardar" %}
-                    </button>
+                    <div class="d-flex gap-2">
 
-                    <a class="btn btn-outline-dark"
-                       href="{% url 'funcionarios:lista' %}">
-                        {% trans "Cancelar" %}
-                    </a>
+                        <button
+                            type="submit"
+                            class="btn btn-primary border border-2 border-dark"
+                        >
+                            <i class="bi bi-check-lg"></i>
+                            {% trans "Guardar" %}
+                        </button>
+
+                        <a
+                            class="btn btn-outline-dark"
+                            href="{% url 'funcionarios:lista' %}"
+                        >
+                            <i class="bi bi-x-lg"></i>
+                            {% trans "Cancelar" %}
+                        </a>
+
+                    </div>
+
                 </form>
+
             </div>
         </div>
+
     </div>
 </div>
+
 {% endblock %}

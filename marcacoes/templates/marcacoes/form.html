@@ -1,24 +1,33 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block titulo %}{{ titulo }}{% endblock %}
+{% block titulo %}
+    {{ titulo }}
+{% endblock %}
 
 {% block conteudo %}
+
 {% trans "Selecione o funcionário, o serviço e o dia." as t_selecione %}
 {% trans "A procurar horários disponíveis..." as t_procurando %}
 {% trans "Não existem horários disponíveis neste dia." as t_sem_horarios %}
 {% trans "Não foi possível consultar os horários." as t_erro %}
 {% trans "Horário selecionado" as t_horario_selecionado %}
 {% trans "Nenhum horário selecionado." as t_nenhum_selecionado %}
+{% trans "Função não definida" as t_funcao_nao_definida %}
+{% trans "Nenhum serviço associado" as t_servicos_nao_definidos %}
 
 <div class="row justify-content-center">
-    <div class="col-lg-7">
-        <div class="card">
-            <div class="card-header fw-bold">
+    <div class="col-lg-8">
+
+        <div class="card border border-2 border-dark">
+
+            <div class="card-header bg-primary border-bottom border-2 border-dark fw-bold">
+                <i class="bi bi-calendar-plus"></i>
                 {{ titulo }}
             </div>
 
             <div class="card-body">
+
                 <form method="post" novalidate>
                     {% csrf_token %}
 
@@ -28,16 +37,21 @@
 
                     {% if form.non_field_errors %}
                         <div class="alert alert-danger" role="alert">
+
                             {% for erro in form.non_field_errors %}
                                 <div>{{ erro }}</div>
                             {% endfor %}
+
                         </div>
                     {% endif %}
 
+
                     {% for campo in form.visible_fields %}
+
                         <div class="mb-3">
+
                             <label
-                                class="form-label"
+                                class="form-label fw-semibold"
                                 for="{{ campo.id_for_label }}"
                             >
                                 {{ campo.label }}
@@ -56,17 +70,106 @@
                                     {{ erro }}
                                 </div>
                             {% endfor %}
+
                         </div>
 
+
+                        {% if campo.name == "funcionario" %}
+
+                            <div
+                                id="cartao_funcionario"
+                                class="card border border-2 border-dark mb-4 d-none"
+                            >
+                                <div class="card-header bg-primary border-bottom border-2 border-dark fw-bold">
+                                    <i class="bi bi-person-badge"></i>
+                                    {% trans "Profissional selecionada" %}
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div class="d-flex flex-column flex-sm-row align-items-center gap-3">
+
+                                        <div class="flex-shrink-0">
+
+                                            <img
+                                                id="foto_funcionario"
+                                                src=""
+                                                alt="{% trans 'Fotografia da profissional' %}"
+                                                class="rounded-circle border border-2 border-dark shadow-sm d-none"
+                                                style="
+                                                    width: 130px;
+                                                    height: 130px;
+                                                    object-fit: cover;
+                                                "
+                                            >
+
+                                            <div
+                                                id="foto_funcionario_padrao"
+                                                class="rounded-circle border border-2 border-dark bg-light d-flex align-items-center justify-content-center"
+                                                style="
+                                                    width: 130px;
+                                                    height: 130px;
+                                                "
+                                            >
+                                                <i class="bi bi-person-circle display-3 text-muted"></i>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="flex-grow-1 text-center text-sm-start">
+
+                                            <h2
+                                                id="nome_funcionario"
+                                                class="h5 mb-1"
+                                            ></h2>
+
+                                            <p class="mb-2">
+
+                                                <i class="bi bi-briefcase"></i>
+
+                                                <span
+                                                    id="funcao_funcionario"
+                                                    class="text-muted"
+                                                ></span>
+
+                                            </p>
+
+                                            <div class="small fw-semibold mb-1">
+                                                <i class="bi bi-scissors"></i>
+                                                {% trans "Serviços que presta" %}
+                                            </div>
+
+                                            <div
+                                                id="servicos_funcionario"
+                                                class="text-muted"
+                                            ></div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        {% endif %}
+
+
                         {% if campo.name == "posto" %}
-                            <div class="card bg-light mb-4">
+
+                            <div class="card bg-light border border-2 border-dark mb-4">
+
                                 <div class="card-header fw-bold">
+                                    <i class="bi bi-clock"></i>
                                     {% trans "Escolher data e horário" %}
                                 </div>
 
                                 <div class="card-body">
+
                                     <div class="row g-2 align-items-end">
+
                                         <div class="col-md-8">
+
                                             <label
                                                 class="form-label"
                                                 for="id_dia_horarios"
@@ -79,18 +182,25 @@
                                                 id="id_dia_horarios"
                                                 class="form-control"
                                             >
+
                                         </div>
 
+
                                         <div class="col-md-4 d-grid">
+
                                             <button
                                                 type="button"
                                                 id="btn_consultar_horarios"
-                                                class="btn btn-primary"
+                                                class="btn btn-primary border border-2 border-dark"
                                             >
+                                                <i class="bi bi-search"></i>
                                                 {% trans "Ver horários" %}
                                             </button>
+
                                         </div>
+
                                     </div>
+
 
                                     <div
                                         id="mensagem_horarios"
@@ -99,12 +209,15 @@
                                         {% trans "Escolha o funcionário, o serviço e o dia." %}
                                     </div>
 
+
                                     <div
                                         id="lista_horarios"
                                         class="d-flex flex-wrap gap-2 mt-3"
                                     ></div>
 
+
                                     <div class="border rounded p-3 mt-3 bg-white">
+
                                         <div class="small text-muted">
                                             {% trans "Horário selecionado" %}
                                         </div>
@@ -115,40 +228,94 @@
                                         >
                                             {% trans "Nenhum horário selecionado." %}
                                         </div>
+
                                     </div>
+
 
                                     {% for erro in form.inicio.errors %}
                                         <div class="text-danger small mt-2">
                                             {{ erro }}
                                         </div>
                                     {% endfor %}
+
                                 </div>
                             </div>
+
                         {% endif %}
+
                     {% endfor %}
 
-                    <button type="submit" class="btn btn-primary">
-                        {% trans "Guardar" %}
-                    </button>
 
-                    <a
-                        class="btn btn-outline-dark"
-                        href="{% url 'marcacoes:agenda' %}"
-                    >
-                        {% trans "Cancelar" %}
-                    </a>
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary border border-2 border-dark"
+                        >
+                            <i class="bi bi-check-lg"></i>
+                            {% trans "Guardar" %}
+                        </button>
+
+                        <a
+                            class="btn btn-outline-dark"
+                            href="{% url 'marcacoes:agenda' %}"
+                        >
+                            <i class="bi bi-x-lg"></i>
+                            {% trans "Cancelar" %}
+                        </a>
+
+                    </div>
+
                 </form>
+
             </div>
         </div>
+
     </div>
 </div>
 
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const funcionario = document.getElementById("id_funcionario");
-    const servico = document.getElementById("id_servico");
-    const posto = document.getElementById("id_posto");
-    const inicio = document.getElementById("id_inicio");
+    const funcionario = document.getElementById(
+        "id_funcionario"
+    );
+
+    const servico = document.getElementById(
+        "id_servico"
+    );
+
+    const posto = document.getElementById(
+        "id_posto"
+    );
+
+    const inicio = document.getElementById(
+        "id_inicio"
+    );
+
+    const cartaoFuncionario = document.getElementById(
+        "cartao_funcionario"
+    );
+
+    const fotoFuncionario = document.getElementById(
+        "foto_funcionario"
+    );
+
+    const fotoFuncionarioPadrao = document.getElementById(
+        "foto_funcionario_padrao"
+    );
+
+    const nomeFuncionario = document.getElementById(
+        "nome_funcionario"
+    );
+
+    const funcaoFuncionario = document.getElementById(
+        "funcao_funcionario"
+    );
+
+    const servicosFuncionario = document.getElementById(
+        "servicos_funcionario"
+    );
 
     const diaHorarios = document.getElementById(
         "id_dia_horarios"
@@ -194,6 +361,91 @@ document.addEventListener("DOMContentLoaded", function () {
     const textoNenhumSelecionado =
         "{{ t_nenhum_selecionado|escapejs }}";
 
+    const textoFuncaoNaoDefinida =
+        "{{ t_funcao_nao_definida|escapejs }}";
+
+    const textoServicosNaoDefinidos =
+        "{{ t_servicos_nao_definidos|escapejs }}";
+
+
+    function mostrarFotoPadrao() {
+        fotoFuncionario.removeAttribute("src");
+        fotoFuncionario.classList.add("d-none");
+
+        fotoFuncionarioPadrao.classList.remove(
+            "d-none"
+        );
+    }
+
+
+    function mostrarFoto(urlFoto) {
+        fotoFuncionario.src = urlFoto;
+
+        fotoFuncionario.classList.remove(
+            "d-none"
+        );
+
+        fotoFuncionarioPadrao.classList.add(
+            "d-none"
+        );
+    }
+
+
+    function atualizarCartaoFuncionario() {
+        const opcaoSelecionada =
+            funcionario.options[
+                funcionario.selectedIndex
+            ];
+
+        if (
+            !opcaoSelecionada
+            || !opcaoSelecionada.value
+        ) {
+            cartaoFuncionario.classList.add(
+                "d-none"
+            );
+
+            mostrarFotoPadrao();
+
+            return;
+        }
+
+        cartaoFuncionario.classList.remove(
+            "d-none"
+        );
+
+        const foto =
+            opcaoSelecionada.dataset.foto || "";
+
+        const funcao =
+            opcaoSelecionada.dataset.funcao || "";
+
+        const servicos =
+            opcaoSelecionada.dataset.servicos || "";
+
+        nomeFuncionario.textContent =
+            opcaoSelecionada.textContent.trim();
+
+        funcaoFuncionario.textContent =
+            funcao || textoFuncaoNaoDefinida;
+
+        servicosFuncionario.textContent =
+            servicos || textoServicosNaoDefinidos;
+
+        if (foto) {
+            mostrarFoto(foto);
+        } else {
+            mostrarFotoPadrao();
+        }
+    }
+
+
+    fotoFuncionario.addEventListener(
+        "error",
+        mostrarFotoPadrao
+    );
+
+
     function formatarDataHora(valor) {
         if (!valor || !valor.includes("T")) {
             return textoNenhumSelecionado;
@@ -204,11 +456,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const hora = partes[1].substring(0, 5);
 
         const partesData = data.split("-");
+
         const dataFormatada =
             `${partesData[2]}/${partesData[1]}/${partesData[0]}`;
 
         return `${dataFormatada} às ${hora}`;
     }
+
 
     function mostrarHorarioSelecionado() {
         if (!inicio.value) {
@@ -222,12 +476,17 @@ document.addEventListener("DOMContentLoaded", function () {
             formatarDataHora(inicio.value);
     }
 
+
     function preencherDiaInicial() {
-        if (inicio.value && inicio.value.length >= 10) {
+        if (
+            inicio.value
+            && inicio.value.length >= 10
+        ) {
             diaHorarios.value =
                 inicio.value.substring(0, 10);
 
             mostrarHorarioSelecionado();
+
             return;
         }
 
@@ -246,7 +505,10 @@ document.addEventListener("DOMContentLoaded", function () {
             `${ano}-${mes}-${dia}`;
     }
 
-    function limparHorarios(limparSelecao = false) {
+
+    function limparHorarios(
+        limparSelecao = false
+    ) {
         listaHorarios.innerHTML = "";
 
         mensagemHorarios.textContent =
@@ -263,15 +525,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+
     async function consultarHorarios() {
         limparHorarios(false);
 
-        const funcionarioId = funcionario.value;
-        const servicoId = servico.value;
-        const postoId = posto.value;
-        const dia = diaHorarios.value;
+        const funcionarioId =
+            funcionario.value;
 
-        if (!funcionarioId || !servicoId || !dia) {
+        const servicoId =
+            servico.value;
+
+        const postoId =
+            posto.value;
+
+        const dia =
+            diaHorarios.value;
+
+        if (
+            !funcionarioId
+            || !servicoId
+            || !dia
+        ) {
             mensagemHorarios.textContent =
                 textoSelecione;
 
@@ -344,6 +618,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 botao.textContent =
                     `${horario.inicio} – ${horario.fim}`;
 
+                botao.dataset.textoOriginal =
+                    `${horario.inicio} – ${horario.fim}`;
+
                 if (inicio.value === horario.valor) {
                     botao.className =
                         "btn btn-success btn-sm";
@@ -355,19 +632,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 botao.addEventListener(
                     "click",
                     function () {
-                        inicio.value = horario.valor;
+                        inicio.value =
+                            horario.valor;
 
                         document
                             .querySelectorAll(
                                 "#lista_horarios button"
                             )
-                            .forEach(function (outroBotao) {
-                                outroBotao.className =
-                                    "btn btn-outline-success btn-sm";
+                            .forEach(
+                                function (outroBotao) {
+                                    outroBotao.className =
+                                        "btn btn-outline-success btn-sm";
 
-                                outroBotao.textContent =
-                                    outroBotao.dataset.textoOriginal;
-                            });
+                                    outroBotao.textContent =
+                                        outroBotao.dataset.textoOriginal;
+                                }
+                            );
 
                         botao.className =
                             "btn btn-success btn-sm";
@@ -385,36 +665,41 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 );
 
-                botao.dataset.textoOriginal =
-                    `${horario.inicio} – ${horario.fim}`;
-
                 listaHorarios.appendChild(botao);
             });
+
         } catch (erro) {
             mensagemHorarios.textContent =
                 erro.message || textoErro;
 
             mensagemHorarios.className =
                 "small text-danger mt-3";
+
         } finally {
             botaoConsultar.disabled = false;
         }
     }
 
+
+    atualizarCartaoFuncionario();
     preencherDiaInicial();
     mostrarHorarioSelecionado();
+
 
     botaoConsultar.addEventListener(
         "click",
         consultarHorarios
     );
 
+
     funcionario.addEventListener(
         "change",
         function () {
+            atualizarCartaoFuncionario();
             limparHorarios(true);
         }
     );
+
 
     servico.addEventListener(
         "change",
@@ -423,12 +708,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
+
     posto.addEventListener(
         "change",
         function () {
             limparHorarios(true);
         }
     );
+
 
     diaHorarios.addEventListener(
         "change",
@@ -438,4 +725,5 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 });
 </script>
+
 {% endblock %}

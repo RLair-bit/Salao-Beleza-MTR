@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}
+    {% trans "Minha Agenda" %}
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="h3 mb-1">
+            <i class="bi bi-calendar-check"></i>
+            {% trans "Minha Agenda" %}
+        </h1>
+
+        <p class="text-muted mb-0">
+            {% trans "Funcionário:" %}
+            <strong>{{ funcionario.nome }}</strong>
+        </p>
+    </div>
+
+    <a
+        href="{% url 'utilizadores:minha_agenda' %}"
+        class="btn btn-outline-dark"
+    >
+        <i class="bi bi-calendar-day"></i>
+        {% trans "Ver hoje" %}
+    </a>
+</div>
+
+
+<div class="card border border-2 border-dark mb-4">
+    <div class="card-header bg-primary border-bottom border-2 border-dark">
+        <strong>
+            <i class="bi bi-funnel"></i>
+            {% trans "Filtrar agenda" %}
+        </strong>
+    </div>
+
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+
+            <div class="col-md-5">
+                <label
+                    for="id_data"
+                    class="form-label fw-semibold"
+                >
+                    {% trans "Data" %}
+                </label>
+
+                <input
+                    type="date"
+                    name="data"
+                    id="id_data"
+                    value="{{ data_escolhida|date:'Y-m-d' }}"
+                    class="form-control"
+                >
+            </div>
+
+            <div class="col-md-5">
+                <label
+                    for="id_estado"
+                    class="form-label fw-semibold"
+                >
+                    {% trans "Estado" %}
+                </label>
+
+                <select
+                    name="estado"
+                    id="id_estado"
+                    class="form-select"
+                >
+                    <option value="">
+                        {% trans "Todos os estados" %}
+                    </option>
+
+                    {% for valor, nome in estados %}
+                        <option
+                            value="{{ valor }}"
+                            {% if estado_escolhido == valor %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ nome }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-2 d-grid">
+                <button
+                    type="submit"
+                    class="btn btn-dark"
+                >
+                    <i class="bi bi-search"></i>
+                    {% trans "Filtrar" %}
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div class="card border border-2 border-dark">
+    <div class="card-header bg-primary border-bottom border-2 border-dark">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <strong>
+                <i class="bi bi-calendar3"></i>
+                {% trans "Marcações do dia" %}
+            </strong>
+
+            <span class="badge text-bg-dark">
+                {{ data_escolhida|date:"d/m/Y" }}
+            </span>
+        </div>
+    </div>
+
+    <div class="card-body p-0">
+
+        {% if marcacoes %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">
+                                {% trans "Horário" %}
+                            </th>
+
+                            <th scope="col">
+                                {% trans "Cliente" %}
+                            </th>
+
+                            <th scope="col">
+                                {% trans "Serviço" %}
+                            </th>
+
+                            <th scope="col">
+                                {% trans "Mesa / Posto" %}
+                            </th>
+
+                            <th scope="col">
+                                {% trans "Estado" %}
+                            </th>
+
+                            <th scope="col">
+                                {% trans "Notas" %}
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for marcacao in marcacoes %}
+                            <tr>
+                                <td>
+                                    <strong>
+                                        {{ marcacao.inicio|date:"H:i" }}
+                                    </strong>
+
+                                    <span class="text-muted">
+                                        –
+                                        {{ marcacao.fim|date:"H:i" }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <i class="bi bi-person"></i>
+                                    {{ marcacao.cliente }}
+                                </td>
+
+                                <td>
+                                    {{ marcacao.servico }}
+                                </td>
+
+                                <td>
+                                    {% if marcacao.posto %}
+                                        {{ marcacao.posto }}
+                                    {% else %}
+                                        <span class="text-muted">
+                                            {% trans "Não definido" %}
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if marcacao.estado == "marcada" %}
+                                        <span class="badge text-bg-primary">
+                                            {{ marcacao.get_estado_display }}
+                                        </span>
+
+                                    {% elif marcacao.estado == "realizada" %}
+                                        <span class="badge text-bg-success">
+                                            {{ marcacao.get_estado_display }}
+                                        </span>
+
+                                    {% elif marcacao.estado == "cancelada" %}
+                                        <span class="badge text-bg-danger">
+                                            {{ marcacao.get_estado_display }}
+                                        </span>
+
+                                    {% elif marcacao.estado == "faltou" %}
+                                        <span class="badge text-bg-warning">
+                                            {{ marcacao.get_estado_display }}
+                                        </span>
+
+                                    {% else %}
+                                        <span class="badge text-bg-secondary">
+                                            {{ marcacao.get_estado_display }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if marcacao.notas %}
+                                        {{ marcacao.notas|truncatechars:60 }}
+                                    {% else %}
+                                        <span class="text-muted">
+                                            {% trans "Sem notas" %}
+                                        </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-calendar-x display-4 text-muted"></i>
+
+                <h2 class="h5 mt-3">
+                    {% trans "Não existem marcações para esta data." %}
+                </h2>
+
+                <p class="text-muted mb-0">
+                    {% trans "Escolha outra data ou altere o filtro de estado." %}
+                </p>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

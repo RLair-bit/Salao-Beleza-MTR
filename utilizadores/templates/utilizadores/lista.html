@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% trans "Utilizadores" %}{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">
+            {% trans "Utilizadores" %}
+        </h1>
+
+        <p class="text-muted mb-0">
+            {% trans "Gestão das contas e dos grupos de acesso." %}
+        </p>
+    </div>
+
+    <a
+        class="btn btn-primary"
+        href="{% url 'utilizadores:criar' %}"
+    >
+        {% trans "Novo utilizador" %}
+    </a>
+</div>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-lg-5">
+        <input
+            type="text"
+            name="q"
+            value="{{ procura }}"
+            class="form-control"
+            placeholder="{% trans 'Procurar por utilizador, nome ou email...' %}"
+        >
+    </div>
+
+    <div class="col-lg-3">
+        <select name="grupo" class="form-select">
+            <option value="">
+                {% trans "Todos os grupos" %}
+            </option>
+
+            {% for nome_grupo in grupos %}
+                <option
+                    value="{{ nome_grupo }}"
+                    {% if grupo_escolhido == nome_grupo %}
+                        selected
+                    {% endif %}
+                >
+                    {{ nome_grupo }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-lg-2">
+        <select name="estado" class="form-select">
+            <option
+                value=""
+                {% if not estado %}selected{% endif %}
+            >
+                {% trans "Todos os estados" %}
+            </option>
+
+            <option
+                value="ativo"
+                {% if estado == "ativo" %}selected{% endif %}
+            >
+                {% trans "Apenas ativos" %}
+            </option>
+
+            <option
+                value="inativo"
+                {% if estado == "inativo" %}selected{% endif %}
+            >
+                {% trans "Apenas inativos" %}
+            </option>
+        </select>
+    </div>
+
+    <div class="col-lg-2 d-grid">
+        <button class="btn btn-primary">
+            {% trans "Filtrar" %}
+        </button>
+    </div>
+</form>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>{% trans "Utilizador" %}</th>
+                    <th>{% trans "Nome" %}</th>
+                    <th>{% trans "Grupo" %}</th>
+                    <th>{% trans "Funcionário associado" %}</th>
+                    <th>{% trans "Estado" %}</th>
+                    <th class="text-end">
+                        {% trans "Ações" %}
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for utilizador in utilizadores %}
+                    <tr>
+                        <td>
+                            <div class="fw-bold">
+                                {{ utilizador.username }}
+                            </div>
+
+                            {% if utilizador.email %}
+                                <div class="small text-muted">
+                                    {{ utilizador.email }}
+                                </div>
+                            {% endif %}
+
+                            {% if utilizador.is_superuser %}
+                                <span class="badge text-bg-dark mt-1">
+                                    {% trans "Superutilizador" %}
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if utilizador.get_full_name %}
+                                {{ utilizador.get_full_name }}
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% for grupo in utilizador.groups.all %}
+                                <span class="badge text-bg-light border border-dark">
+                                    {{ grupo.name }}
+                                </span>
+                            {% empty %}
+                                <span class="text-muted">
+                                    {% trans "Sem grupo" %}
+                                </span>
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            {% if utilizador.funcionario %}
+                                <a href="{% url 'funcionarios:detalhe' utilizador.funcionario.pk %}">
+                                    {{ utilizador.funcionario.nome }}
+                                </a>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if utilizador.is_active %}
+                                <span class="badge text-bg-success">
+                                    {% trans "Ativo" %}
+                                </span>
+                            {% else %}
+                                <span class="badge text-bg-secondary">
+                                    {% trans "Inativo" %}
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-end">
+                            {% if not utilizador.is_superuser or request.user.is_superuser %}
+                                <a
+                                    class="btn btn-sm btn-outline-primary"
+                                    href="{% url 'utilizadores:editar' utilizador.pk %}"
+                                >
+                                    {% trans "Editar" %}
+                                </a>
+                            {% endif %}
+
+                            {% if utilizador != request.user %}
+                                {% if not utilizador.is_superuser or request.user.is_superuser %}
+                                    <form
+                                        method="post"
+                                        action="{% url 'utilizadores:alterar_estado' utilizador.pk %}"
+                                        class="d-inline"
+                                    >
+                                        {% csrf_token %}
+
+                                        {% if utilizador.is_active %}
+                                            <button
+                                                type="submit"
+                                                class="btn btn-sm btn-outline-danger"
+                                            >
+                                                {% trans "Desativar" %}
+                                            </button>
+                                        {% else %}
+                                            <button
+                                                type="submit"
+                                                class="btn btn-sm btn-outline-success"
+                                            >
+                                                {% trans "Ativar" %}
+                                            </button>
+                                        {% endif %}
+                                    </form>
+                                {% endif %}
+                            {% else %}
+                                <span class="badge text-bg-light border ms-1">
+                                    {% trans "Conta atual" %}
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                {% empty %}
+                    <tr>
+                        <td
+                            colspan="6"
+                            class="text-center text-muted py-4"
+                        >
+                            {% trans "Não foram encontrados utilizadores." %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

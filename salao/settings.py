@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "clientes",
     "servicos",
+    "utilizadores",
     "funcionarios",
     "marcacoes",
     "relatorios",
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'configuracoes.context_processors.configuracao',
+                'utilizadores.context_processors.permissoes_utilizador',
             ],
         },
     },
@@ -140,3 +142,5 @@ STATIC_URL = 'static/'
 LOGIN_URL = "/contas/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/contas/login/"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"

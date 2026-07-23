@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{{ titulo }}{% endblock %}
+
+{% block conteudo %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="h3 mb-1">
+                    {{ titulo }}
+                </h1>
+
+                <p class="text-muted mb-0">
+                    {% if modo_criacao %}
+                        {% trans "Crie uma conta e defina o respetivo grupo de acesso." %}
+                    {% else %}
+                        {% trans "Atualize os dados, o grupo e o estado da conta." %}
+                    {% endif %}
+                </p>
+            </div>
+
+            <a
+                class="btn btn-outline-dark"
+                href="{% url 'utilizadores:lista' %}"
+            >
+                {% trans "Voltar" %}
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-header fw-bold">
+                {% if modo_criacao %}
+                    {% trans "Dados do novo utilizador" %}
+                {% else %}
+                    {% trans "Dados do utilizador" %}
+                {% endif %}
+            </div>
+
+            <div class="card-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for erro in form.non_field_errors %}
+                                <div>{{ erro }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% for campo in form %}
+
+                        {% if campo.name == "grupo" %}
+                            <hr>
+
+                            <h2 class="h6 fw-bold mb-3">
+                                {% trans "Acesso e associação" %}
+                            </h2>
+                        {% endif %}
+
+                        {% if campo.name == "password1" %}
+                            <hr>
+
+                            <h2 class="h6 fw-bold mb-3">
+                                {% trans "Definir password" %}
+                            </h2>
+                        {% endif %}
+
+                        {% if campo.name == "is_active" %}
+                            <div class="form-check mb-3">
+                                {{ campo }}
+
+                                <label
+                                    class="form-check-label"
+                                    for="{{ campo.id_for_label }}"
+                                >
+                                    {{ campo.label }}
+                                </label>
+
+                                {% if campo.help_text %}
+                                    <div class="form-text">
+                                        {{ campo.help_text }}
+                                    </div>
+                                {% endif %}
+
+                                {% for erro in campo.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ erro }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            <div class="mb-3">
+                                <label
+                                    class="form-label"
+                                    for="{{ campo.id_for_label }}"
+                                >
+                                    {{ campo.label }}
+
+                                    {% if campo.field.required %}
+                                        <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+
+                                {{ campo }}
+
+                                {% if campo.help_text %}
+                                    <div class="form-text">
+                                        {{ campo.help_text|safe }}
+                                    </div>
+                                {% endif %}
+
+                                {% for erro in campo.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ erro }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+
+                    <div class="d-flex gap-2 mt-4">
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            {% if modo_criacao %}
+                                {% trans "Criar utilizador" %}
+                            {% else %}
+                                {% trans "Guardar alterações" %}
+                            {% endif %}
+                        </button>
+
+                        <a
+                            class="btn btn-outline-dark"
+                            href="{% url 'utilizadores:lista' %}"
+                        >
+                            {% trans "Cancelar" %}
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if not modo_criacao %}
+            <div class="alert alert-light border mt-3">
+                <strong>
+                    {% trans "Nota:" %}
+                </strong>
+
+                {% trans "A alteração da password será feita posteriormente numa página própria." %}
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

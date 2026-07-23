@@ -1,134 +1,333 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block titulo %}{% trans "Detalhes do funcionário" %}{% endblock %}
+{% block titulo %}
+    {% trans "Detalhes do funcionário" %}
+{% endblock %}
 
 {% block conteudo %}
+
 {% trans "Não indicado" as t_nao_indicado %}
 {% trans "Não indicada" as t_nao_indicada %}
 {% trans "Não definido" as t_nao_definido %}
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
-        <h1 class="h3 mb-1">{{ funcionario.nome }}</h1>
+        <h1 class="h3 mb-1">
+            {{ funcionario.nome }}
+        </h1>
+
         <p class="text-muted mb-0">
             {% trans "Detalhes do funcionário" %}
         </p>
     </div>
 
-    <a class="btn btn-outline-dark"
-       href="{% url 'funcionarios:lista' %}">
+    <a
+        class="btn btn-outline-dark"
+        href="{% url 'funcionarios:lista' %}"
+    >
+        <i class="bi bi-arrow-left"></i>
         {% trans "Voltar" %}
     </a>
 </div>
 
+
 <div class="row g-3">
+
     <div class="col-lg-8">
-        <div class="card h-100">
-            <div class="card-header fw-bold">
+
+        <div class="card border border-2 border-dark h-100">
+
+            <div class="card-header bg-primary border-bottom border-2 border-dark fw-bold">
+                <i class="bi bi-person-badge"></i>
                 {% trans "Informações profissionais" %}
             </div>
 
             <div class="card-body">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="text-muted small">
-                            {% trans "Nome" %}
-                        </div>
 
-                        <div class="fw-bold">
-                            {{ funcionario.nome }}
-                        </div>
-                    </div>
+                <div class="row g-4 align-items-center">
 
-                    <div class="col-md-6">
-                        <div class="text-muted small">
-                            {% trans "Telefone" %}
-                        </div>
+                    <div class="col-md-4 text-center">
 
-                        <div>
-                            {{ funcionario.telefone|default:t_nao_indicado }}
-                        </div>
-                    </div>
+                        {% if funcionario.foto %}
 
-                    <div class="col-md-6">
-                        <div class="text-muted small">
-                            {% trans "Função" %}
-                        </div>
+                            <img
+                                src="{{ funcionario.foto.url }}"
+                                alt="{% trans 'Fotografia da funcionária' %}"
+                                class="rounded-circle border border-2 border-dark shadow-sm"
+                                style="
+                                    width: 180px;
+                                    height: 180px;
+                                    object-fit: cover;
+                                "
+                            >
 
-                        <div>
-                            {{ funcionario.funcao|default:t_nao_indicada }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="text-muted small">
-                            {% trans "Estado" %}
-                        </div>
-
-                        {% if funcionario.ativo %}
-                            <span class="badge text-bg-light border border-dark">
-                                {% trans "Ativo" %}
-                            </span>
                         {% else %}
-                            <span class="badge text-bg-secondary">
-                                {% trans "Inativo" %}
-                            </span>
+
+                            <div
+                                class="rounded-circle border border-2 border-dark bg-light d-flex align-items-center justify-content-center mx-auto"
+                                style="
+                                    width: 180px;
+                                    height: 180px;
+                                "
+                            >
+                                <i class="bi bi-person-circle display-1 text-muted"></i>
+                            </div>
+
                         {% endif %}
+
+                        <h2 class="h5 mt-3 mb-1">
+                            {{ funcionario.nome }}
+                        </h2>
+
+                        {% if funcionario.funcao %}
+                            <p class="text-muted mb-0">
+                                {{ funcionario.funcao }}
+                            </p>
+                        {% endif %}
+
                     </div>
+
+
+                    <div class="col-md-8">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">
+                                    {% trans "Nome" %}
+                                </div>
+
+                                <div class="fw-bold">
+                                    {{ funcionario.nome }}
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">
+                                    {% trans "Telefone" %}
+                                </div>
+
+                                <div>
+                                    {{ funcionario.telefone|default:t_nao_indicado }}
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">
+                                    {% trans "Função" %}
+                                </div>
+
+                                <div>
+                                    {{ funcionario.funcao|default:t_nao_indicada }}
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">
+                                    {% trans "Estado" %}
+                                </div>
+
+                                {% if funcionario.ativo %}
+                                    <span class="badge text-bg-success">
+                                        {% trans "Ativo" %}
+                                    </span>
+                                {% else %}
+                                    <span class="badge text-bg-secondary">
+                                        {% trans "Inativo" %}
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <div class="text-muted small mb-2">
+                            {% trans "Serviços que presta" %}
+                        </div>
+
+                        {% for servico in funcionario.servicos.all %}
+
+                            <span class="badge text-bg-light border border-dark me-1 mb-1">
+                                {{ servico }}
+                            </span>
+
+                        {% empty %}
+
+                            <p class="mb-0 text-muted">
+                                {% trans "Nenhum serviço associado." %}
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
                 </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-lg-4">
+
+        <div class="card border border-2 border-dark h-100">
+
+            <div class="card-header bg-primary border-bottom border-2 border-dark fw-bold text-center">
+                <i class="bi bi-calendar-check"></i>
+                {% trans "Resumo das marcações" %}
+            </div>
+
+            <div class="card-body">
+
+                <div class="text-center mb-3">
+
+                    <div class="display-5 fw-bold">
+                        {{ total_marcacoes }}
+                    </div>
+
+                    <div class="text-muted">
+                        {% blocktrans trimmed count n=total_marcacoes %}
+                            marcação no total
+                        {% plural %}
+                            marcações no total
+                        {% endblocktrans %}
+                    </div>
+
+                </div>
+
+
+                <div class="row g-2">
+
+                    <div class="col-6">
+                        <div class="border border-2 border-dark rounded p-2 text-center h-100">
+                            <div class="small text-muted">
+                                {% trans "Próximas" %}
+                            </div>
+
+                            <div class="h4 mb-0 text-primary">
+                                {{ total_proximas }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-6">
+                        <div class="border border-2 border-dark rounded p-2 text-center h-100">
+                            <div class="small text-muted">
+                                {% trans "Realizadas" %}
+                            </div>
+
+                            <div class="h4 mb-0 text-success">
+                                {{ total_realizadas }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-6">
+                        <div class="border border-2 border-dark rounded p-2 text-center h-100">
+                            <div class="small text-muted">
+                                {% trans "Canceladas" %}
+                            </div>
+
+                            <div class="h4 mb-0 text-danger">
+                                {{ total_canceladas }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-6">
+                        <div class="border border-2 border-dark rounded p-2 text-center h-100">
+                            <div class="small text-muted">
+                                {% trans "Faltas" %}
+                            </div>
+
+                            <div class="h4 mb-0 text-warning">
+                                {{ total_faltas }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
 
                 <hr>
 
-                <div class="text-muted small mb-2">
-                    {% trans "Serviços que presta" %}
+
+                <div>
+                    <div class="fw-bold mb-2">
+                        <i class="bi bi-clock"></i>
+                        {% trans "Próxima marcação" %}
+                    </div>
+
+                    {% if proxima_marcacao %}
+
+                        <div class="border rounded p-2 bg-light">
+
+                            <div class="fw-semibold">
+                                {{ proxima_marcacao.inicio|date:"d/m/Y" }}
+                                às
+                                {{ proxima_marcacao.inicio|date:"H:i" }}
+                            </div>
+
+                            <div class="small mt-1">
+                                <i class="bi bi-person"></i>
+                                {{ proxima_marcacao.cliente }}
+                            </div>
+
+                            <div class="small">
+                                <i class="bi bi-scissors"></i>
+                                {{ proxima_marcacao.servico }}
+                            </div>
+
+                            <div class="small">
+                                <i class="bi bi-geo-alt"></i>
+                                {{ proxima_marcacao.posto|default:t_nao_definido }}
+                            </div>
+
+                        </div>
+
+                    {% else %}
+
+                        <p class="text-muted mb-0">
+                            {% trans "Não existem marcações futuras." %}
+                        </p>
+
+                    {% endif %}
                 </div>
 
-                {% for servico in funcionario.servicos.all %}
-                    <span class="badge text-bg-light border border-dark me-1 mb-1">
-                        {{ servico }}
-                    </span>
-                {% empty %}
-                    <p class="mb-0">
-                        {% trans "Nenhum serviço associado." %}
-                    </p>
-                {% endfor %}
             </div>
         </div>
+
     </div>
 
-    <div class="col-lg-4">
-        <div class="card text-center h-100">
-            <div class="card-header fw-bold">
-                {% trans "Marcações" %}
-            </div>
-
-            <div class="card-body d-flex flex-column justify-content-center">
-                <div class="display-5 fw-bold">
-                    {{ total_marcacoes }}
-                </div>
-
-                <div class="text-muted">
-                    {% blocktrans trimmed count n=total_marcacoes %}
-                        marcação associada
-                    {% plural %}
-                        marcações associadas
-                    {% endblocktrans %}
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
-<div class="card mt-3">
-    <div class="card-header fw-bold">
+
+<div class="card border border-2 border-dark mt-3">
+
+    <div class="card-header bg-primary border-bottom border-2 border-dark fw-bold">
+        <i class="bi bi-calendar3"></i>
         {% trans "Próximas marcações" %}
     </div>
 
     <div class="card-body p-0">
+
         {% if proximas_marcacoes %}
+
             <div class="table-responsive">
+
                 <table class="table table-striped align-middle mb-0">
+
                     <thead>
                         <tr>
                             <th>{% trans "Data" %}</th>
@@ -141,57 +340,79 @@
                     </thead>
 
                     <tbody>
+
                         {% for marcacao in proximas_marcacoes %}
-                        <tr>
-                            <td>
-                                {{ marcacao.inicio|date:"d/m/Y" }}
-                            </td>
 
-                            <td>
-                                {{ marcacao.inicio|date:"H:i" }}
-                                –
-                                {{ marcacao.fim|date:"H:i" }}
-                            </td>
+                            <tr>
 
-                            <td>
-                                {{ marcacao.cliente }}
-                            </td>
+                                <td>
+                                    {{ marcacao.inicio|date:"d/m/Y" }}
+                                </td>
 
-                            <td>
-                                {{ marcacao.servico }}
-                            </td>
+                                <td>
+                                    {{ marcacao.inicio|date:"H:i" }}
+                                    –
+                                    {{ marcacao.fim|date:"H:i" }}
+                                </td>
 
-                            <td>
-                                {{ marcacao.posto|default:t_nao_definido }}
-                            </td>
+                                <td>
+                                    {{ marcacao.cliente }}
+                                </td>
 
-                            <td>
-                                <span class="badge text-bg-light border border-dark">
-                                    {{ marcacao.get_estado_display }}
-                                </span>
-                            </td>
-                        </tr>
+                                <td>
+                                    {{ marcacao.servico }}
+                                </td>
+
+                                <td>
+                                    {{ marcacao.posto|default:t_nao_definido }}
+                                </td>
+
+                                <td>
+                                    <span class="badge text-bg-light border border-dark">
+                                        {{ marcacao.get_estado_display }}
+                                    </span>
+                                </td>
+
+                            </tr>
+
                         {% endfor %}
+
                     </tbody>
+
                 </table>
+
             </div>
+
         {% else %}
+
             <p class="text-muted m-3">
                 {% trans "Não existem marcações futuras para esta funcionária." %}
             </p>
+
         {% endif %}
+
     </div>
 </div>
 
-<div class="mt-3">
-    <a class="btn btn-primary"
-       href="{% url 'funcionarios:editar' funcionario.pk %}">
+
+<div class="mt-3 d-flex gap-2">
+
+    <a
+        class="btn btn-primary border border-2 border-dark"
+        href="{% url 'funcionarios:editar' funcionario.pk %}"
+    >
+        <i class="bi bi-pencil-square"></i>
         {% trans "Editar funcionário" %}
     </a>
 
-    <a class="btn btn-outline-danger"
-       href="{% url 'funcionarios:eliminar' funcionario.pk %}">
+    <a
+        class="btn btn-outline-danger"
+        href="{% url 'funcionarios:eliminar' funcionario.pk %}"
+    >
+        <i class="bi bi-trash"></i>
         {% trans "Eliminar" %}
     </a>
+
 </div>
+
 {% endblock %}
