@@ -57,7 +57,18 @@
         <div class="collapse navbar-collapse" id="menu">
             {% if user.is_authenticated %}
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'marcacoes:agenda' %}">{% trans "Marcações" %}</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'marcacoes:agenda' %}">{% trans "Marcações" %}</a>
+                </li>
+                {% if n_pendentes_antigas %}
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'marcacoes:pendentes' %}"
+                       title="{% blocktrans count n=n_pendentes_antigas %}{{ n }} marcação de dias anteriores por fechar{% plural %}{{ n }} marcações de dias anteriores por fechar{% endblocktrans %}">
+                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                        <span class="badge rounded-pill text-bg-dark">{{ n_pendentes_antigas }}</span>
+                    </a>
+                </li>
+                {% endif %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'clientes:listar' %}">{% trans "Clientes" %}</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'servicos:listar' %}">{% trans "Serviços" %}</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'funcionarios:lista' %}">{% trans "Funcionários" %}</a></li>

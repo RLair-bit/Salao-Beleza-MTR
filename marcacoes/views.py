@@ -463,3 +463,38 @@ def painel(request):
             ),
         },
     )
+
+
+@login_required
+def pendentes(request):
+    """
+    Lista as marcações de dias anteriores que ficaram por
+    fechar (continuam no estado "marcada").
+    """
+    inicio_hoje = _tornar_aware(
+        datetime.combine(timezone.localdate(), time.min)
+    )
+
+    marcacoes = (
+        Marcacao.objects
+        .filter(
+            estado="marcada",
+            inicio__lt=inicio_hoje,
+        )
+        .select_related(
+            "cliente",
+            "funcionario",
+            "servico",
+            "posto",
+        )
+        .order_by("-inicio")
+    )
+
+    return render(
+        request,
+        "marcacoes/pendentes.html",
+        {
+            "marcacoes": marcacoes,
+            "total": marcacoes.count(),
+        },
+    )

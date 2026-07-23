@@ -18,6 +18,11 @@ urlpatterns = [
         name="criar",
     ),
     path(
+        "pendentes/",
+        views.pendentes,
+        name="pendentes",
+    ),
+    path(
         "horarios-disponiveis/",
         views.horarios_disponiveis,
         name="horarios_disponiveis",
