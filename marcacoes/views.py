@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.db.models import Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -90,11 +91,23 @@ def agenda(request):
     else:
         escolhido = ""
 
+    total_marcacoes = marcacoes.count()
+
+    paginador = Paginator(marcacoes, 20)
+    pagina = paginador.get_page(request.GET.get("pagina"))
+
+    extra = f"dia={dia:%Y-%m-%d}"
+
+    if escolhido:
+        extra += f"&funcionario={escolhido}"
+
     return render(
         request,
         "marcacoes/agenda.html",
         {
-            "marcacoes": marcacoes,
+            "marcacoes": pagina.object_list,
+            "pagina": pagina,
+            "extra": extra,
             "dia": dia,
             "dia_anterior": dia - timedelta(days=1),
             "dia_seguinte": dia + timedelta(days=1),
@@ -103,7 +116,7 @@ def agenda(request):
                 ativo=True
             ),
             "escolhido": escolhido,
-            "total": marcacoes.count(),
+            "total": total_marcacoes,
         },
     )
 
@@ -490,11 +503,17 @@ def pendentes(request):
         .order_by("-inicio")
     )
 
+    total_pendentes = marcacoes.count()
+
+    paginador = Paginator(marcacoes, 15)
+    pagina = paginador.get_page(request.GET.get("pagina"))
+
     return render(
         request,
         "marcacoes/pendentes.html",
         {
-            "marcacoes": marcacoes,
-            "total": marcacoes.count(),
+            "marcacoes": pagina.object_list,
+            "pagina": pagina,
+            "total": total_pendentes,
         },
     )

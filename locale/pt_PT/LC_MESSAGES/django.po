@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:34+0000\n"
+"POT-Creation-Date: 2026-07-23 10:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -490,7 +490,7 @@ msgstr "Agenda"
 msgid "Agenda de %(data)s"
 msgstr "Agenda de %(data)s"
 
-#: marcacoes/templates/marcacoes/agenda.html:9 marcacoes/views.py:323
+#: marcacoes/templates/marcacoes/agenda.html:9 marcacoes/views.py:336
 #: templates/home.html:10
 msgid "Nova marcação"
 msgstr "Nova marcação"
@@ -602,43 +602,43 @@ msgstr[1] "Há <strong>%(n)s</strong> marcações por fechar de dias anteriores.
 msgid "Não há marcações por fechar de dias anteriores."
 msgstr "Não há marcações por fechar de dias anteriores."
 
-#: marcacoes/views.py:125
+#: marcacoes/views.py:138
 msgid "Selecione um funcionário."
 msgstr "Selecione um funcionário."
 
-#: marcacoes/views.py:131
+#: marcacoes/views.py:144
 msgid "Selecione um serviço."
 msgstr "Selecione um serviço."
 
-#: marcacoes/views.py:142
+#: marcacoes/views.py:155
 msgid "Selecione uma data válida."
 msgstr "Selecione uma data válida."
 
-#: marcacoes/views.py:167
+#: marcacoes/views.py:180
 msgid "Funcionário não encontrado."
 msgstr "Funcionário não encontrado."
 
-#: marcacoes/views.py:177
+#: marcacoes/views.py:190
 msgid "Serviço não encontrado."
 msgstr "Serviço não encontrado."
 
-#: marcacoes/views.py:183
+#: marcacoes/views.py:196
 msgid "A duração do serviço é inválida."
 msgstr "A duração do serviço é inválida."
 
-#: marcacoes/views.py:313
+#: marcacoes/views.py:326
 msgid "Marcação criada com sucesso."
 msgstr "Marcação criada com sucesso."
 
-#: marcacoes/views.py:345
+#: marcacoes/views.py:358
 msgid "Marcação atualizada."
 msgstr "Marcação atualizada."
 
-#: marcacoes/views.py:358
+#: marcacoes/views.py:371
 msgid "Editar marcação"
 msgstr "Editar marcação"
 
-#: marcacoes/views.py:384
+#: marcacoes/views.py:397
 #, python-format
 msgid "Marcação alterada para %(estado)s."
 msgstr "Marcação alterada para %(estado)s."
@@ -686,6 +686,25 @@ msgstr "Serviço atualizado com sucesso."
 #: servicos/views.py:42
 msgid "Serviço excluído com sucesso."
 msgstr "Serviço excluído com sucesso."
+
+#: templates/_paginacao.html:3
+msgid "Navegação de páginas"
+msgstr "Navegação de páginas"
+
+#: templates/_paginacao.html:9 templates/_paginacao.html:14
+#| msgid "Dia anterior"
+msgid "Anterior"
+msgstr "Anterior"
+
+#: templates/_paginacao.html:31 templates/_paginacao.html:36
+#| msgid "Dia seguinte"
+msgid "Seguinte"
+msgstr "Seguinte"
+
+#: templates/_paginacao.html:42
+#, python-format
+msgid "Página %(atual)s de %(total)s"
+msgstr "Página %(atual)s de %(total)s"
 
 #: templates/base.html:78
 msgid "Sair"
@@ -773,7 +792,6 @@ msgstr "Agenda e novos agendamentos."
 
 #: templates/home.html:102
 #, python-format
-#| msgid "Marcações por fechar"
 msgid "%(n)s por fechar"
 msgid_plural "%(n)s por fechar"
 msgstr[0] "%(n)s por fechar"
