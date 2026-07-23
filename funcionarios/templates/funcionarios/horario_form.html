@@ -1,0 +1,1258 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}
+    {{ titulo }}
+{% endblock %}
+
+{% block conteudo %}
+
+<style>
+    :root {
+        --horario-rosa: #f8a5c2;
+        --horario-rosa-suave: #fff1f6;
+        --horario-rosa-selecionado: #fbd5e2;
+        --horario-borda: #eadde2;
+        --horario-texto-suave: #7b6f74;
+        --horario-sombra: 0 8px 24px rgba(73, 52, 61, 0.07);
+    }
+
+    /*
+     * Estrutura principal
+     */
+
+    .horario-pagina {
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    .horario-cabecalho {
+        margin-bottom: 1.5rem;
+    }
+
+    .horario-cabecalho h1 {
+        font-weight: 700;
+    }
+
+    .horario-painel {
+        overflow: hidden;
+        border: 1px solid var(--horario-borda);
+        border-radius: 1.25rem;
+        background-color: #ffffff;
+        box-shadow: var(--horario-sombra);
+    }
+
+    .horario-painel-cabecalho {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--horario-borda);
+        background:
+            linear-gradient(
+                135deg,
+                #fff7fa,
+                #fdebf2
+            );
+    }
+
+    .horario-painel-cabecalho h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .horario-painel-corpo {
+        padding: 1.35rem;
+    }
+
+    /*
+     * Dias da semana
+     */
+
+    .dias-semana-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+    }
+
+    .dia-semana-cartao {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 0.55rem 0.9rem;
+        border: 1px solid var(--horario-borda);
+        border-radius: 2rem;
+        background-color: #ffffff;
+        color: #3d3538;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition:
+            background-color 0.18s ease,
+            border-color 0.18s ease,
+            box-shadow 0.18s ease,
+            transform 0.18s ease;
+    }
+
+    .dia-semana-cartao:hover {
+        border-color: var(--horario-rosa);
+        background-color: var(--horario-rosa-suave);
+        transform: translateY(-1px);
+    }
+
+    .dia-semana-cartao:has(
+        input[type="checkbox"]:checked
+    ) {
+        border-color: var(--horario-rosa);
+        background-color: var(--horario-rosa-selecionado);
+        box-shadow:
+            0 3px 10px
+            rgba(248, 165, 194, 0.18);
+    }
+
+    .dia-semana-cartao input[type="checkbox"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .dia-semana-cartao:has(
+        input[type="checkbox"]:checked
+    )::before {
+        content: "✓";
+        margin-right: 0.4rem;
+        color: #a94f70;
+        font-weight: 800;
+    }
+
+    /*
+     * Área dos horários
+     */
+
+    .horarios-titulo-secao {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.85rem;
+        color: #40373b;
+        font-size: 0.95rem;
+        font-weight: 700;
+    }
+
+    .hora-cartao {
+        height: 100%;
+        padding: 1rem;
+        border: 1px solid var(--horario-borda);
+        border-radius: 1rem;
+        background-color: #ffffff;
+        transition:
+            box-shadow 0.18s ease,
+            transform 0.18s ease;
+    }
+
+    .hora-cartao:hover {
+        box-shadow:
+            0 8px 18px
+            rgba(73, 52, 61, 0.06);
+        transform: translateY(-1px);
+    }
+
+    .hora-titulo {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin-bottom: 0.75rem;
+        color: #40373b;
+        font-size: 0.92rem;
+        font-weight: 700;
+    }
+
+    .hora-titulo-icone {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: var(--horario-rosa-suave);
+        color: #b45b7c;
+    }
+
+    /*
+     * Seletor delicado
+     */
+
+    .hora-seletor {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        padding: 0.55rem;
+        border: 1px solid var(--horario-borda);
+        border-radius: 0.9rem;
+        background-color: #fffafb;
+        transition:
+            border-color 0.18s ease,
+            box-shadow 0.18s ease;
+    }
+
+    .hora-seletor:hover {
+        border-color: #e5b3c5;
+    }
+
+    .hora-seletor.erro {
+        border-color: #dc3545;
+        box-shadow:
+            0 0 0 0.18rem
+            rgba(220, 53, 69, 0.1);
+    }
+
+    .hora-parte {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .hora-botao {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background-color: #ffffff;
+        color: #8b717b;
+        font-size: 0.72rem;
+        box-shadow:
+            0 2px 6px
+            rgba(73, 52, 61, 0.08);
+        transition:
+            background-color 0.15s ease,
+            color 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .hora-botao:hover {
+        background-color: var(--horario-rosa);
+        color: #ffffff;
+        transform: scale(1.07);
+    }
+
+    .hora-botao:active {
+        transform: scale(0.95);
+    }
+
+    .hora-valor {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 42px;
+        height: 36px;
+        padding: 0 0.45rem;
+        border: 0;
+        border-radius: 0.65rem;
+        background-color: var(--horario-rosa-selecionado);
+        color: #493b41;
+        font-size: 1rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        user-select: none;
+    }
+
+    .hora-separador {
+        color: #9a7d88;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .hora-seletor.sem-valor .hora-valor {
+        background-color: #f4f1f2;
+        color: #a3999d;
+    }
+
+    .hora-ajuda {
+        margin-top: 0.55rem;
+        color: var(--horario-texto-suave);
+        font-size: 0.77rem;
+    }
+
+    .hora-acoes {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 0.35rem;
+    }
+
+    .hora-limpar {
+        padding: 0.2rem 0.4rem;
+        border: 0;
+        background: transparent;
+        color: #b96380;
+        font-size: 0.76rem;
+        font-weight: 600;
+    }
+
+    .hora-limpar:hover {
+        color: #94445f;
+        text-decoration: underline;
+    }
+
+    /*
+     * Intervalo
+     */
+
+    .intervalo-painel {
+        padding: 1rem;
+        border: 1px solid var(--horario-borda);
+        border-radius: 1rem;
+        background-color: #fffafb;
+    }
+
+    .intervalo-cabecalho {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.35rem;
+        font-weight: 700;
+    }
+
+    /*
+     * Estado
+     */
+
+    .estado-horario {
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--horario-borda);
+        border-radius: 0.9rem;
+        background-color: #faf8f9;
+    }
+
+    /*
+     * Campos enviados ao Django
+     */
+
+    .campos-hora-originais {
+        display: none;
+    }
+
+    /*
+     * Botões finais
+     */
+
+    .botao-guardar-delicado {
+        border: 1px solid #d681a0;
+        background-color: var(--horario-rosa);
+        color: #362b30;
+        font-weight: 700;
+        box-shadow:
+            0 4px 10px
+            rgba(248, 165, 194, 0.2);
+    }
+
+    .botao-guardar-delicado:hover {
+        border-color: #c96c8d;
+        background-color: #f58eb4;
+        color: #2d2327;
+    }
+
+    .botao-cancelar-delicado {
+        border: 1px solid var(--horario-borda);
+        background-color: #ffffff;
+        color: #5f5157;
+        font-weight: 600;
+    }
+
+    .botao-cancelar-delicado:hover {
+        border-color: #d3bbc4;
+        background-color: #faf5f7;
+    }
+
+    @media (max-width: 575.98px) {
+        .horario-painel-corpo {
+            padding: 1rem;
+        }
+
+        .hora-seletor {
+            gap: 0.2rem;
+            padding: 0.45rem 0.3rem;
+        }
+
+        .hora-botao {
+            width: 24px;
+            height: 24px;
+        }
+
+        .hora-valor {
+            min-width: 38px;
+            height: 34px;
+            font-size: 0.92rem;
+        }
+    }
+</style>
+
+
+<div class="horario-pagina">
+
+    <div class="horario-cabecalho">
+
+        <h1 class="h3 mb-1">
+            <i class="bi bi-clock"></i>
+            {{ titulo }}
+        </h1>
+
+        <p class="text-muted mb-0">
+            {% trans "Funcionário:" %}
+            <strong>{{ funcionario.nome }}</strong>
+        </p>
+
+    </div>
+
+
+    <div class="horario-painel">
+
+        <div class="horario-painel-cabecalho">
+
+            <h2>
+                <i class="bi bi-calendar-week"></i>
+                {% trans "Informações do horário" %}
+            </h2>
+
+        </div>
+
+
+        <div class="horario-painel-corpo">
+
+            <form
+                method="post"
+                id="formulario-horario"
+                novalidate
+            >
+
+                {% csrf_token %}
+
+
+                {% if form.non_field_errors %}
+
+                    <div class="alert alert-danger">
+
+                        {% for erro in form.non_field_errors %}
+                            <div>{{ erro }}</div>
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if criacao_multipla %}
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+                            {{ form.dias_semana.label }}
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <div class="dias-semana-grid">
+
+                            {% for opcao in form.dias_semana %}
+
+                                <label
+                                    class="dia-semana-cartao"
+                                    for="{{ opcao.id_for_label }}"
+                                >
+                                    {{ opcao.tag }}
+                                    <span>{{ opcao.choice_label }}</span>
+                                </label>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        {% if form.dias_semana.help_text %}
+
+                            <div class="form-text mt-2">
+                                <i class="bi bi-info-circle"></i>
+                                {{ form.dias_semana.help_text }}
+                            </div>
+
+                        {% endif %}
+
+
+                        {% for erro in form.dias_semana.errors %}
+
+                            <div class="text-danger mt-2">
+                                {{ erro }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="mb-4">
+
+                        <label
+                            for="{{ form.dia_semana.id_for_label }}"
+                            class="form-label fw-bold"
+                        >
+                            {{ form.dia_semana.label }}
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        {{ form.dia_semana }}
+
+                        {% for erro in form.dia_semana.errors %}
+
+                            <div class="text-danger mt-1">
+                                {{ erro }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="campos-hora-originais">
+                    {{ form.hora_inicio }}
+                    {{ form.hora_fim }}
+                    {{ form.intervalo_inicio }}
+                    {{ form.intervalo_fim }}
+                </div>
+
+
+                <div class="horarios-titulo-secao">
+                    <i class="bi bi-clock-history"></i>
+                    {% trans "Período de trabalho" %}
+                </div>
+
+
+                <div class="row g-3 mb-4">
+
+                    <div class="col-md-6">
+
+                        <div class="hora-cartao">
+
+                            <div class="hora-titulo">
+
+                                <span class="hora-titulo-icone">
+                                    <i class="bi bi-sunrise"></i>
+                                </span>
+
+                                {{ form.hora_inicio.label }}
+
+                                <span class="text-danger">*</span>
+
+                            </div>
+
+
+                            <div
+                                class="hora-seletor"
+                                data-target="{{ form.hora_inicio.id_for_label }}"
+                                data-default="09:00"
+                                data-required="true"
+                            >
+
+                                <div class="hora-parte">
+
+                                    <button
+                                        type="button"
+                                        class="hora-botao"
+                                        data-parte="hora"
+                                        data-acao="diminuir"
+                                    >
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <div class="hora-valor valor-hora">
+                                        09
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        class="hora-botao"
+                                        data-parte="hora"
+                                        data-acao="aumentar"
+                                    >
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+
+                                </div>
+
+
+                                <div class="hora-separador">:</div>
+
+
+                                <div class="hora-parte">
+
+                                    <button
+                                        type="button"
+                                        class="hora-botao"
+                                        data-parte="minuto"
+                                        data-acao="diminuir"
+                                    >
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <div class="hora-valor valor-minuto">
+                                        00
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        class="hora-botao"
+                                        data-parte="minuto"
+                                        data-acao="aumentar"
+                                    >
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="hora-ajuda">
+                                {% trans "Ajuste as horas e os minutos." %}
+                            </div>
+
+
+                            {% for erro in form.hora_inicio.errors %}
+
+                                <div class="text-danger small mt-2">
+                                    {{ erro }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="hora-cartao">
+
+                            <div class="hora-titulo">
+
+                                <span class="hora-titulo-icone">
+                                    <i class="bi bi-sunset"></i>
+                                </span>
+
+                                {{ form.hora_fim.label }}
+
+                                <span class="text-danger">*</span>
+
+                            </div>
+
+
+                            <div
+                                class="hora-seletor"
+                                data-target="{{ form.hora_fim.id_for_label }}"
+                                data-default="18:00"
+                                data-required="true"
+                            >
+
+                                <div class="hora-parte">
+
+                                    <button
+                                        type="button"
+                                        class="hora-botao"
+                                        data-parte="hora"
+                                        data-acao="diminuir"
+                                    >
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <div class="hora-valor valor-hora">
+                                        18
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        class="hora-botao"
+                                        data-parte="hora"
+                                        data-acao="aumentar"
+                                    >
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+
+                                </div>
+
+
+                                <div class="hora-separador">:</div>
+
+
+                                <div class="hora-parte">
+
+                                    <button
+                                        type="button"
+                                        class="hora-botao"
+                                        data-parte="minuto"
+                                        data-acao="diminuir"
+                                    >
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+
+                                    <div class="hora-valor valor-minuto">
+                                        00
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        class="hora-botao"
+                                        data-parte="minuto"
+                                        data-acao="aumentar"
+                                    >
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="hora-ajuda">
+                                {% trans "Ajuste as horas e os minutos." %}
+                            </div>
+
+
+                            {% for erro in form.hora_fim.errors %}
+
+                                <div class="text-danger small mt-2">
+                                    {{ erro }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="intervalo-painel mb-4">
+
+                    <div class="intervalo-cabecalho">
+                        <i class="bi bi-cup-hot"></i>
+                        {% trans "Intervalo" %}
+                    </div>
+
+                    <p class="text-muted small">
+                        {% trans "Opcional. Pode deixar os dois campos vazios." %}
+                    </p>
+
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <div class="hora-cartao">
+
+                                <div class="hora-titulo">
+
+                                    <span class="hora-titulo-icone">
+                                        <i class="bi bi-pause"></i>
+                                    </span>
+
+                                    {{ form.intervalo_inicio.label }}
+
+                                </div>
+
+
+                                <div
+                                    class="hora-seletor sem-valor"
+                                    data-target="{{ form.intervalo_inicio.id_for_label }}"
+                                    data-default="13:00"
+                                    data-required="false"
+                                >
+
+                                    <div class="hora-parte">
+
+                                        <button
+                                            type="button"
+                                            class="hora-botao"
+                                            data-parte="hora"
+                                            data-acao="diminuir"
+                                        >
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+
+                                        <div class="hora-valor valor-hora">
+                                            --
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="hora-botao"
+                                            data-parte="hora"
+                                            data-acao="aumentar"
+                                        >
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+
+                                    </div>
+
+
+                                    <div class="hora-separador">:</div>
+
+
+                                    <div class="hora-parte">
+
+                                        <button
+                                            type="button"
+                                            class="hora-botao"
+                                            data-parte="minuto"
+                                            data-acao="diminuir"
+                                        >
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+
+                                        <div class="hora-valor valor-minuto">
+                                            --
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="hora-botao"
+                                            data-parte="minuto"
+                                            data-acao="aumentar"
+                                        >
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="hora-acoes">
+
+                                    <button
+                                        type="button"
+                                        class="hora-limpar"
+                                    >
+                                        <i class="bi bi-x"></i>
+                                        {% trans "Limpar" %}
+                                    </button>
+
+                                </div>
+
+
+                                {% for erro in form.intervalo_inicio.errors %}
+
+                                    <div class="text-danger small mt-1">
+                                        {{ erro }}
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="hora-cartao">
+
+                                <div class="hora-titulo">
+
+                                    <span class="hora-titulo-icone">
+                                        <i class="bi bi-play"></i>
+                                    </span>
+
+                                    {{ form.intervalo_fim.label }}
+
+                                </div>
+
+
+                                <div
+                                    class="hora-seletor sem-valor"
+                                    data-target="{{ form.intervalo_fim.id_for_label }}"
+                                    data-default="14:00"
+                                    data-required="false"
+                                >
+
+                                    <div class="hora-parte">
+
+                                        <button
+                                            type="button"
+                                            class="hora-botao"
+                                            data-parte="hora"
+                                            data-acao="diminuir"
+                                        >
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+
+                                        <div class="hora-valor valor-hora">
+                                            --
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="hora-botao"
+                                            data-parte="hora"
+                                            data-acao="aumentar"
+                                        >
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+
+                                    </div>
+
+
+                                    <div class="hora-separador">:</div>
+
+
+                                    <div class="hora-parte">
+
+                                        <button
+                                            type="button"
+                                            class="hora-botao"
+                                            data-parte="minuto"
+                                            data-acao="diminuir"
+                                        >
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+
+                                        <div class="hora-valor valor-minuto">
+                                            --
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="hora-botao"
+                                            data-parte="minuto"
+                                            data-acao="aumentar"
+                                        >
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="hora-acoes">
+
+                                    <button
+                                        type="button"
+                                        class="hora-limpar"
+                                    >
+                                        <i class="bi bi-x"></i>
+                                        {% trans "Limpar" %}
+                                    </button>
+
+                                </div>
+
+
+                                {% for erro in form.intervalo_fim.errors %}
+
+                                    <div class="text-danger small mt-1">
+                                        {{ erro }}
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="estado-horario mb-4">
+
+                    <div class="form-check mb-0">
+
+                        {{ form.ativo }}
+
+                        <label
+                            for="{{ form.ativo.id_for_label }}"
+                            class="form-check-label fw-semibold"
+                        >
+                            {{ form.ativo.label }}
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex flex-wrap gap-2">
+
+                    <button
+                        type="submit"
+                        class="btn botao-guardar-delicado"
+                    >
+                        <i class="bi bi-check-circle"></i>
+
+                        {% if criacao_multipla %}
+                            {% trans "Guardar horários" %}
+                        {% else %}
+                            {% trans "Guardar horário" %}
+                        {% endif %}
+                    </button>
+
+                    <a
+                        href="{% url 'funcionarios:horarios_lista' funcionario.pk %}"
+                        class="btn botao-cancelar-delicado"
+                    >
+                        <i class="bi bi-arrow-left"></i>
+                        {% trans "Cancelar" %}
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+            const formulario = document.getElementById(
+                "formulario-horario"
+            );
+
+            const seletores = document.querySelectorAll(
+                ".hora-seletor"
+            );
+
+            function formatar(numero) {
+                return String(numero).padStart(2, "0");
+            }
+
+            function separarHora(valor) {
+                if (!valor) {
+                    return null;
+                }
+
+                const partes = valor.split(":");
+
+                return {
+                    hora: Number(partes[0]),
+                    minuto: Number(partes[1]),
+                };
+            }
+
+            function atualizar(
+                seletor,
+                hora,
+                minuto
+            ) {
+                const campo = document.getElementById(
+                    seletor.dataset.target
+                );
+
+                const valor =
+                    formatar(hora)
+                    + ":"
+                    + formatar(minuto);
+
+                seletor.querySelector(
+                    ".valor-hora"
+                ).textContent = formatar(hora);
+
+                seletor.querySelector(
+                    ".valor-minuto"
+                ).textContent = formatar(minuto);
+
+                campo.value = valor;
+
+                seletor.classList.remove(
+                    "sem-valor",
+                    "erro"
+                );
+            }
+
+            function limpar(seletor) {
+                const campo = document.getElementById(
+                    seletor.dataset.target
+                );
+
+                seletor.querySelector(
+                    ".valor-hora"
+                ).textContent = "--";
+
+                seletor.querySelector(
+                    ".valor-minuto"
+                ).textContent = "--";
+
+                campo.value = "";
+
+                seletor.classList.add("sem-valor");
+                seletor.classList.remove("erro");
+            }
+
+            seletores.forEach(
+                function (seletor) {
+                    const campo = document.getElementById(
+                        seletor.dataset.target
+                    );
+
+                    const obrigatorio =
+                        seletor.dataset.required === "true";
+
+                    const valorInicial =
+                        campo.value
+                        || (
+                            obrigatorio
+                                ? seletor.dataset.default
+                                : ""
+                        );
+
+                    if (valorInicial) {
+                        const partes = separarHora(
+                            valorInicial
+                        );
+
+                        atualizar(
+                            seletor,
+                            partes.hora,
+                            partes.minuto
+                        );
+                    } else {
+                        limpar(seletor);
+                    }
+
+                    seletor.querySelectorAll(
+                        ".hora-botao"
+                    ).forEach(
+                        function (botao) {
+                            botao.addEventListener(
+                                "click",
+                                function () {
+                                    let partes = separarHora(
+                                        campo.value
+                                    );
+
+                                    if (!partes) {
+                                        partes = separarHora(
+                                            seletor.dataset.default
+                                        );
+                                    }
+
+                                    const parte =
+                                        botao.dataset.parte;
+
+                                    const acao =
+                                        botao.dataset.acao;
+
+                                    if (parte === "hora") {
+                                        if (acao === "aumentar") {
+                                            partes.hora =
+                                                (partes.hora + 1) % 24;
+                                        } else {
+                                            partes.hora =
+                                                (partes.hora + 23) % 24;
+                                        }
+                                    }
+
+                                    if (parte === "minuto") {
+                                        const alteracao =
+                                            acao === "aumentar"
+                                                ? 5
+                                                : -5;
+
+                                        partes.minuto += alteracao;
+
+                                        if (partes.minuto >= 60) {
+                                            partes.minuto = 0;
+
+                                            partes.hora =
+                                                (partes.hora + 1) % 24;
+                                        }
+
+                                        if (partes.minuto < 0) {
+                                            partes.minuto = 55;
+
+                                            partes.hora =
+                                                (partes.hora + 23) % 24;
+                                        }
+                                    }
+
+                                    atualizar(
+                                        seletor,
+                                        partes.hora,
+                                        partes.minuto
+                                    );
+                                }
+                            );
+                        }
+                    );
+
+                    const cartao = seletor.closest(
+                        ".hora-cartao"
+                    );
+
+                    const botaoLimpar = cartao
+                        ? cartao.querySelector(
+                            ".hora-limpar"
+                        )
+                        : null;
+
+                    if (botaoLimpar) {
+                        botaoLimpar.addEventListener(
+                            "click",
+                            function () {
+                                limpar(seletor);
+                            }
+                        );
+                    }
+                }
+            );
+
+            formulario.addEventListener(
+                "submit",
+                function (evento) {
+                    let valido = true;
+
+                    seletores.forEach(
+                        function (seletor) {
+                            const obrigatorio =
+                                seletor.dataset.required
+                                === "true";
+
+                            const campo =
+                                document.getElementById(
+                                    seletor.dataset.target
+                                );
+
+                            if (
+                                obrigatorio
+                                && !campo.value
+                            ) {
+                                seletor.classList.add("erro");
+                                valido = false;
+                            }
+                        }
+                    );
+
+                    if (!valido) {
+                        evento.preventDefault();
+                    }
+                }
+            );
+        }
+    );
+</script>
+
+{% endblock %}

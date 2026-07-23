@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}
+    {{ titulo }}
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+
+        <div class="mb-4">
+            <h1 class="h3 mb-1">
+                <i class="bi bi-calendar-x"></i>
+                {{ titulo }}
+            </h1>
+
+            <p class="text-muted mb-0">
+                {% trans "Funcionário:" %}
+                <strong>{{ funcionario.nome }}</strong>
+            </p>
+        </div>
+
+        <div class="card border border-2 border-dark shadow-sm">
+
+            <div class="card-header bg-primary border-bottom border-2 border-dark">
+                <h2 class="h5 mb-0">
+                    <i class="bi bi-calendar2-minus"></i>
+                    {% trans "Informações da ausência" %}
+                </h2>
+            </div>
+
+            <div class="card-body">
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger border border-2 border-dark">
+                            {% for erro in form.non_field_errors %}
+                                <div>
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    {{ erro }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label
+                            for="{{ form.tipo.id_for_label }}"
+                            class="form-label fw-bold"
+                        >
+                            {{ form.tipo.label }}
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        {{ form.tipo }}
+
+                        {% for erro in form.tipo.errors %}
+                            <div class="text-danger mt-1">
+                                {{ erro }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label
+                                for="{{ form.data_inicio.id_for_label }}"
+                                class="form-label fw-bold"
+                            >
+                                {{ form.data_inicio.label }}
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            {{ form.data_inicio }}
+
+                            {% for erro in form.data_inicio.errors %}
+                                <div class="text-danger mt-1">
+                                    {{ erro }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label
+                                for="{{ form.data_fim.id_for_label }}"
+                                class="form-label fw-bold"
+                            >
+                                {{ form.data_fim.label }}
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            {{ form.data_fim }}
+
+                            {% for erro in form.data_fim.errors %}
+                                <div class="text-danger mt-1">
+                                    {{ erro }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                    <div class="form-check mb-4">
+
+                        {{ form.dia_inteiro }}
+
+                        <label
+                            for="{{ form.dia_inteiro.id_for_label }}"
+                            class="form-check-label fw-bold"
+                        >
+                            {{ form.dia_inteiro.label }}
+                        </label>
+
+                        {% if form.dia_inteiro.help_text %}
+                            <div class="form-text">
+                                {{ form.dia_inteiro.help_text }}
+                            </div>
+                        {% endif %}
+
+                        {% for erro in form.dia_inteiro.errors %}
+                            <div class="text-danger mt-1">
+                                {{ erro }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                    <div
+                        id="campos-horario"
+                        class="card border border-dark mb-4"
+                    >
+
+                        <div class="card-header bg-light border-bottom border-dark">
+                            <strong>
+                                <i class="bi bi-clock"></i>
+                                {% trans "Horário da ausência parcial" %}
+                            </strong>
+                        </div>
+
+                        <div class="card-body">
+
+                            <p class="text-muted small">
+                                {% trans "Preencha as horas apenas quando a ausência não ocupar o dia inteiro." %}
+                            </p>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <label
+                                        for="{{ form.hora_inicio.id_for_label }}"
+                                        class="form-label fw-bold"
+                                    >
+                                        {{ form.hora_inicio.label }}
+                                    </label>
+
+                                    {{ form.hora_inicio }}
+
+                                    {% for erro in form.hora_inicio.errors %}
+                                        <div class="text-danger mt-1">
+                                            {{ erro }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label
+                                        for="{{ form.hora_fim.id_for_label }}"
+                                        class="form-label fw-bold"
+                                    >
+                                        {{ form.hora_fim.label }}
+                                    </label>
+
+                                    {{ form.hora_fim }}
+
+                                    {% for erro in form.hora_fim.errors %}
+                                        <div class="text-danger mt-1">
+                                            {{ erro }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label
+                            for="{{ form.motivo.id_for_label }}"
+                            class="form-label fw-bold"
+                        >
+                            {{ form.motivo.label }}
+                        </label>
+
+                        {{ form.motivo }}
+
+                        {% for erro in form.motivo.errors %}
+                            <div class="text-danger mt-1">
+                                {{ erro }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary border border-2 border-dark"
+                        >
+                            <i class="bi bi-check-circle"></i>
+                            {% trans "Guardar ausência" %}
+                        </button>
+
+                        <a
+                            href="{% url 'funcionarios:ausencias_lista' funcionario.pk %}"
+                            class="btn btn-light border border-2 border-dark"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+                            {% trans "Cancelar" %}
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const campoDiaInteiro = document.getElementById(
+            "{{ form.dia_inteiro.id_for_label }}"
+        );
+
+        const camposHorario = document.getElementById(
+            "campos-horario"
+        );
+
+        const horaInicio = document.getElementById(
+            "{{ form.hora_inicio.id_for_label }}"
+        );
+
+        const horaFim = document.getElementById(
+            "{{ form.hora_fim.id_for_label }}"
+        );
+
+        function atualizarCamposHorario() {
+            if (campoDiaInteiro.checked) {
+                camposHorario.style.display = "none";
+                horaInicio.value = "";
+                horaFim.value = "";
+            } else {
+                camposHorario.style.display = "block";
+            }
+        }
+
+        campoDiaInteiro.addEventListener(
+            "change",
+            atualizarCamposHorario
+        );
+
+        atualizarCamposHorario();
+    });
+</script>
+
+{% endblock %}

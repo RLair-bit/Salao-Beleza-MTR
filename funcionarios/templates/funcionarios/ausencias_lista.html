@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}
+    {% trans "Ausências" %} — {{ funcionario.nome }}
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+    <div>
+        <h1 class="h3 mb-1">
+            <i class="bi bi-calendar-x"></i>
+            {% trans "Folgas e ausências" %}
+        </h1>
+
+        <p class="text-muted mb-0">
+            {{ funcionario.nome }}
+        </p>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+
+        <a
+            href="{% url 'funcionarios:ausencia_criar' funcionario.pk %}"
+            class="btn btn-primary border border-2 border-dark"
+        >
+            <i class="bi bi-plus-circle"></i>
+            {% trans "Registar ausência" %}
+        </a>
+
+        <a
+            href="{% url 'funcionarios:detalhe' funcionario.pk %}"
+            class="btn btn-light border border-2 border-dark"
+        >
+            <i class="bi bi-arrow-left"></i>
+            {% trans "Voltar ao funcionário" %}
+        </a>
+
+    </div>
+
+</div>
+
+<div class="card border border-2 border-dark shadow-sm">
+
+    <div class="card-header bg-primary border-bottom border-2 border-dark">
+
+        <h2 class="h5 mb-0">
+            <i class="bi bi-calendar2-week"></i>
+            {% trans "Ausências registadas" %}
+        </h2>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        {% if ausencias %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>{% trans "Tipo" %}</th>
+                            <th>{% trans "Período" %}</th>
+                            <th>{% trans "Horário" %}</th>
+                            <th>{% trans "Motivo" %}</th>
+                            <th class="text-end">{% trans "Ações" %}</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for ausencia in ausencias %}
+
+                            <tr>
+
+                                <td>
+                                    {% if ausencia.tipo == "folga" %}
+
+                                        <span class="badge text-bg-info">
+                                            {% trans "Folga" %}
+                                        </span>
+
+                                    {% elif ausencia.tipo == "ferias" %}
+
+                                        <span class="badge text-bg-success">
+                                            {% trans "Férias" %}
+                                        </span>
+
+                                    {% elif ausencia.tipo == "doenca" %}
+
+                                        <span class="badge text-bg-danger">
+                                            {% trans "Doença" %}
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge text-bg-secondary">
+                                            {{ ausencia.get_tipo_display }}
+                                        </span>
+
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if ausencia.data_inicio == ausencia.data_fim %}
+
+                                        {{ ausencia.data_inicio|date:"d/m/Y" }}
+
+                                    {% else %}
+
+                                        {{ ausencia.data_inicio|date:"d/m/Y" }}
+                                        –
+                                        {{ ausencia.data_fim|date:"d/m/Y" }}
+
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if ausencia.dia_inteiro %}
+
+                                        <span class="fw-bold">
+                                            {% trans "Dia inteiro" %}
+                                        </span>
+
+                                    {% else %}
+
+                                        {{ ausencia.hora_inicio|time:"H:i" }}
+                                        –
+                                        {{ ausencia.hora_fim|time:"H:i" }}
+
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if ausencia.motivo %}
+
+                                        {{ ausencia.motivo }}
+
+                                    {% else %}
+
+                                        <span class="text-muted">
+                                            {% trans "Sem observação" %}
+                                        </span>
+
+                                    {% endif %}
+                                </td>
+
+                                <td class="text-end">
+
+                                    <div class="d-flex flex-wrap justify-content-end gap-2">
+
+                                        <a
+                                            href="{% url 'funcionarios:ausencia_editar' ausencia.pk %}"
+                                            class="btn btn-outline-dark btn-sm"
+                                        >
+                                            <i class="bi bi-pencil"></i>
+                                            {% trans "Editar" %}
+                                        </a>
+
+                                        <a
+                                            href="{% url 'funcionarios:ausencia_eliminar' ausencia.pk %}"
+                                            class="btn btn-outline-danger btn-sm"
+                                        >
+                                            <i class="bi bi-trash"></i>
+                                            {% trans "Eliminar" %}
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-5">
+
+                <i
+                    class="bi bi-calendar-check text-muted"
+                    style="font-size: 3.5rem;"
+                ></i>
+
+                <h2 class="h5 mt-3">
+                    {% trans "Nenhuma ausência registada" %}
+                </h2>
+
+                <p class="text-muted">
+                    {% trans "Não existem folgas, férias ou outras ausências registadas para este funcionário." %}
+                </p>
+
+                <a
+                    href="{% url 'funcionarios:ausencia_criar' funcionario.pk %}"
+                    class="btn btn-primary border border-2 border-dark"
+                >
+                    <i class="bi bi-plus-circle"></i>
+                    {% trans "Registar primeira ausência" %}
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<div class="alert alert-info border border-2 border-dark mt-4">
+
+    <i class="bi bi-info-circle-fill"></i>
+
+    {% trans "As ausências serão utilizadas para impedir marcações nos períodos em que o funcionário não estiver disponível." %}
+
+</div>
+
+{% endblock %}

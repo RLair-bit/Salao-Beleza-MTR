@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}
+    {% trans "Eliminar horário" %}
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7 col-xl-6">
+
+        <div class="card border border-2 border-danger shadow-sm">
+
+            <div class="card-header bg-danger text-white border-bottom border-2 border-dark">
+
+                <h1 class="h4 mb-0">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    {% trans "Eliminar horário" %}
+                </h1>
+
+            </div>
+
+            <div class="card-body">
+
+                <p class="mb-3">
+                    {% trans "Tem a certeza de que pretende eliminar este horário de trabalho?" %}
+                </p>
+
+                <div class="card border border-2 border-dark mb-4">
+
+                    <div class="card-body">
+
+                        <p class="mb-2">
+                            <strong>{% trans "Funcionário:" %}</strong>
+                            {{ funcionario.nome }}
+                        </p>
+
+                        <p class="mb-2">
+                            <strong>{% trans "Dia da semana:" %}</strong>
+                            {{ horario.get_dia_semana_display }}
+                        </p>
+
+                        <p class="mb-2">
+                            <strong>{% trans "Horário:" %}</strong>
+
+                            {{ horario.hora_inicio|time:"H:i" }}
+                            –
+                            {{ horario.hora_fim|time:"H:i" }}
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>{% trans "Intervalo:" %}</strong>
+
+                            {% if horario.intervalo_inicio and horario.intervalo_fim %}
+
+                                {{ horario.intervalo_inicio|time:"H:i" }}
+                                –
+                                {{ horario.intervalo_fim|time:"H:i" }}
+
+                            {% else %}
+
+                                <span class="text-muted">
+                                    {% trans "Sem intervalo" %}
+                                </span>
+
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="alert alert-warning border border-2 border-dark">
+
+                    <i class="bi bi-info-circle-fill"></i>
+
+                    {% trans "Depois de eliminado, este horário terá de ser criado novamente caso seja necessário." %}
+
+                </div>
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger border border-2 border-dark"
+                        >
+                            <i class="bi bi-trash"></i>
+                            {% trans "Sim, eliminar horário" %}
+                        </button>
+
+                        <a
+                            href="{% url 'funcionarios:horarios_lista' funcionario.pk %}"
+                            class="btn btn-light border border-2 border-dark"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+                            {% trans "Cancelar" %}
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}
+    {% trans "Horários de trabalho" %} — {{ funcionario.nome }}
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+    <div>
+        <h1 class="h3 mb-1">
+            <i class="bi bi-clock"></i>
+            {% trans "Horários de trabalho" %}
+        </h1>
+
+        <p class="text-muted mb-0">
+            {{ funcionario.nome }}
+        </p>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+
+        <a
+            href="{% url 'funcionarios:horario_criar' funcionario.pk %}"
+            class="btn btn-primary border border-2 border-dark"
+        >
+            <i class="bi bi-plus-circle"></i>
+            {% trans "Adicionar horário" %}
+        </a>
+
+        <a
+            href="{% url 'funcionarios:detalhe' funcionario.pk %}"
+            class="btn btn-light border border-2 border-dark"
+        >
+            <i class="bi bi-arrow-left"></i>
+            {% trans "Voltar ao funcionário" %}
+        </a>
+
+    </div>
+
+</div>
+
+<div class="card border border-2 border-dark shadow-sm">
+
+    <div class="card-header bg-primary border-bottom border-2 border-dark">
+
+        <h2 class="h5 mb-0">
+            <i class="bi bi-calendar-week"></i>
+            {% trans "Horário semanal" %}
+        </h2>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        {% if horarios %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>{% trans "Dia da semana" %}</th>
+                            <th>{% trans "Entrada" %}</th>
+                            <th>{% trans "Saída" %}</th>
+                            <th>{% trans "Intervalo" %}</th>
+                            <th>{% trans "Estado" %}</th>
+                            <th class="text-end">{% trans "Ações" %}</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for horario in horarios %}
+
+                            <tr>
+
+                                <td class="fw-bold">
+                                    {{ horario.get_dia_semana_display }}
+                                </td>
+
+                                <td>
+                                    {{ horario.hora_inicio|time:"H:i" }}
+                                </td>
+
+                                <td>
+                                    {{ horario.hora_fim|time:"H:i" }}
+                                </td>
+
+                                <td>
+                                    {% if horario.intervalo_inicio and horario.intervalo_fim %}
+
+                                        {{ horario.intervalo_inicio|time:"H:i" }}
+                                        –
+                                        {{ horario.intervalo_fim|time:"H:i" }}
+
+                                    {% else %}
+
+                                        <span class="text-muted">
+                                            {% trans "Sem intervalo" %}
+                                        </span>
+
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if horario.ativo %}
+
+                                        <span class="badge text-bg-success">
+                                            {% trans "Ativo" %}
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge text-bg-secondary">
+                                            {% trans "Inativo" %}
+                                        </span>
+
+                                    {% endif %}
+                                </td>
+
+                                <td class="text-end">
+
+                                    <div class="d-flex flex-wrap justify-content-end gap-2">
+
+                                        <a
+                                            href="{% url 'funcionarios:horario_editar' horario.pk %}"
+                                            class="btn btn-outline-dark btn-sm"
+                                            title="{% trans 'Editar horário' %}"
+                                        >
+                                            <i class="bi bi-pencil"></i>
+                                            {% trans "Editar" %}
+                                        </a>
+
+                                        <a
+                                            href="{% url 'funcionarios:horario_eliminar' horario.pk %}"
+                                            class="btn btn-outline-danger btn-sm"
+                                            title="{% trans 'Eliminar horário' %}"
+                                        >
+                                            <i class="bi bi-trash"></i>
+                                            {% trans "Eliminar" %}
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-5">
+
+                <i
+                    class="bi bi-calendar-x text-muted"
+                    style="font-size: 3.5rem;"
+                ></i>
+
+                <h2 class="h5 mt-3">
+                    {% trans "Nenhum horário registado" %}
+                </h2>
+
+                <p class="text-muted">
+                    {% trans "Adicione os dias e horários de trabalho deste funcionário." %}
+                </p>
+
+                <a
+                    href="{% url 'funcionarios:horario_criar' funcionario.pk %}"
+                    class="btn btn-primary border border-2 border-dark"
+                >
+                    <i class="bi bi-plus-circle"></i>
+                    {% trans "Adicionar primeiro horário" %}
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<div class="alert alert-info border border-2 border-dark mt-4">
+
+    <i class="bi bi-info-circle-fill"></i>
+
+    {% trans "Cada funcionário pode ter apenas um horário por dia da semana." %}
+
+</div>
+
+{% endblock %}
