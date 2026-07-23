@@ -89,12 +89,21 @@
 
 <div class="row g-3">
     <div class="col-md-3">
-        <a class="text-decoration-none text-reset" href="{% url 'marcacoes:agenda' %}">
-            <div class="card h-100"><div class="card-body">
+        <div class="card h-100">
+            <div class="card-body">
                 <h5 class="card-title">{% trans "Marcações" %}</h5>
                 <p class="card-text text-muted small">{% trans "Agenda e novos agendamentos." %}</p>
-            </div></div>
-        </a>
+                <a class="stretched-link" href="{% url 'marcacoes:agenda' %}"></a>
+                {% if n_pendentes_antigas %}
+                <a href="{% url 'marcacoes:pendentes' %}"
+                   class="badge rounded-pill text-bg-warning border border-2 border-dark text-decoration-none position-relative"
+                   style="z-index: 2;">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    {% blocktrans count n=n_pendentes_antigas %}{{ n }} por fechar{% plural %}{{ n }} por fechar{% endblocktrans %}
+                </a>
+                {% endif %}
+            </div>
+        </div>
     </div>
     <div class="col-md-3">
         <a class="text-decoration-none text-reset" href="{% url 'funcionarios:lista' %}">

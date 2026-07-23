@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:10+0000\n"
+"POT-Creation-Date: 2026-07-23 10:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgstr "Cancelar"
 msgid "Salvar"
 msgstr "Salvar"
 
-#: clientes/templates/clientes/lista.html:4 templates/base.html:72
+#: clientes/templates/clientes/lista.html:4 templates/base.html:61
 msgid "Clientes"
 msgstr "Clientes"
 
@@ -119,8 +119,6 @@ msgid "Cliente criado com sucesso."
 msgstr "Cliente criado com sucesso."
 
 #: clientes/views.py:30
-#| msgid "%(n)s cliente"
-#| msgid_plural "%(n)s clientes"
 msgid "Novo cliente"
 msgstr "Novo cliente"
 
@@ -156,7 +154,7 @@ msgstr "Idioma"
 msgid "Fuso horário"
 msgstr "Fuso horário"
 
-#: configuracoes/templates/configuracoes/editar.html:4 templates/base.html:84
+#: configuracoes/templates/configuracoes/editar.html:4 templates/base.html:73
 msgid "Configurações"
 msgstr "Configurações"
 
@@ -248,7 +246,7 @@ msgid "Nenhum serviço associado."
 msgstr "Nenhum serviço associado."
 
 #: funcionarios/templates/funcionarios/detalhe.html:103 marcacoes/models.py:50
-#: templates/base.html:61 templates/home.html:94
+#: templates/base.html:60 templates/home.html:94
 msgid "Marcações"
 msgstr "Marcações"
 
@@ -301,8 +299,8 @@ msgid "Eliminar"
 msgstr "Eliminar"
 
 #: funcionarios/templates/funcionarios/lista.html:4
-#: funcionarios/templates/funcionarios/lista.html:8 templates/base.html:74
-#: templates/home.html:102
+#: funcionarios/templates/funcionarios/lista.html:8 templates/base.html:63
+#: templates/home.html:111
 msgid "Funcionários"
 msgstr "Funcionários"
 
@@ -327,7 +325,7 @@ msgid "Filtrar"
 msgstr "Filtrar"
 
 #: funcionarios/templates/funcionarios/lista.html:56
-#: servicos/templates/servicos/lista.html:4 templates/base.html:73
+#: servicos/templates/servicos/lista.html:4 templates/base.html:62
 msgid "Serviços"
 msgstr "Serviços"
 
@@ -343,7 +341,7 @@ msgstr "Ainda não há funcionários registados."
 
 #: funcionarios/templates/registration/login.html:4
 #: funcionarios/templates/registration/login.html:11
-#: funcionarios/templates/registration/login.html:50 templates/base.html:93
+#: funcionarios/templates/registration/login.html:50 templates/base.html:82
 msgid "Entrar"
 msgstr "Entrar"
 
@@ -379,7 +377,7 @@ msgstr ""
 "Não é possível eliminar: este funcionário tem marcações associadas. Em "
 "alternativa, desativa-o."
 
-#: mapa/templates/mapa/mapa.html:4 templates/base.html:75
+#: mapa/templates/mapa/mapa.html:4 templates/base.html:64
 msgid "Mapa do Salão"
 msgstr "Mapa do Salão"
 
@@ -538,7 +536,6 @@ msgid "Não há marcações para este dia."
 msgstr "Não há marcações para este dia."
 
 #: marcacoes/templates/marcacoes/form.html:7
-#| msgid "Selecione um funcionário."
 msgid "Selecione o funcionário, o serviço e o dia."
 msgstr "Selecione o funcionário, o serviço e o dia."
 
@@ -556,13 +553,11 @@ msgstr "Não foi possível consultar os horários."
 
 #: marcacoes/templates/marcacoes/form.html:11
 #: marcacoes/templates/marcacoes/form.html:109
-#| msgid "para o funcionário selecionado"
 msgid "Horário selecionado"
 msgstr "Horário selecionado"
 
 #: marcacoes/templates/marcacoes/form.html:12
 #: marcacoes/templates/marcacoes/form.html:116
-#| msgid "Nenhum serviço associado."
 msgid "Nenhum horário selecionado."
 msgstr "Nenhum horário selecionado."
 
@@ -571,12 +566,10 @@ msgid "Escolher data e horário"
 msgstr "Escolher data e horário"
 
 #: marcacoes/templates/marcacoes/form.html:74
-#| msgid "Dia anterior"
 msgid "Dia pretendido"
 msgstr "Dia pretendido"
 
 #: marcacoes/templates/marcacoes/form.html:90
-#| msgid "Fuso horário"
 msgid "Ver horários"
 msgstr "Ver horários"
 
@@ -586,7 +579,6 @@ msgstr "Escolha o funcionário, o serviço e o dia."
 
 #: marcacoes/templates/marcacoes/pendentes.html:4
 #: marcacoes/templates/marcacoes/pendentes.html:11
-#| msgid "Marcações do dia"
 msgid "Marcações por fechar"
 msgstr "Marcações por fechar"
 
@@ -595,16 +587,11 @@ msgid "Marcações de dias anteriores que continuam por resolver."
 msgstr "Marcações de dias anteriores que continuam por resolver."
 
 #: marcacoes/templates/marcacoes/pendentes.html:18
-#| msgid "Ver agenda"
 msgid "Voltar à agenda"
 msgstr "Voltar à agenda"
 
 #: marcacoes/templates/marcacoes/pendentes.html:26
 #, python-format
-#| msgid ""
-#| "<strong>%(n)s</strong> marcação já passou da hora e continua por fechar."
-#| msgid_plural ""
-#| "<strong>%(n)s</strong> marcações já passaram da hora e continuam por fechar."
 msgid "Há <strong>%(n)s</strong> marcação por fechar de dias anteriores."
 msgid_plural ""
 "Há <strong>%(n)s</strong> marcações por fechar de dias anteriores."
@@ -612,7 +599,6 @@ msgstr[0] "Há <strong>%(n)s</strong> marcação por fechar de dias anteriores."
 msgstr[1] "Há <strong>%(n)s</strong> marcações por fechar de dias anteriores."
 
 #: marcacoes/templates/marcacoes/pendentes.html:77
-#| msgid "Não há marcações por fechar hoje."
 msgid "Não há marcações por fechar de dias anteriores."
 msgstr "Não há marcações por fechar de dias anteriores."
 
@@ -658,27 +644,22 @@ msgid "Marcação alterada para %(estado)s."
 msgstr "Marcação alterada para %(estado)s."
 
 #: servicos/templates/servicos/confirmar_exclusao.html:4
-#| msgid "Serviço"
 msgid "Excluir Serviço"
 msgstr "Excluir Serviço"
 
 #: servicos/templates/servicos/confirmar_exclusao.html:19
-#| msgid "Tem a certeza de que pretende excluir este cliente?"
 msgid "Tem a certeza de que pretende excluir este serviço?"
 msgstr "Tem a certeza de que pretende excluir este serviço?"
 
 #: servicos/templates/servicos/lista.html:7
-#| msgid "Clientes Cadastrados"
 msgid "Serviços Cadastrados"
 msgstr "Serviços Cadastrados"
 
 #: servicos/templates/servicos/lista.html:21
-#| msgid "Preço (€)"
 msgid "Preço"
 msgstr "Preço"
 
 #: servicos/templates/servicos/lista.html:22
-#| msgid "Marcação"
 msgid "Duração"
 msgstr "Duração"
 
@@ -687,39 +668,26 @@ msgid "Status"
 msgstr "Status"
 
 #: servicos/templates/servicos/lista.html:57
-#| msgid "Nenhum serviço associado."
 msgid "Nenhum serviço encontrado."
 msgstr "Nenhum serviço encontrado."
 
 #: servicos/views.py:20
-#| msgid "Marcação criada com sucesso."
 msgid "Serviço criado com sucesso."
 msgstr "Serviço criado com sucesso."
 
 #: servicos/views.py:23
-#| msgid "%(n)s serviço"
-#| msgid_plural "%(n)s serviços"
 msgid "Novo serviço"
 msgstr "Novo serviço"
 
 #: servicos/views.py:32
-#| msgid "Cliente atualizado com sucesso."
 msgid "Serviço atualizado com sucesso."
 msgstr "Serviço atualizado com sucesso."
 
 #: servicos/views.py:42
-#| msgid "Cliente excluído com sucesso."
 msgid "Serviço excluído com sucesso."
 msgstr "Serviço excluído com sucesso."
 
-#: templates/base.html:66
-#, python-format
-msgid "%(n)s marcação de dias anteriores por fechar"
-msgid_plural "%(n)s marcações de dias anteriores por fechar"
-msgstr[0] "%(n)s marcação de dias anteriores por fechar"
-msgstr[1] "%(n)s marcações de dias anteriores por fechar"
-
-#: templates/base.html:89
+#: templates/base.html:78
 msgid "Sair"
 msgstr "Sair"
 
@@ -803,9 +771,23 @@ msgstr "Não há marcações por fechar hoje."
 msgid "Agenda e novos agendamentos."
 msgstr "Agenda e novos agendamentos."
 
-#: templates/home.html:103
+#: templates/home.html:102
+#, python-format
+#| msgid "Marcações por fechar"
+msgid "%(n)s por fechar"
+msgid_plural "%(n)s por fechar"
+msgstr[0] "%(n)s por fechar"
+msgstr[1] "%(n)s por fechar"
+
+#: templates/home.html:112
 msgid "Profissionais do salão."
 msgstr "Profissionais do salão."
+
+#, python-format
+#~ msgid "%(n)s marcação de dias anteriores por fechar"
+#~ msgid_plural "%(n)s marcações de dias anteriores por fechar"
+#~ msgstr[0] "%(n)s marcação de dias anteriores por fechar"
+#~ msgstr[1] "%(n)s marcações de dias anteriores por fechar"
 
 #~ msgid "Nome completo"
 #~ msgstr "Nome completo"
