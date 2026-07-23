@@ -36,6 +36,10 @@ urlpatterns = [
         include("mapa.urls"),
     ),
     path(
+        "servicos/",
+        include("servicos.urls"),
+    ),
+    path(
         "configuracoes/",
         include("configuracoes.urls"),
     ),

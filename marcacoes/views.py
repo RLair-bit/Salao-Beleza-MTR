@@ -4,11 +4,13 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.db.models import Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from clientes.models import Cliente
 from funcionarios.models import Funcionario
@@ -89,11 +91,23 @@ def agenda(request):
     else:
         escolhido = ""
 
+    total_marcacoes = marcacoes.count()
+
+    paginador = Paginator(marcacoes, 20)
+    pagina = paginador.get_page(request.GET.get("pagina"))
+
+    extra = f"dia={dia:%Y-%m-%d}"
+
+    if escolhido:
+        extra += f"&funcionario={escolhido}"
+
     return render(
         request,
         "marcacoes/agenda.html",
         {
-            "marcacoes": marcacoes,
+            "marcacoes": pagina.object_list,
+            "pagina": pagina,
+            "extra": extra,
             "dia": dia,
             "dia_anterior": dia - timedelta(days=1),
             "dia_seguinte": dia + timedelta(days=1),
@@ -102,7 +116,7 @@ def agenda(request):
                 ativo=True
             ),
             "escolhido": escolhido,
-            "total": marcacoes.count(),
+            "total": total_marcacoes,
         },
     )
 
@@ -121,13 +135,13 @@ def horarios_disponiveis(request):
 
     if not funcionario_txt.isdigit():
         return JsonResponse(
-            {"erro": "Selecione um funcionário."},
+            {"erro": _("Selecione um funcionário.")},
             status=400,
         )
 
     if not servico_txt.isdigit():
         return JsonResponse(
-            {"erro": "Selecione um serviço."},
+            {"erro": _("Selecione um serviço.")},
             status=400,
         )
 
@@ -138,7 +152,7 @@ def horarios_disponiveis(request):
         ).date()
     except ValueError:
         return JsonResponse(
-            {"erro": "Selecione uma data válida."},
+            {"erro": _("Selecione uma data válida.")},
             status=400,
         )
 
@@ -163,7 +177,7 @@ def horarios_disponiveis(request):
 
     if not funcionario_existe:
         return JsonResponse(
-            {"erro": "Funcionário não encontrado."},
+            {"erro": _("Funcionário não encontrado.")},
             status=404,
         )
 
@@ -173,13 +187,13 @@ def horarios_disponiveis(request):
 
     if servico is None:
         return JsonResponse(
-            {"erro": "Serviço não encontrado."},
+            {"erro": _("Serviço não encontrado.")},
             status=404,
         )
 
     if servico.duracao_min <= 0:
         return JsonResponse(
-            {"erro": "A duração do serviço é inválida."},
+            {"erro": _("A duração do serviço é inválida.")},
             status=400,
         )
 
@@ -309,7 +323,7 @@ def criar(request):
 
         messages.success(
             request,
-            "Marcação criada com sucesso.",
+            _("Marcação criada com sucesso."),
         )
 
         return redirect("marcacoes:agenda")
@@ -319,7 +333,7 @@ def criar(request):
         "marcacoes/form.html",
         {
             "form": form,
-            "titulo": "Nova marcação",
+            "titulo": _("Nova marcação"),
         },
     )
 
@@ -341,7 +355,7 @@ def editar(request, pk):
 
         messages.success(
             request,
-            "Marcação atualizada.",
+            _("Marcação atualizada."),
         )
 
         return redirect(
@@ -354,7 +368,7 @@ def editar(request, pk):
         "marcacoes/form.html",
         {
             "form": form,
-            "titulo": "Editar marcação",
+            "titulo": _("Editar marcação"),
         },
     )
 
@@ -380,10 +394,9 @@ def mudar_estado(request, pk, estado):
 
             messages.success(
                 request,
-                (
-                    "Marcação alterada para "
-                    f"{estados_validos[estado]}."
-                ),
+                _("Marcação alterada para %(estado)s.") % {
+                    "estado": estados_validos[estado]
+                },
             )
         except ValidationError as erro:
             messages.error(
@@ -461,5 +474,46 @@ def painel(request):
                     ativo=True
                 ).count()
             ),
+        },
+    )
+
+
+@login_required
+def pendentes(request):
+    """
+    Lista as marcações de dias anteriores que ficaram por
+    fechar (continuam no estado "marcada").
+    """
+    inicio_hoje = _tornar_aware(
+        datetime.combine(timezone.localdate(), time.min)
+    )
+
+    marcacoes = (
+        Marcacao.objects
+        .filter(
+            estado="marcada",
+            inicio__lt=inicio_hoje,
+        )
+        .select_related(
+            "cliente",
+            "funcionario",
+            "servico",
+            "posto",
+        )
+        .order_by("-inicio")
+    )
+
+    total_pendentes = marcacoes.count()
+
+    paginador = Paginator(marcacoes, 15)
+    pagina = paginador.get_page(request.GET.get("pagina"))
+
+    return render(
+        request,
+        "marcacoes/pendentes.html",
+        {
+            "marcacoes": pagina.object_list,
+            "pagina": pagina,
+            "total": total_pendentes,
         },
     )
