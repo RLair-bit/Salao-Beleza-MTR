@@ -322,6 +322,15 @@
                         {{ user.username }}
                     </span>
 
+                    <a
+                        href="{% url 'password_change' %}"
+                        class="btn btn-dark btn-sm"
+                        title="{% trans 'Alterar a minha palavra-passe' %}"
+                    >
+                        <i class="bi bi-key"></i>
+                        {% trans "Alterar palavra-passe" %}
+                    </a>
+
                     {% if utilizador_e_administrador %}
                         <a
                             href="{% url 'utilizadores:lista' %}"
