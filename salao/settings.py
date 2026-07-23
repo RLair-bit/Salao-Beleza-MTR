@@ -57,6 +57,10 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+
+    # Proteção das páginas conforme o grupo do utilizador
+    "utilizadores.middleware.ControloAcessoMiddleware",
+
     "configuracoes.middleware.ConfiguracaoMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
