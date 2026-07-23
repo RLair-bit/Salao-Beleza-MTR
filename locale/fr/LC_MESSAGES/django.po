@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 15:14+0000\n"
+"POT-Creation-Date: 2026-07-23 09:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,8 +22,40 @@ msgstr ""
 msgid "Nome completo"
 msgstr "Nom complet"
 
+#: clientes/models.py:7 clientes/templates/clientes/confirmar_exclusao.html:22
+#: clientes/templates/clientes/lista.html:20 funcionarios/models.py:8
+#: funcionarios/templates/funcionarios/detalhe.html:31
+#: funcionarios/templates/funcionarios/lista.html:53
+msgid "Nome"
+msgstr "Nom"
+
+#: clientes/models.py:8 clientes/templates/clientes/confirmar_exclusao.html:25
+#: clientes/templates/clientes/lista.html:21 configuracoes/models.py:48
+#: funcionarios/models.py:9
+#: funcionarios/templates/funcionarios/detalhe.html:36
+msgid "Telefone"
+msgstr "Téléphone"
+
+#: clientes/models.py:9 clientes/templates/clientes/confirmar_exclusao.html:28
+#: clientes/templates/clientes/lista.html:22 configuracoes/models.py:49
+msgid "Email"
+msgstr "E-mail"
+
+#: clientes/models.py:10
+msgid "Observações"
+msgstr "Observations"
+
+#: clientes/models.py:14 funcionarios/templates/funcionarios/detalhe.html:111
+#: marcacoes/models.py:36 marcacoes/templates/marcacoes/agenda.html:53
+msgid "Cliente"
+msgstr "Client"
+
+#: clientes/models.py:15 clientes/templates/clientes/lista.html:4
+#: templates/base.html:61
+msgid "Clientes"
+msgstr "Clients"
+
 #: clientes/templates/clientes/confirmar_exclusao.html:4
-#| msgid "Cliente"
 msgid "Excluir Cliente"
 msgstr "Supprimer le client"
 
@@ -34,24 +66,6 @@ msgstr "Confirmer la suppression"
 #: clientes/templates/clientes/confirmar_exclusao.html:19
 msgid "Tem a certeza de que pretende excluir este cliente?"
 msgstr "Voulez-vous vraiment supprimer ce client ?"
-
-#: clientes/templates/clientes/confirmar_exclusao.html:22
-#: clientes/templates/clientes/lista.html:20
-#: funcionarios/templates/funcionarios/detalhe.html:31
-#: funcionarios/templates/funcionarios/lista.html:53
-msgid "Nome"
-msgstr "Nom"
-
-#: clientes/templates/clientes/confirmar_exclusao.html:25
-#: clientes/templates/clientes/lista.html:21 configuracoes/models.py:48
-#: funcionarios/templates/funcionarios/detalhe.html:36
-msgid "Telefone"
-msgstr "Téléphone"
-
-#: clientes/templates/clientes/confirmar_exclusao.html:28
-#: clientes/templates/clientes/lista.html:22 configuracoes/models.py:49
-msgid "Email"
-msgstr "E-mail"
 
 #: clientes/templates/clientes/confirmar_exclusao.html:34
 msgid "Esta operação não pode ser desfeita."
@@ -75,10 +89,6 @@ msgstr "Annuler"
 #: clientes/templates/clientes/form.html:27
 msgid "Salvar"
 msgstr "Enregistrer"
-
-#: clientes/templates/clientes/lista.html:4 templates/base.html:61
-msgid "Clientes"
-msgstr "Clients"
 
 #: clientes/templates/clientes/lista.html:7
 msgid "Clientes Cadastrados"
@@ -110,12 +120,10 @@ msgid "Adicionar"
 msgstr "Ajouter"
 
 #: clientes/views.py:27
-#| msgid "Configurações guardadas com sucesso."
 msgid "Cliente criado com sucesso."
 msgstr "Client créé avec succès."
 
 #: clientes/views.py:39
-#| msgid "Configurações guardadas com sucesso."
 msgid "Cliente atualizado com sucesso."
 msgstr "Client mis à jour avec succès."
 
@@ -165,10 +173,37 @@ msgstr "Enregistrer"
 msgid "Configurações guardadas com sucesso."
 msgstr "Paramètres enregistrés avec succès."
 
+#: funcionarios/models.py:10
+#: funcionarios/templates/funcionarios/detalhe.html:43
+#: funcionarios/templates/funcionarios/lista.html:54
+msgid "Função"
+msgstr "Fonction"
+
+#: funcionarios/models.py:11
+#: funcionarios/templates/funcionarios/detalhe.html:67
+msgid "Serviços que presta"
+msgstr "Services fournis"
+
+#: funcionarios/models.py:12
+#: funcionarios/templates/funcionarios/detalhe.html:54
+#: funcionarios/templates/funcionarios/lista.html:75 marcacoes/models.py:16
+#: servicos/models.py:9
+msgid "Ativo"
+msgstr "Actif"
+
+#: funcionarios/models.py:15 marcacoes/models.py:38
+#: marcacoes/templates/marcacoes/agenda.html:56
+msgid "Funcionário"
+msgstr "Employé"
+
+#: funcionarios/models.py:16 funcionarios/templates/funcionarios/lista.html:3
+#: funcionarios/templates/funcionarios/lista.html:7 templates/base.html:63
+#: templates/home.html:102
+msgid "Funcionários"
+msgstr "Personnel"
+
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:3
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:10
-#| msgid "%(n)s funcionário"
-#| msgid_plural "%(n)s funcionários"
 msgid "Eliminar funcionário"
 msgstr "Supprimer l'employé"
 
@@ -183,7 +218,6 @@ msgstr "Oui, supprimer"
 
 #: funcionarios/templates/funcionarios/detalhe.html:3
 #: funcionarios/templates/funcionarios/detalhe.html:12
-#| msgid "Todos os funcionários"
 msgid "Detalhes do funcionário"
 msgstr "Détails de l'employé"
 
@@ -207,39 +241,24 @@ msgstr "Retour"
 msgid "Informações profissionais"
 msgstr "Informations professionnelles"
 
-#: funcionarios/templates/funcionarios/detalhe.html:43
-#: funcionarios/templates/funcionarios/lista.html:54
-msgid "Função"
-msgstr "Fonction"
-
 #: funcionarios/templates/funcionarios/detalhe.html:50
 #: funcionarios/templates/funcionarios/detalhe.html:114
-#: funcionarios/templates/funcionarios/lista.html:56
+#: funcionarios/templates/funcionarios/lista.html:56 marcacoes/models.py:44
 #: marcacoes/templates/marcacoes/agenda.html:57
 msgid "Estado"
 msgstr "Statut"
-
-#: funcionarios/templates/funcionarios/detalhe.html:54
-#: funcionarios/templates/funcionarios/lista.html:75
-msgid "Ativo"
-msgstr "Actif"
 
 #: funcionarios/templates/funcionarios/detalhe.html:58
 #: funcionarios/templates/funcionarios/lista.html:79
 msgid "Inativo"
 msgstr "Inactif"
 
-#: funcionarios/templates/funcionarios/detalhe.html:67
-#| msgid "Serviços"
-msgid "Serviços que presta"
-msgstr "Services fournis"
-
 #: funcionarios/templates/funcionarios/detalhe.html:75
 msgid "Nenhum serviço associado."
 msgstr "Aucun service associé."
 
-#: funcionarios/templates/funcionarios/detalhe.html:84 templates/base.html:60
-#: templates/home.html:94
+#: funcionarios/templates/funcionarios/detalhe.html:84 marcacoes/models.py:50
+#: templates/base.html:60 templates/home.html:94
 msgid "Marcações"
 msgstr "Rendez-vous"
 
@@ -250,7 +269,6 @@ msgstr[0] "rendez-vous associé"
 msgstr[1] "rendez-vous associés"
 
 #: funcionarios/templates/funcionarios/detalhe.html:100
-#| msgid "Marcações"
 msgid "Próximas marcações"
 msgstr "Prochains rendez-vous"
 
@@ -259,17 +277,12 @@ msgid "Data"
 msgstr "Date"
 
 #: funcionarios/templates/funcionarios/detalhe.html:110
-#| msgid "Fuso horário"
 msgid "Horário"
 msgstr "Horaire"
 
-#: funcionarios/templates/funcionarios/detalhe.html:111
-#: marcacoes/templates/marcacoes/agenda.html:53
-msgid "Cliente"
-msgstr "Client"
-
-#: funcionarios/templates/funcionarios/detalhe.html:112
-#: marcacoes/templates/marcacoes/agenda.html:54
+#: funcionarios/templates/funcionarios/detalhe.html:112 marcacoes/models.py:40
+#: marcacoes/templates/marcacoes/agenda.html:54 servicos/models.py:6
+#: servicos/models.py:12
 msgid "Serviço"
 msgstr "Service"
 
@@ -278,12 +291,10 @@ msgid "Mesa/Posto"
 msgstr "Poste"
 
 #: funcionarios/templates/funcionarios/detalhe.html:155
-#| msgid "Não há marcações para este dia."
 msgid "Não existem marcações futuras para esta funcionária."
 msgstr "Aucun rendez-vous à venir pour cette employée."
 
 #: funcionarios/templates/funcionarios/detalhe.html:163
-#| msgid "Funcionário"
 msgid "Editar funcionário"
 msgstr "Modifier l'employé"
 
@@ -292,14 +303,7 @@ msgstr "Modifier l'employé"
 msgid "Eliminar"
 msgstr "Supprimer"
 
-#: funcionarios/templates/funcionarios/lista.html:3
-#: funcionarios/templates/funcionarios/lista.html:7 templates/base.html:63
-#: templates/home.html:102
-msgid "Funcionários"
-msgstr "Personnel"
-
 #: funcionarios/templates/funcionarios/lista.html:11
-#| msgid "Todos os funcionários"
 msgid "Novo funcionário"
 msgstr "Nouvel employé"
 
@@ -316,11 +320,11 @@ msgid "Apenas inativos"
 msgstr "Inactifs uniquement"
 
 #: funcionarios/templates/funcionarios/lista.html:44
-#| msgid "Entrar"
 msgid "Filtrar"
 msgstr "Filtrer"
 
-#: funcionarios/templates/funcionarios/lista.html:55 templates/base.html:62
+#: funcionarios/templates/funcionarios/lista.html:55 servicos/models.py:13
+#: templates/base.html:62
 msgid "Serviços"
 msgstr "Services"
 
@@ -331,7 +335,6 @@ msgid "Ver"
 msgstr "Voir"
 
 #: funcionarios/templates/funcionarios/lista.html:105
-#| msgid "para o funcionário selecionado"
 msgid "Ainda não há funcionários registados."
 msgstr "Aucun employé enregistré pour l'instant."
 
@@ -358,12 +361,10 @@ msgid "Funcionário criado com sucesso."
 msgstr "Employé créé avec succès."
 
 #: funcionarios/views.py:99
-#| msgid "Funcionário"
 msgid "Funcionário atualizado."
 msgstr "Employé mis à jour."
 
 #: funcionarios/views.py:119
-#| msgid "para o funcionário selecionado"
 msgid "Funcionário eliminado."
 msgstr "Employé supprimé."
 
@@ -381,7 +382,6 @@ msgstr "Plan du salon"
 
 #: mapa/templates/mapa/mapa.html:7
 #, python-format
-#| msgid "Mapa do Salão"
 msgid "Mapa do Salão — %(data)s"
 msgstr "Plan du salon — %(data)s"
 
@@ -398,7 +398,6 @@ msgid "Mesas livres"
 msgstr "Postes libres"
 
 #: mapa/templates/mapa/mapa.html:40
-#| msgid "Marcações hoje"
 msgid "Marcações do dia"
 msgstr "Rendez-vous du jour"
 
@@ -411,9 +410,68 @@ msgid "Livre"
 msgstr "Libre"
 
 #: mapa/templates/mapa/mapa.html:101
-#| msgid "Não há marcações para este dia."
 msgid "Sem marcações neste dia."
 msgstr "Aucun rendez-vous ce jour."
+
+#: marcacoes/models.py:14
+msgid "Número"
+msgstr "Numéro"
+
+#: marcacoes/models.py:15
+msgid "Descrição"
+msgstr "Description"
+
+#: marcacoes/models.py:19
+msgid "Posto"
+msgstr "Poste"
+
+#: marcacoes/models.py:20
+msgid "Postos"
+msgstr "Postes"
+
+#: marcacoes/models.py:29 marcacoes/templates/marcacoes/agenda.html:77
+msgid "Marcada"
+msgstr "Réservé"
+
+#: marcacoes/models.py:30 marcacoes/templates/marcacoes/agenda.html:71
+#: marcacoes/templates/marcacoes/agenda.html:88
+msgid "Realizada"
+msgstr "Terminé"
+
+#: marcacoes/models.py:31 marcacoes/templates/marcacoes/agenda.html:73
+msgid "Cancelada"
+msgstr "Annulé"
+
+#: marcacoes/models.py:32 marcacoes/templates/marcacoes/agenda.html:75
+#: marcacoes/templates/marcacoes/agenda.html:93
+msgid "Faltou"
+msgstr "Absent"
+
+#: marcacoes/models.py:42
+msgid "Mesa / Posto"
+msgstr "Poste"
+
+#: marcacoes/models.py:43
+msgid "Data e hora"
+msgstr "Date et heure"
+
+#: marcacoes/models.py:45
+msgid "Notas"
+msgstr "Notes"
+
+#: marcacoes/models.py:49
+msgid "Marcação"
+msgstr "Rendez-vous"
+
+#: marcacoes/models.py:88
+#, python-format
+msgid "%(funcionario)s já tem uma marcação das %(inicio)s às %(fim)s."
+msgstr "%(funcionario)s a déjà un rendez-vous de %(inicio)s à %(fim)s."
+
+#: marcacoes/models.py:97
+#, python-format
+msgid "A %(posto)s já está ocupada das %(inicio)s às %(fim)s."
+msgstr "Le %(posto)s est déjà occupé de %(inicio)s à %(fim)s."
 
 #: marcacoes/templates/marcacoes/agenda.html:4
 msgid "Agenda"
@@ -424,7 +482,8 @@ msgstr "Agenda"
 msgid "Agenda de %(data)s"
 msgstr "Agenda du %(data)s"
 
-#: marcacoes/templates/marcacoes/agenda.html:9 templates/home.html:10
+#: marcacoes/templates/marcacoes/agenda.html:9 marcacoes/views.py:323
+#: templates/home.html:10
 msgid "Nova marcação"
 msgstr "Nouveau rendez-vous"
 
@@ -463,31 +522,64 @@ msgstr "Heure"
 msgid "Mesa"
 msgstr "Poste"
 
-#: marcacoes/templates/marcacoes/agenda.html:56
-msgid "Funcionário"
-msgstr "Employé"
-
-#: marcacoes/templates/marcacoes/agenda.html:71
-#: marcacoes/templates/marcacoes/agenda.html:88
-msgid "Realizada"
-msgstr "Terminé"
-
-#: marcacoes/templates/marcacoes/agenda.html:73
-msgid "Cancelada"
-msgstr "Annulé"
-
-#: marcacoes/templates/marcacoes/agenda.html:75
-#: marcacoes/templates/marcacoes/agenda.html:93
-msgid "Faltou"
-msgstr "Absent"
-
-#: marcacoes/templates/marcacoes/agenda.html:77
-msgid "Marcada"
-msgstr "Réservé"
-
 #: marcacoes/templates/marcacoes/agenda.html:109
 msgid "Não há marcações para este dia."
 msgstr "Aucun rendez-vous pour ce jour."
+
+#: marcacoes/views.py:125
+#| msgid "Eliminar funcionário"
+msgid "Selecione um funcionário."
+msgstr "Veuillez sélectionner un employé."
+
+#: marcacoes/views.py:131
+msgid "Selecione um serviço."
+msgstr "Veuillez sélectionner un service."
+
+#: marcacoes/views.py:142
+msgid "Selecione uma data válida."
+msgstr "Veuillez sélectionner une date valide."
+
+#: marcacoes/views.py:167
+#| msgid "Funcionário eliminado."
+msgid "Funcionário não encontrado."
+msgstr "Employé introuvable."
+
+#: marcacoes/views.py:177
+msgid "Serviço não encontrado."
+msgstr "Service introuvable."
+
+#: marcacoes/views.py:183
+msgid "A duração do serviço é inválida."
+msgstr "La durée du service est invalide."
+
+#: marcacoes/views.py:313
+#| msgid "Funcionário criado com sucesso."
+msgid "Marcação criada com sucesso."
+msgstr "Rendez-vous créé avec succès."
+
+#: marcacoes/views.py:345
+#| msgid "marcação associada"
+#| msgid_plural "marcações associadas"
+msgid "Marcação atualizada."
+msgstr "Rendez-vous mis à jour."
+
+#: marcacoes/views.py:358
+#| msgid "Nova marcação"
+msgid "Editar marcação"
+msgstr "Modifier le rendez-vous"
+
+#: marcacoes/views.py:384
+#, python-format
+msgid "Marcação alterada para %(estado)s."
+msgstr "Rendez-vous modifié en %(estado)s."
+
+#: servicos/models.py:7
+msgid "Preço (€)"
+msgstr "Prix (€)"
+
+#: servicos/models.py:8
+msgid "Duração (minutos)"
+msgstr "Durée (minutes)"
 
 #: templates/base.html:78
 msgid "Sair"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 15:14+0000\n"
+"POT-Creation-Date: 2026-07-23 09:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,8 +22,40 @@ msgstr ""
 msgid "Nome completo"
 msgstr "Full name"
 
+#: clientes/models.py:7 clientes/templates/clientes/confirmar_exclusao.html:22
+#: clientes/templates/clientes/lista.html:20 funcionarios/models.py:8
+#: funcionarios/templates/funcionarios/detalhe.html:31
+#: funcionarios/templates/funcionarios/lista.html:53
+msgid "Nome"
+msgstr "Name"
+
+#: clientes/models.py:8 clientes/templates/clientes/confirmar_exclusao.html:25
+#: clientes/templates/clientes/lista.html:21 configuracoes/models.py:48
+#: funcionarios/models.py:9
+#: funcionarios/templates/funcionarios/detalhe.html:36
+msgid "Telefone"
+msgstr "Phone"
+
+#: clientes/models.py:9 clientes/templates/clientes/confirmar_exclusao.html:28
+#: clientes/templates/clientes/lista.html:22 configuracoes/models.py:49
+msgid "Email"
+msgstr "Email"
+
+#: clientes/models.py:10
+msgid "Observações"
+msgstr "Notes"
+
+#: clientes/models.py:14 funcionarios/templates/funcionarios/detalhe.html:111
+#: marcacoes/models.py:36 marcacoes/templates/marcacoes/agenda.html:53
+msgid "Cliente"
+msgstr "Client"
+
+#: clientes/models.py:15 clientes/templates/clientes/lista.html:4
+#: templates/base.html:61
+msgid "Clientes"
+msgstr "Clients"
+
 #: clientes/templates/clientes/confirmar_exclusao.html:4
-#| msgid "Cliente"
 msgid "Excluir Cliente"
 msgstr "Delete Client"
 
@@ -34,24 +66,6 @@ msgstr "Confirm deletion"
 #: clientes/templates/clientes/confirmar_exclusao.html:19
 msgid "Tem a certeza de que pretende excluir este cliente?"
 msgstr "Are you sure you want to delete this client?"
-
-#: clientes/templates/clientes/confirmar_exclusao.html:22
-#: clientes/templates/clientes/lista.html:20
-#: funcionarios/templates/funcionarios/detalhe.html:31
-#: funcionarios/templates/funcionarios/lista.html:53
-msgid "Nome"
-msgstr "Name"
-
-#: clientes/templates/clientes/confirmar_exclusao.html:25
-#: clientes/templates/clientes/lista.html:21 configuracoes/models.py:48
-#: funcionarios/templates/funcionarios/detalhe.html:36
-msgid "Telefone"
-msgstr "Phone"
-
-#: clientes/templates/clientes/confirmar_exclusao.html:28
-#: clientes/templates/clientes/lista.html:22 configuracoes/models.py:49
-msgid "Email"
-msgstr "Email"
 
 #: clientes/templates/clientes/confirmar_exclusao.html:34
 msgid "Esta operação não pode ser desfeita."
@@ -75,10 +89,6 @@ msgstr "Cancel"
 #: clientes/templates/clientes/form.html:27
 msgid "Salvar"
 msgstr "Save"
-
-#: clientes/templates/clientes/lista.html:4 templates/base.html:61
-msgid "Clientes"
-msgstr "Clients"
 
 #: clientes/templates/clientes/lista.html:7
 msgid "Clientes Cadastrados"
@@ -110,12 +120,10 @@ msgid "Adicionar"
 msgstr "Add"
 
 #: clientes/views.py:27
-#| msgid "Configurações guardadas com sucesso."
 msgid "Cliente criado com sucesso."
 msgstr "Client created successfully."
 
 #: clientes/views.py:39
-#| msgid "Configurações guardadas com sucesso."
 msgid "Cliente atualizado com sucesso."
 msgstr "Client updated successfully."
 
@@ -165,10 +173,37 @@ msgstr "Save"
 msgid "Configurações guardadas com sucesso."
 msgstr "Settings saved successfully."
 
+#: funcionarios/models.py:10
+#: funcionarios/templates/funcionarios/detalhe.html:43
+#: funcionarios/templates/funcionarios/lista.html:54
+msgid "Função"
+msgstr "Role"
+
+#: funcionarios/models.py:11
+#: funcionarios/templates/funcionarios/detalhe.html:67
+msgid "Serviços que presta"
+msgstr "Services provided"
+
+#: funcionarios/models.py:12
+#: funcionarios/templates/funcionarios/detalhe.html:54
+#: funcionarios/templates/funcionarios/lista.html:75 marcacoes/models.py:16
+#: servicos/models.py:9
+msgid "Ativo"
+msgstr "Active"
+
+#: funcionarios/models.py:15 marcacoes/models.py:38
+#: marcacoes/templates/marcacoes/agenda.html:56
+msgid "Funcionário"
+msgstr "Staff member"
+
+#: funcionarios/models.py:16 funcionarios/templates/funcionarios/lista.html:3
+#: funcionarios/templates/funcionarios/lista.html:7 templates/base.html:63
+#: templates/home.html:102
+msgid "Funcionários"
+msgstr "Staff"
+
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:3
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:10
-#| msgid "%(n)s funcionário"
-#| msgid_plural "%(n)s funcionários"
 msgid "Eliminar funcionário"
 msgstr "Delete staff member"
 
@@ -183,7 +218,6 @@ msgstr "Yes, delete"
 
 #: funcionarios/templates/funcionarios/detalhe.html:3
 #: funcionarios/templates/funcionarios/detalhe.html:12
-#| msgid "Todos os funcionários"
 msgid "Detalhes do funcionário"
 msgstr "Staff member details"
 
@@ -207,39 +241,24 @@ msgstr "Back"
 msgid "Informações profissionais"
 msgstr "Professional information"
 
-#: funcionarios/templates/funcionarios/detalhe.html:43
-#: funcionarios/templates/funcionarios/lista.html:54
-msgid "Função"
-msgstr "Role"
-
 #: funcionarios/templates/funcionarios/detalhe.html:50
 #: funcionarios/templates/funcionarios/detalhe.html:114
-#: funcionarios/templates/funcionarios/lista.html:56
+#: funcionarios/templates/funcionarios/lista.html:56 marcacoes/models.py:44
 #: marcacoes/templates/marcacoes/agenda.html:57
 msgid "Estado"
 msgstr "Status"
-
-#: funcionarios/templates/funcionarios/detalhe.html:54
-#: funcionarios/templates/funcionarios/lista.html:75
-msgid "Ativo"
-msgstr "Active"
 
 #: funcionarios/templates/funcionarios/detalhe.html:58
 #: funcionarios/templates/funcionarios/lista.html:79
 msgid "Inativo"
 msgstr "Inactive"
 
-#: funcionarios/templates/funcionarios/detalhe.html:67
-#| msgid "Serviços"
-msgid "Serviços que presta"
-msgstr "Services provided"
-
 #: funcionarios/templates/funcionarios/detalhe.html:75
 msgid "Nenhum serviço associado."
 msgstr "No service associated."
 
-#: funcionarios/templates/funcionarios/detalhe.html:84 templates/base.html:60
-#: templates/home.html:94
+#: funcionarios/templates/funcionarios/detalhe.html:84 marcacoes/models.py:50
+#: templates/base.html:60 templates/home.html:94
 msgid "Marcações"
 msgstr "Appointments"
 
@@ -250,7 +269,6 @@ msgstr[0] "appointment associated"
 msgstr[1] "appointments associated"
 
 #: funcionarios/templates/funcionarios/detalhe.html:100
-#| msgid "Marcações"
 msgid "Próximas marcações"
 msgstr "Upcoming appointments"
 
@@ -259,17 +277,12 @@ msgid "Data"
 msgstr "Date"
 
 #: funcionarios/templates/funcionarios/detalhe.html:110
-#| msgid "Fuso horário"
 msgid "Horário"
 msgstr "Time"
 
-#: funcionarios/templates/funcionarios/detalhe.html:111
-#: marcacoes/templates/marcacoes/agenda.html:53
-msgid "Cliente"
-msgstr "Client"
-
-#: funcionarios/templates/funcionarios/detalhe.html:112
-#: marcacoes/templates/marcacoes/agenda.html:54
+#: funcionarios/templates/funcionarios/detalhe.html:112 marcacoes/models.py:40
+#: marcacoes/templates/marcacoes/agenda.html:54 servicos/models.py:6
+#: servicos/models.py:12
 msgid "Serviço"
 msgstr "Service"
 
@@ -278,12 +291,10 @@ msgid "Mesa/Posto"
 msgstr "Station"
 
 #: funcionarios/templates/funcionarios/detalhe.html:155
-#| msgid "Não há marcações para este dia."
 msgid "Não existem marcações futuras para esta funcionária."
 msgstr "There are no upcoming appointments for this staff member."
 
 #: funcionarios/templates/funcionarios/detalhe.html:163
-#| msgid "Funcionário"
 msgid "Editar funcionário"
 msgstr "Edit staff member"
 
@@ -292,14 +303,7 @@ msgstr "Edit staff member"
 msgid "Eliminar"
 msgstr "Delete"
 
-#: funcionarios/templates/funcionarios/lista.html:3
-#: funcionarios/templates/funcionarios/lista.html:7 templates/base.html:63
-#: templates/home.html:102
-msgid "Funcionários"
-msgstr "Staff"
-
 #: funcionarios/templates/funcionarios/lista.html:11
-#| msgid "Todos os funcionários"
 msgid "Novo funcionário"
 msgstr "New staff member"
 
@@ -316,11 +320,11 @@ msgid "Apenas inativos"
 msgstr "Inactive only"
 
 #: funcionarios/templates/funcionarios/lista.html:44
-#| msgid "Entrar"
 msgid "Filtrar"
 msgstr "Filter"
 
-#: funcionarios/templates/funcionarios/lista.html:55 templates/base.html:62
+#: funcionarios/templates/funcionarios/lista.html:55 servicos/models.py:13
+#: templates/base.html:62
 msgid "Serviços"
 msgstr "Services"
 
@@ -331,7 +335,6 @@ msgid "Ver"
 msgstr "View"
 
 #: funcionarios/templates/funcionarios/lista.html:105
-#| msgid "para o funcionário selecionado"
 msgid "Ainda não há funcionários registados."
 msgstr "No staff members registered yet."
 
@@ -358,12 +361,10 @@ msgid "Funcionário criado com sucesso."
 msgstr "Staff member created successfully."
 
 #: funcionarios/views.py:99
-#| msgid "Funcionário"
 msgid "Funcionário atualizado."
 msgstr "Staff member updated."
 
 #: funcionarios/views.py:119
-#| msgid "para o funcionário selecionado"
 msgid "Funcionário eliminado."
 msgstr "Staff member deleted."
 
@@ -381,7 +382,6 @@ msgstr "Salon Map"
 
 #: mapa/templates/mapa/mapa.html:7
 #, python-format
-#| msgid "Mapa do Salão"
 msgid "Mapa do Salão — %(data)s"
 msgstr "Salon Map — %(data)s"
 
@@ -398,7 +398,6 @@ msgid "Mesas livres"
 msgstr "Free stations"
 
 #: mapa/templates/mapa/mapa.html:40
-#| msgid "Marcações hoje"
 msgid "Marcações do dia"
 msgstr "Appointments today"
 
@@ -411,9 +410,69 @@ msgid "Livre"
 msgstr "Free"
 
 #: mapa/templates/mapa/mapa.html:101
-#| msgid "Não há marcações para este dia."
 msgid "Sem marcações neste dia."
 msgstr "No appointments this day."
+
+#: marcacoes/models.py:14
+msgid "Número"
+msgstr "Number"
+
+#: marcacoes/models.py:15
+msgid "Descrição"
+msgstr "Description"
+
+#: marcacoes/models.py:19
+msgid "Posto"
+msgstr "Station"
+
+#: marcacoes/models.py:20
+msgid "Postos"
+msgstr "Stations"
+
+#: marcacoes/models.py:29 marcacoes/templates/marcacoes/agenda.html:77
+msgid "Marcada"
+msgstr "Booked"
+
+#: marcacoes/models.py:30 marcacoes/templates/marcacoes/agenda.html:71
+#: marcacoes/templates/marcacoes/agenda.html:88
+msgid "Realizada"
+msgstr "Completed"
+
+#: marcacoes/models.py:31 marcacoes/templates/marcacoes/agenda.html:73
+msgid "Cancelada"
+msgstr "Cancelled"
+
+#: marcacoes/models.py:32 marcacoes/templates/marcacoes/agenda.html:75
+#: marcacoes/templates/marcacoes/agenda.html:93
+msgid "Faltou"
+msgstr "No-show"
+
+#: marcacoes/models.py:42
+msgid "Mesa / Posto"
+msgstr "Station"
+
+#: marcacoes/models.py:43
+msgid "Data e hora"
+msgstr "Date and time"
+
+#: marcacoes/models.py:45
+msgid "Notas"
+msgstr "Notes"
+
+#: marcacoes/models.py:49
+msgid "Marcação"
+msgstr "Appointment"
+
+#: marcacoes/models.py:88
+#, python-format
+msgid "%(funcionario)s já tem uma marcação das %(inicio)s às %(fim)s."
+msgstr ""
+"%(funcionario)s already has an appointment from %(inicio)s to %(fim)s."
+
+#: marcacoes/models.py:97
+#, python-format
+msgid "A %(posto)s já está ocupada das %(inicio)s às %(fim)s."
+msgstr "%(posto)s is already occupied from %(inicio)s to %(fim)s."
 
 #: marcacoes/templates/marcacoes/agenda.html:4
 msgid "Agenda"
@@ -424,7 +483,8 @@ msgstr "Schedule"
 msgid "Agenda de %(data)s"
 msgstr "Schedule for %(data)s"
 
-#: marcacoes/templates/marcacoes/agenda.html:9 templates/home.html:10
+#: marcacoes/templates/marcacoes/agenda.html:9 marcacoes/views.py:323
+#: templates/home.html:10
 msgid "Nova marcação"
 msgstr "New appointment"
 
@@ -463,31 +523,64 @@ msgstr "Time"
 msgid "Mesa"
 msgstr "Station"
 
-#: marcacoes/templates/marcacoes/agenda.html:56
-msgid "Funcionário"
-msgstr "Staff member"
-
-#: marcacoes/templates/marcacoes/agenda.html:71
-#: marcacoes/templates/marcacoes/agenda.html:88
-msgid "Realizada"
-msgstr "Completed"
-
-#: marcacoes/templates/marcacoes/agenda.html:73
-msgid "Cancelada"
-msgstr "Cancelled"
-
-#: marcacoes/templates/marcacoes/agenda.html:75
-#: marcacoes/templates/marcacoes/agenda.html:93
-msgid "Faltou"
-msgstr "No-show"
-
-#: marcacoes/templates/marcacoes/agenda.html:77
-msgid "Marcada"
-msgstr "Booked"
-
 #: marcacoes/templates/marcacoes/agenda.html:109
 msgid "Não há marcações para este dia."
 msgstr "No appointments for this day."
+
+#: marcacoes/views.py:125
+#| msgid "Eliminar funcionário"
+msgid "Selecione um funcionário."
+msgstr "Please select a staff member."
+
+#: marcacoes/views.py:131
+msgid "Selecione um serviço."
+msgstr "Please select a service."
+
+#: marcacoes/views.py:142
+msgid "Selecione uma data válida."
+msgstr "Please select a valid date."
+
+#: marcacoes/views.py:167
+#| msgid "Funcionário eliminado."
+msgid "Funcionário não encontrado."
+msgstr "Staff member not found."
+
+#: marcacoes/views.py:177
+msgid "Serviço não encontrado."
+msgstr "Service not found."
+
+#: marcacoes/views.py:183
+msgid "A duração do serviço é inválida."
+msgstr "The service duration is invalid."
+
+#: marcacoes/views.py:313
+#| msgid "Funcionário criado com sucesso."
+msgid "Marcação criada com sucesso."
+msgstr "Appointment created successfully."
+
+#: marcacoes/views.py:345
+#| msgid "marcação associada"
+#| msgid_plural "marcações associadas"
+msgid "Marcação atualizada."
+msgstr "Appointment updated."
+
+#: marcacoes/views.py:358
+#| msgid "Nova marcação"
+msgid "Editar marcação"
+msgstr "Edit appointment"
+
+#: marcacoes/views.py:384
+#, python-format
+msgid "Marcação alterada para %(estado)s."
+msgstr "Appointment changed to %(estado)s."
+
+#: servicos/models.py:7
+msgid "Preço (€)"
+msgstr "Price (€)"
+
+#: servicos/models.py:8
+msgid "Duração (minutos)"
+msgstr "Duration (minutes)"
 
 #: templates/base.html:78
 msgid "Sair"
@@ -576,144 +669,3 @@ msgstr "Schedule and new bookings."
 #: templates/home.html:103
 msgid "Profissionais do salão."
 msgstr "Salon professionals."
-
-msgid "Novo funcionário"
-msgstr "New staff member"
-
-msgid "Procurar por nome..."
-msgstr "Search by name..."
-
-msgid "Todos os estados"
-msgstr "All statuses"
-
-msgid "Apenas ativos"
-msgstr "Active only"
-
-msgid "Apenas inativos"
-msgstr "Inactive only"
-
-msgid "Filtrar"
-msgstr "Filter"
-
-msgid "Nome"
-msgstr "Name"
-
-msgid "Função"
-msgstr "Role"
-
-msgid "Ativo"
-msgstr "Active"
-
-msgid "Inativo"
-msgstr "Inactive"
-
-msgid "Eliminar"
-msgstr "Delete"
-
-msgid "Ainda não há funcionários registados."
-msgstr "No staff members have been registered yet."
-
-msgid "Detalhes do funcionário"
-msgstr "Staff details"
-
-msgid "Não indicado"
-msgstr "Not provided"
-
-msgid "Não indicada"
-msgstr "Not provided"
-
-msgid "Não definido"
-msgstr "Not defined"
-
-msgid "Voltar"
-msgstr "Back"
-
-msgid "Informações profissionais"
-msgstr "Professional information"
-
-msgid "Serviços que presta"
-msgstr "Services provided"
-
-msgid "Nenhum serviço associado."
-msgstr "No services assigned."
-
-msgid "Próximas marcações"
-msgstr "Upcoming appointments"
-
-msgid "Data"
-msgstr "Date"
-
-msgid "Horário"
-msgstr "Time"
-
-msgid "Mesa/Posto"
-msgstr "Table/Station"
-
-msgid "Não existem marcações futuras para esta funcionária."
-msgstr "There are no upcoming appointments for this staff member."
-
-msgid "Editar funcionário"
-msgstr "Edit staff member"
-
-msgid "Eliminar funcionário"
-msgstr "Delete staff member"
-
-msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
-msgstr "Are you sure you want to delete <b>%(nome)s</b>?"
-
-msgid "Sim, eliminar"
-msgstr "Yes, delete"
-
-msgid "Utilizador ou password incorretos."
-msgstr "Incorrect username or password."
-
-msgid "Utilizador"
-msgstr "Username"
-
-msgid "Password"
-msgstr "Password"
-
-msgid "Mapa do Salão — %(data)s"
-msgstr "Salon Map — %(data)s"
-
-msgid "Total de mesas"
-msgstr "Total tables"
-
-msgid "Mesas ocupadas"
-msgstr "Occupied tables"
-
-msgid "Mesas livres"
-msgstr "Available tables"
-
-msgid "Marcações do dia"
-msgstr "Appointments today"
-
-msgid "Dia"
-msgstr "Day"
-
-msgid "Livre"
-msgstr "Available"
-
-msgid "Sem marcações neste dia."
-msgstr "No appointments on this day."
-
-msgid "Funcionário criado com sucesso."
-msgstr "Staff member created successfully."
-
-msgid "Funcionário atualizado."
-msgstr "Staff member updated."
-
-msgid "Funcionário eliminado."
-msgstr "Staff member deleted."
-
-msgid ""
-"Não é possível eliminar: este funcionário tem marcações associadas. Em "
-"alternativa, desativa-o."
-msgstr ""
-"This staff member cannot be deleted because they have associated "
-"appointments. Deactivate them instead."
-
-msgid "marcação associada"
-msgid_plural "marcações associadas"
-msgstr[0] "appointment associated"
-msgstr[1] "appointments associated"

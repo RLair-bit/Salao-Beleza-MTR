@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from clientes.models import Cliente
 from funcionarios.models import Funcionario
@@ -121,13 +122,13 @@ def horarios_disponiveis(request):
 
     if not funcionario_txt.isdigit():
         return JsonResponse(
-            {"erro": "Selecione um funcionário."},
+            {"erro": _("Selecione um funcionário.")},
             status=400,
         )
 
     if not servico_txt.isdigit():
         return JsonResponse(
-            {"erro": "Selecione um serviço."},
+            {"erro": _("Selecione um serviço.")},
             status=400,
         )
 
@@ -138,7 +139,7 @@ def horarios_disponiveis(request):
         ).date()
     except ValueError:
         return JsonResponse(
-            {"erro": "Selecione uma data válida."},
+            {"erro": _("Selecione uma data válida.")},
             status=400,
         )
 
@@ -163,7 +164,7 @@ def horarios_disponiveis(request):
 
     if not funcionario_existe:
         return JsonResponse(
-            {"erro": "Funcionário não encontrado."},
+            {"erro": _("Funcionário não encontrado.")},
             status=404,
         )
 
@@ -173,13 +174,13 @@ def horarios_disponiveis(request):
 
     if servico is None:
         return JsonResponse(
-            {"erro": "Serviço não encontrado."},
+            {"erro": _("Serviço não encontrado.")},
             status=404,
         )
 
     if servico.duracao_min <= 0:
         return JsonResponse(
-            {"erro": "A duração do serviço é inválida."},
+            {"erro": _("A duração do serviço é inválida.")},
             status=400,
         )
 
@@ -309,7 +310,7 @@ def criar(request):
 
         messages.success(
             request,
-            "Marcação criada com sucesso.",
+            _("Marcação criada com sucesso."),
         )
 
         return redirect("marcacoes:agenda")
@@ -319,7 +320,7 @@ def criar(request):
         "marcacoes/form.html",
         {
             "form": form,
-            "titulo": "Nova marcação",
+            "titulo": _("Nova marcação"),
         },
     )
 
@@ -341,7 +342,7 @@ def editar(request, pk):
 
         messages.success(
             request,
-            "Marcação atualizada.",
+            _("Marcação atualizada."),
         )
 
         return redirect(
@@ -354,7 +355,7 @@ def editar(request, pk):
         "marcacoes/form.html",
         {
             "form": form,
-            "titulo": "Editar marcação",
+            "titulo": _("Editar marcação"),
         },
     )
 
@@ -380,10 +381,9 @@ def mudar_estado(request, pk, estado):
 
             messages.success(
                 request,
-                (
-                    "Marcação alterada para "
-                    f"{estados_validos[estado]}."
-                ),
+                _("Marcação alterada para %(estado)s.") % {
+                    "estado": estados_validos[estado]
+                },
             )
         except ValidationError as erro:
             messages.error(
