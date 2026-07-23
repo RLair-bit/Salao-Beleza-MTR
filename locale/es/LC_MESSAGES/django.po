@@ -200,7 +200,7 @@ msgstr "Empleado"
 #: funcionarios/templates/funcionarios/lista.html:7 templates/base.html:63
 #: templates/home.html:102
 msgid "Funcionários"
-msgstr "Empleados"
+msgstr "Personal"
 
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:3
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:10
@@ -210,7 +210,7 @@ msgstr "Eliminar empleado"
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:15
 #, python-format
 msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
-msgstr "¿Seguro que quieres eliminar a <b>%(nome)s</b>?"
+msgstr "¿Estás seguro de que quieres eliminar <b>%(nome)s</b>?"
 
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:22
 msgid "Sim, eliminar"
@@ -292,7 +292,7 @@ msgstr "Mesa/Puesto"
 
 #: funcionarios/templates/funcionarios/detalhe.html:155
 msgid "Não existem marcações futuras para esta funcionária."
-msgstr "No hay citas futuras para esta empleada."
+msgstr "No existen próximas citas para esta empleada."
 
 #: funcionarios/templates/funcionarios/detalhe.html:163
 msgid "Editar funcionário"
@@ -336,13 +336,13 @@ msgstr "Ver"
 
 #: funcionarios/templates/funcionarios/lista.html:105
 msgid "Ainda não há funcionários registados."
-msgstr "Aún no hay empleados registrados."
+msgstr "Todavía no hay empleados registrados."
 
 #: funcionarios/templates/registration/login.html:3
 #: funcionarios/templates/registration/login.html:10
 #: funcionarios/templates/registration/login.html:49 templates/base.html:82
 msgid "Entrar"
-msgstr "Entrar"
+msgstr "Iniciar sesión"
 
 #: funcionarios/templates/registration/login.html:16
 msgid "Utilizador ou password incorretos."
@@ -358,7 +358,7 @@ msgstr "Contraseña"
 
 #: funcionarios/views.py:75
 msgid "Funcionário criado com sucesso."
-msgstr "Empleado creado con éxito."
+msgstr "Empleado creado correctamente."
 
 #: funcionarios/views.py:99
 msgid "Funcionário atualizado."
@@ -411,7 +411,7 @@ msgstr "Libre"
 
 #: mapa/templates/mapa/mapa.html:101
 msgid "Sem marcações neste dia."
-msgstr "Sin citas este día."
+msgstr "No hay citas este día."
 
 #: marcacoes/models.py:14
 msgid "Número"

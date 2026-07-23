@@ -219,7 +219,7 @@ msgstr "Yes, delete"
 #: funcionarios/templates/funcionarios/detalhe.html:3
 #: funcionarios/templates/funcionarios/detalhe.html:12
 msgid "Detalhes do funcionário"
-msgstr "Staff member details"
+msgstr "Staff details"
 
 #: funcionarios/templates/funcionarios/detalhe.html:6
 msgid "Não indicado"
@@ -231,7 +231,7 @@ msgstr "Not provided"
 
 #: funcionarios/templates/funcionarios/detalhe.html:8
 msgid "Não definido"
-msgstr "Not set"
+msgstr "Not defined"
 
 #: funcionarios/templates/funcionarios/detalhe.html:17
 msgid "Voltar"
@@ -255,7 +255,7 @@ msgstr "Inactive"
 
 #: funcionarios/templates/funcionarios/detalhe.html:75
 msgid "Nenhum serviço associado."
-msgstr "No service associated."
+msgstr "No services assigned."
 
 #: funcionarios/templates/funcionarios/detalhe.html:84 marcacoes/models.py:50
 #: templates/base.html:60 templates/home.html:94
@@ -288,7 +288,7 @@ msgstr "Service"
 
 #: funcionarios/templates/funcionarios/detalhe.html:113
 msgid "Mesa/Posto"
-msgstr "Station"
+msgstr "Table/Station"
 
 #: funcionarios/templates/funcionarios/detalhe.html:155
 msgid "Não existem marcações futuras para esta funcionária."
@@ -336,7 +336,7 @@ msgstr "View"
 
 #: funcionarios/templates/funcionarios/lista.html:105
 msgid "Ainda não há funcionários registados."
-msgstr "No staff members registered yet."
+msgstr "No staff members have been registered yet."
 
 #: funcionarios/templates/registration/login.html:3
 #: funcionarios/templates/registration/login.html:10
@@ -373,8 +373,8 @@ msgid ""
 "Não é possível eliminar: este funcionário tem marcações associadas. Em "
 "alternativa, desativa-o."
 msgstr ""
-"Cannot delete: this staff member has associated appointments. Deactivate "
-"them instead."
+"This staff member cannot be deleted because they have associated "
+"appointments. Deactivate them instead."
 
 #: mapa/templates/mapa/mapa.html:3 templates/base.html:64
 msgid "Mapa do Salão"
@@ -387,15 +387,15 @@ msgstr "Salon Map — %(data)s"
 
 #: mapa/templates/mapa/mapa.html:13
 msgid "Total de mesas"
-msgstr "Total stations"
+msgstr "Total tables"
 
 #: mapa/templates/mapa/mapa.html:22
 msgid "Mesas ocupadas"
-msgstr "Occupied stations"
+msgstr "Occupied tables"
 
 #: mapa/templates/mapa/mapa.html:31
 msgid "Mesas livres"
-msgstr "Free stations"
+msgstr "Available tables"
 
 #: mapa/templates/mapa/mapa.html:40
 msgid "Marcações do dia"
@@ -407,11 +407,11 @@ msgstr "Day"
 
 #: mapa/templates/mapa/mapa.html:78
 msgid "Livre"
-msgstr "Free"
+msgstr "Available"
 
 #: mapa/templates/mapa/mapa.html:101
 msgid "Sem marcações neste dia."
-msgstr "No appointments this day."
+msgstr "No appointments on this day."
 
 #: marcacoes/models.py:14
 msgid "Número"

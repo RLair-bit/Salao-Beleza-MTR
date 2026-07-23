@@ -182,7 +182,7 @@ msgstr "Fonction"
 #: funcionarios/models.py:11
 #: funcionarios/templates/funcionarios/detalhe.html:67
 msgid "Serviços que presta"
-msgstr "Services fournis"
+msgstr "Services proposés"
 
 #: funcionarios/models.py:12
 #: funcionarios/templates/funcionarios/detalhe.html:54
@@ -205,12 +205,12 @@ msgstr "Personnel"
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:3
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:10
 msgid "Eliminar funcionário"
-msgstr "Supprimer l'employé"
+msgstr "Supprimer le membre du personnel"
 
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:15
 #, python-format
 msgid "Tens a certeza de que queres eliminar <b>%(nome)s</b>?"
-msgstr "Voulez-vous vraiment supprimer <b>%(nome)s</b> ?"
+msgstr "Êtes-vous sûr de vouloir supprimer <b>%(nome)s</b> ?"
 
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:22
 msgid "Sim, eliminar"
@@ -219,7 +219,7 @@ msgstr "Oui, supprimer"
 #: funcionarios/templates/funcionarios/detalhe.html:3
 #: funcionarios/templates/funcionarios/detalhe.html:12
 msgid "Detalhes do funcionário"
-msgstr "Détails de l'employé"
+msgstr "Détails du membre du personnel"
 
 #: funcionarios/templates/funcionarios/detalhe.html:6
 msgid "Não indicado"
@@ -288,15 +288,15 @@ msgstr "Service"
 
 #: funcionarios/templates/funcionarios/detalhe.html:113
 msgid "Mesa/Posto"
-msgstr "Poste"
+msgstr "Table/Poste"
 
 #: funcionarios/templates/funcionarios/detalhe.html:155
 msgid "Não existem marcações futuras para esta funcionária."
-msgstr "Aucun rendez-vous à venir pour cette employée."
+msgstr "Il n'y a aucun rendez-vous à venir pour cette employée."
 
 #: funcionarios/templates/funcionarios/detalhe.html:163
 msgid "Editar funcionário"
-msgstr "Modifier l'employé"
+msgstr "Modifier le membre du personnel"
 
 #: funcionarios/templates/funcionarios/detalhe.html:168
 #: funcionarios/templates/funcionarios/lista.html:97
@@ -305,7 +305,7 @@ msgstr "Supprimer"
 
 #: funcionarios/templates/funcionarios/lista.html:11
 msgid "Novo funcionário"
-msgstr "Nouvel employé"
+msgstr "Nouveau membre du personnel"
 
 #: funcionarios/templates/funcionarios/lista.html:27
 msgid "Todos os estados"
@@ -336,21 +336,21 @@ msgstr "Voir"
 
 #: funcionarios/templates/funcionarios/lista.html:105
 msgid "Ainda não há funcionários registados."
-msgstr "Aucun employé enregistré pour l'instant."
+msgstr "Aucun membre du personnel n'est encore enregistré."
 
 #: funcionarios/templates/registration/login.html:3
 #: funcionarios/templates/registration/login.html:10
 #: funcionarios/templates/registration/login.html:49 templates/base.html:82
 msgid "Entrar"
-msgstr "Connexion"
+msgstr "Se connecter"
 
 #: funcionarios/templates/registration/login.html:16
 msgid "Utilizador ou password incorretos."
-msgstr "Identifiant ou mot de passe incorrect."
+msgstr "Nom d'utilisateur ou mot de passe incorrect."
 
 #: funcionarios/templates/registration/login.html:25
 msgid "Utilizador"
-msgstr "Identifiant"
+msgstr "Utilisateur"
 
 #: funcionarios/templates/registration/login.html:38
 msgid "Password"
@@ -358,23 +358,23 @@ msgstr "Mot de passe"
 
 #: funcionarios/views.py:75
 msgid "Funcionário criado com sucesso."
-msgstr "Employé créé avec succès."
+msgstr "Membre du personnel créé avec succès."
 
 #: funcionarios/views.py:99
 msgid "Funcionário atualizado."
-msgstr "Employé mis à jour."
+msgstr "Membre du personnel mis à jour."
 
 #: funcionarios/views.py:119
 msgid "Funcionário eliminado."
-msgstr "Employé supprimé."
+msgstr "Membre du personnel supprimé."
 
 #: funcionarios/views.py:123
 msgid ""
 "Não é possível eliminar: este funcionário tem marcações associadas. Em "
 "alternativa, desativa-o."
 msgstr ""
-"Suppression impossible : cet employé a des rendez-vous associés. Désactivez-"
-"le à la place."
+"Impossible de supprimer : ce membre du personnel a des rendez-vous associés."
+" Vous pouvez le désactiver à la place."
 
 #: mapa/templates/mapa/mapa.html:3 templates/base.html:64
 msgid "Mapa do Salão"
@@ -387,15 +387,15 @@ msgstr "Plan du salon — %(data)s"
 
 #: mapa/templates/mapa/mapa.html:13
 msgid "Total de mesas"
-msgstr "Total des postes"
+msgstr "Nombre total de tables"
 
 #: mapa/templates/mapa/mapa.html:22
 msgid "Mesas ocupadas"
-msgstr "Postes occupés"
+msgstr "Tables occupées"
 
 #: mapa/templates/mapa/mapa.html:31
 msgid "Mesas livres"
-msgstr "Postes libres"
+msgstr "Tables libres"
 
 #: mapa/templates/mapa/mapa.html:40
 msgid "Marcações do dia"
@@ -411,7 +411,7 @@ msgstr "Libre"
 
 #: mapa/templates/mapa/mapa.html:101
 msgid "Sem marcações neste dia."
-msgstr "Aucun rendez-vous ce jour."
+msgstr "Aucun rendez-vous ce jour-là."
 
 #: marcacoes/models.py:14
 msgid "Número"
