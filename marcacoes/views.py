@@ -103,7 +103,7 @@ def agenda(request):
 
     return render(
         request,
-        "marcacoes/agenda.html",
+        "agenda.html",
         {
             "marcacoes": pagina.object_list,
             "pagina": pagina,
