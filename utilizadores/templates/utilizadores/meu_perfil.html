@@ -7,8 +7,164 @@
 
 {% block conteudo %}
 
-<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+<style>
+    .horario-perfil {
+        overflow: hidden;
+        border: 1px solid #eadde2;
+        border-radius: 1rem;
+        background-color: #ffffff;
+        box-shadow:
+            0 8px 24px
+            rgba(72, 49, 58, 0.07);
+    }
+
+    .horario-perfil-cabecalho {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid #eadde2;
+        background:
+            linear-gradient(
+                135deg,
+                #fff8fb,
+                #fdebf2
+            );
+    }
+
+    .horario-perfil-icone {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background-color: #ffffff;
+        color: #d76f97;
+        box-shadow:
+            0 3px 10px
+            rgba(72, 49, 58, 0.08);
+    }
+
+    .horario-perfil-cabecalho h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .horario-perfil-cabecalho p {
+        margin: 0.15rem 0 0;
+        color: #75696e;
+        font-size: 0.82rem;
+    }
+
+    .horario-perfil-corpo {
+        padding: 1.25rem;
+    }
+
+    .horario-dia {
+        height: 100%;
+        padding: 1rem;
+        border: 1px solid #eadde2;
+        border-radius: 0.9rem;
+        background-color: #fffafb;
+        transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease;
+    }
+
+    .horario-dia:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            0 7px 18px
+            rgba(72, 49, 58, 0.07);
+    }
+
+    .horario-dia-cabecalho {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
+        border-bottom: 1px solid #efe4e8;
+    }
+
+    .horario-dia-nome {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-weight: 700;
+    }
+
+    .horario-dia-nome i {
+        color: #d76f97;
+    }
+
+    .horario-estado {
+        padding: 0.28rem 0.6rem;
+        border-radius: 2rem;
+        background-color: #f9d9e5;
+        color: #744052;
+        font-size: 0.73rem;
+        font-weight: 700;
+    }
+
+    .horario-informacao {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-bottom: 0.55rem;
+        color: #42373b;
+        font-size: 0.88rem;
+    }
+
+    .horario-informacao:last-child {
+        margin-bottom: 0;
+    }
+
+    .horario-informacao-icone {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background-color: #fff0f5;
+        color: #d76f97;
+    }
+
+    .horario-informacao-label {
+        color: #7a6e73;
+    }
+
+    .horario-vazio {
+        padding: 2rem 1rem;
+        border-radius: 0.9rem;
+        background-color: #fffafb;
+        text-align: center;
+    }
+
+    .horario-vazio i {
+        color: #d76f97;
+        font-size: 2.2rem;
+    }
+
+    .horario-vazio p {
+        margin: 0.7rem 0 0;
+        color: #75696e;
+    }
+</style>
+
+
+<div
+    class="d-flex justify-content-between
+           align-items-center flex-wrap gap-3 mb-4"
+>
     <div>
+
         <h1 class="h3 mb-1">
             <i class="bi bi-person-circle"></i>
             {% trans "Meu Perfil" %}
@@ -17,7 +173,9 @@
         <p class="text-muted mb-0">
             {% trans "Consulte os dados da sua conta e do seu perfil profissional." %}
         </p>
+
     </div>
+
 
     <a
         href="{% url 'utilizadores:minha_agenda' %}"
@@ -26,6 +184,7 @@
         <i class="bi bi-calendar-check"></i>
         {% trans "Minha Agenda" %}
     </a>
+
 </div>
 
 
@@ -35,12 +194,16 @@
 
         <div class="card border border-2 border-dark h-100">
 
-            <div class="card-header bg-primary border-bottom border-2 border-dark">
+            <div
+                class="card-header bg-primary
+                       border-bottom border-2 border-dark"
+            >
                 <strong>
                     <i class="bi bi-person-badge"></i>
                     {% trans "Dados profissionais" %}
                 </strong>
             </div>
+
 
             <div class="card-body">
 
@@ -62,34 +225,48 @@
                     {% else %}
 
                         <div
-                            class="rounded-circle border border-2 border-dark bg-light d-flex align-items-center justify-content-center mx-auto"
+                            class="rounded-circle border border-2
+                                   border-dark bg-light d-flex
+                                   align-items-center
+                                   justify-content-center mx-auto"
                             style="
                                 width: 180px;
                                 height: 180px;
                             "
                         >
-                            <i class="bi bi-person-circle display-1 text-muted"></i>
+                            <i
+                                class="bi bi-person-circle
+                                       display-1 text-muted"
+                            ></i>
                         </div>
 
                     {% endif %}
+
 
                     <h2 class="h4 mt-3 mb-1">
                         {{ funcionario.nome }}
                     </h2>
 
+
                     {% if funcionario.funcao %}
+
                         <p class="text-muted mb-0">
                             {{ funcionario.funcao }}
                         </p>
+
                     {% else %}
+
                         <p class="text-muted mb-0">
                             {% trans "Função não definida" %}
                         </p>
+
                     {% endif %}
 
                 </div>
 
+
                 <hr>
+
 
                 <dl class="row mb-0">
 
@@ -101,53 +278,75 @@
                         {{ funcionario.nome }}
                     </dd>
 
+
                     <dt class="col-sm-5">
                         {% trans "Função" %}
                     </dt>
 
                     <dd class="col-sm-7">
+
                         {% if funcionario.funcao %}
+
                             {{ funcionario.funcao }}
+
                         {% else %}
+
                             <span class="text-muted">
                                 {% trans "Não definida" %}
                             </span>
+
                         {% endif %}
+
                     </dd>
+
 
                     <dt class="col-sm-5">
                         {% trans "Telefone" %}
                     </dt>
 
                     <dd class="col-sm-7">
+
                         {% if funcionario.telefone %}
+
                             {{ funcionario.telefone }}
+
                         {% else %}
+
                             <span class="text-muted">
                                 {% trans "Não definido" %}
                             </span>
+
                         {% endif %}
+
                     </dd>
+
 
                     <dt class="col-sm-5">
                         {% trans "Estado" %}
                     </dt>
 
                     <dd class="col-sm-7">
+
                         {% if funcionario.ativo %}
+
                             <span class="badge text-bg-success">
                                 {% trans "Ativo" %}
                             </span>
+
                         {% else %}
+
                             <span class="badge text-bg-danger">
                                 {% trans "Inativo" %}
                             </span>
+
                         {% endif %}
+
                     </dd>
 
                 </dl>
 
             </div>
+
         </div>
 
     </div>
@@ -157,12 +356,16 @@
 
         <div class="card border border-2 border-dark mb-4">
 
-            <div class="card-header bg-primary border-bottom border-2 border-dark">
+            <div
+                class="card-header bg-primary
+                       border-bottom border-2 border-dark"
+            >
                 <strong>
                     <i class="bi bi-person-lock"></i>
                     {% trans "Dados da conta" %}
                 </strong>
             </div>
+
 
             <div class="card-body">
 
@@ -176,64 +379,90 @@
                         {{ user.username }}
                     </dd>
 
+
                     <dt class="col-sm-4">
                         {% trans "Nome completo" %}
                     </dt>
 
                     <dd class="col-sm-8">
+
                         {% if user.get_full_name %}
+
                             {{ user.get_full_name }}
+
                         {% else %}
+
                             <span class="text-muted">
                                 {% trans "Não definido" %}
                             </span>
+
                         {% endif %}
+
                     </dd>
+
 
                     <dt class="col-sm-4">
                         {% trans "Email" %}
                     </dt>
 
                     <dd class="col-sm-8">
+
                         {% if user.email %}
+
                             {{ user.email }}
+
                         {% else %}
+
                             <span class="text-muted">
                                 {% trans "Não definido" %}
                             </span>
+
                         {% endif %}
+
                     </dd>
+
 
                     <dt class="col-sm-4">
                         {% trans "Conta" %}
                     </dt>
 
                     <dd class="col-sm-8">
+
                         {% if user.is_active %}
+
                             <span class="badge text-bg-success">
                                 {% trans "Ativa" %}
                             </span>
+
                         {% else %}
+
                             <span class="badge text-bg-danger">
                                 {% trans "Inativa" %}
                             </span>
+
                         {% endif %}
+
                     </dd>
 
                 </dl>
 
             </div>
+
         </div>
 
 
         <div class="card border border-2 border-dark">
 
-            <div class="card-header bg-primary border-bottom border-2 border-dark">
+            <div
+                class="card-header bg-primary
+                       border-bottom border-2 border-dark"
+            >
                 <strong>
                     <i class="bi bi-scissors"></i>
                     {% trans "Serviços que presta" %}
                 </strong>
             </div>
+
 
             <div class="card-body">
 
@@ -243,7 +472,10 @@
 
                         {% for servico in servicos %}
 
-                            <span class="badge rounded-pill text-bg-dark fs-6">
+                            <span
+                                class="badge rounded-pill
+                                       text-bg-dark fs-6"
+                            >
                                 {{ servico }}
                             </span>
 
@@ -255,7 +487,10 @@
 
                     <div class="text-center py-4">
 
-                        <i class="bi bi-exclamation-circle display-5 text-muted"></i>
+                        <i
+                            class="bi bi-exclamation-circle
+                                   display-5 text-muted"
+                        ></i>
 
                         <p class="text-muted mt-3 mb-0">
                             {% trans "Ainda não existem serviços associados a este funcionário." %}
@@ -266,7 +501,154 @@
                 {% endif %}
 
             </div>
+
         </div>
+
+    </div>
+
+</div>
+
+
+<div class="horario-perfil mt-4">
+
+    <div class="horario-perfil-cabecalho">
+
+        <span class="horario-perfil-icone">
+            <i class="bi bi-clock-history"></i>
+        </span>
+
+
+        <div>
+
+            <h2>
+                {% trans "Meu horário de trabalho" %}
+            </h2>
+
+            <p>
+                {% trans "Consulte os seus dias de trabalho, horários e intervalos." %}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="horario-perfil-corpo">
+
+        {% if horarios_trabalho %}
+
+            <div class="row g-3">
+
+                {% for horario in horarios_trabalho %}
+
+                    <div class="col-md-6 col-xl-4">
+
+                        <div class="horario-dia">
+
+                            <div class="horario-dia-cabecalho">
+
+                                <div class="horario-dia-nome">
+
+                                    <i class="bi bi-calendar3"></i>
+
+                                    {{ horario.get_dia_semana_display }}
+
+                                </div>
+
+
+                                <span class="horario-estado">
+                                    {% trans "Dia de trabalho" %}
+                                </span>
+
+                            </div>
+
+
+                            <div class="horario-informacao">
+
+                                <span class="horario-informacao-icone">
+                                    <i class="bi bi-box-arrow-in-right"></i>
+                                </span>
+
+                                <span class="horario-informacao-label">
+                                    {% trans "Entrada:" %}
+                                </span>
+
+                                <strong>
+                                    {{ horario.hora_inicio|time:"H:i" }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="horario-informacao">
+
+                                <span class="horario-informacao-icone">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                </span>
+
+                                <span class="horario-informacao-label">
+                                    {% trans "Saída:" %}
+                                </span>
+
+                                <strong>
+                                    {{ horario.hora_fim|time:"H:i" }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="horario-informacao">
+
+                                <span class="horario-informacao-icone">
+                                    <i class="bi bi-cup-hot"></i>
+                                </span>
+
+                                <span class="horario-informacao-label">
+                                    {% trans "Intervalo:" %}
+                                </span>
+
+
+                                <strong>
+
+                                    {% if horario.intervalo_inicio and horario.intervalo_fim %}
+
+                                        {{ horario.intervalo_inicio|time:"H:i" }}
+
+                                        –
+
+                                        {{ horario.intervalo_fim|time:"H:i" }}
+
+                                    {% else %}
+
+                                        {% trans "Sem intervalo" %}
+
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="horario-vazio">
+
+                <i class="bi bi-calendar-x"></i>
+
+                <p>
+                    {% trans "O seu horário de trabalho ainda não foi configurado." %}
+                </p>
+
+            </div>
+
+        {% endif %}
 
     </div>
 
