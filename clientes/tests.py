@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group, User
 from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import reverse
@@ -5,6 +6,16 @@ from clientes.forms import ClienteForm
 from clientes.models import Cliente
 
 # Create your tests here.
+
+
+class AutenticadoMixin:
+    """Cria uma conta de Receção e inicia sessão antes de cada teste."""
+
+    def autenticar(self):
+        utilizador = User.objects.create_user("rececao", password="teste12345")
+        utilizador.groups.add(Group.objects.get(name="Receção"))
+        self.client.login(username="rececao", password="teste12345")
+
 
 # Testa o modelo Cliente
 class ClienteModelTest(TestCase):
@@ -42,16 +53,20 @@ class ClienteFormTest(TestCase):
         self.assertIn("nome", form.errors)
 
 # Testa as URLs e views relacionadas ao cliente
-class ClienteUrlsTest(TestCase):
+class ClienteUrlsTest(AutenticadoMixin, TestCase):
+
+    def setUp(self):
+        self.autenticar()
 
     def test_lista(self):
         response = self.client.get(reverse("clientes:listar"))
         self.assertEqual(response.status_code, 200)
 
 # Testa as views de listagem e criação de clientes
-class ClienteListViewTest(TestCase):
+class ClienteListViewTest(AutenticadoMixin, TestCase):
 
     def setUp(self):
+        self.autenticar()
         Cliente.objects.create(
             nome="João",
             telefone="912345678",
@@ -88,7 +103,10 @@ class ClienteListViewTest(TestCase):
         self.assertNotContains(response, "Maria Oliveira")
 
 # Testa a view de criação de clientes
-class ClienteCreateViewTest(TestCase):
+class ClienteCreateViewTest(AutenticadoMixin, TestCase):
+
+    def setUp(self):
+        self.autenticar()
 
     def test_criar_cliente(self):
 
@@ -105,9 +123,10 @@ class ClienteCreateViewTest(TestCase):
         self.assertEqual(Cliente.objects.count(), 1)
 
 # Testa a view de edição de clientes
-class ClienteEditViewTest(TestCase):
+class ClienteEditViewTest(AutenticadoMixin, TestCase):
 
     def setUp(self):
+        self.autenticar()
         self.cliente = Cliente.objects.create(
             nome="João",
             telefone="912345678",
@@ -132,9 +151,10 @@ class ClienteEditViewTest(TestCase):
         self.assertEqual(self.cliente.nome, "João Pedro")
 
 # Testa a view de exclusão de clientes
-class ClienteDeleteViewTest(TestCase):
+class ClienteDeleteViewTest(AutenticadoMixin, TestCase):
 
     def setUp(self):
+        self.autenticar()
         self.cliente = Cliente.objects.create(
             nome="Maria",
             telefone="912345678",

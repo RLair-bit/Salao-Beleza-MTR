@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:42+0000\n"
+"POT-Creation-Date: 2026-07-24 11:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,13 +46,18 @@ msgstr "Delete"
 #: clientes/templates/clientes/confirmar_exclusao.html:47
 #: clientes/templates/clientes/form.html:31
 #: configuracoes/templates/configuracoes/editar.html:25
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:124
+#: funcionarios/templates/funcionarios/ausencia_form.html:224
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:31
-#: funcionarios/templates/funcionarios/form.html:41
+#: funcionarios/templates/funcionarios/form.html:135
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:101
+#: funcionarios/templates/funcionarios/horario_form.html:1252
 #: marcacoes/templates/marcacoes/agenda.html:98
-#: marcacoes/templates/marcacoes/form.html:138
+#: marcacoes/templates/marcacoes/form.html:264
 #: marcacoes/templates/marcacoes/pendentes.html:65
 #: servicos/templates/servicos/confirmar_exclusao.html:57
 #: servicos/templates/servicos/form.html:31
+#: utilizadores/templates/utilizadores/form.html:143
 msgid "Cancelar"
 msgstr "Cancel"
 
@@ -61,7 +66,7 @@ msgstr "Cancel"
 msgid "Salvar"
 msgstr "Save"
 
-#: clientes/templates/clientes/lista.html:4 templates/base.html:61
+#: clientes/templates/clientes/lista.html:4 templates/base.html:261
 msgid "Clientes"
 msgstr "Clients"
 
@@ -75,33 +80,44 @@ msgid "Procurar por nome..."
 msgstr "Search by name..."
 
 #: clientes/templates/clientes/lista.html:20
-#: funcionarios/templates/funcionarios/detalhe.html:36
+#: funcionarios/templates/funcionarios/detalhe.html:129
 #: funcionarios/templates/funcionarios/lista.html:54
-#: servicos/templates/servicos/lista.html:20
+#: servicos/templates/servicos/lista.html:20 utilizadores/forms.py:66
+#: utilizadores/forms.py:149 utilizadores/templates/utilizadores/lista.html:94
+#: utilizadores/templates/utilizadores/meu_perfil.html:274
 msgid "Nome"
 msgstr "Name"
 
 #: clientes/templates/clientes/lista.html:21 configuracoes/models.py:48
-#: funcionarios/templates/funcionarios/detalhe.html:46
+#: funcionarios/templates/funcionarios/detalhe.html:140
+#: utilizadores/templates/utilizadores/meu_perfil.html:304
 msgid "Telefone"
 msgstr "Phone"
 
 #: clientes/templates/clientes/lista.html:22 configuracoes/models.py:49
+#: utilizadores/forms.py:68 utilizadores/forms.py:151
+#: utilizadores/templates/utilizadores/meu_perfil.html:405
 msgid "Email"
 msgstr "Email"
 
 #: clientes/templates/clientes/lista.html:23
+#: funcionarios/templates/funcionarios/ausencias_lista.html:71
+#: funcionarios/templates/funcionarios/horarios_lista.html:72
 #: funcionarios/templates/funcionarios/lista.html:58
 #: marcacoes/templates/marcacoes/agenda.html:58
 #: marcacoes/templates/marcacoes/pendentes.html:40
 #: servicos/templates/servicos/lista.html:24
+#: utilizadores/templates/utilizadores/lista.html:99
 msgid "Ações"
 msgstr "Actions"
 
 #: clientes/templates/clientes/lista.html:35
+#: funcionarios/templates/funcionarios/ausencias_lista.html:163
+#: funcionarios/templates/funcionarios/horarios_lista.html:137
 #: funcionarios/templates/funcionarios/lista.html:92
 #: marcacoes/templates/marcacoes/agenda.html:82
 #: servicos/templates/servicos/lista.html:46
+#: utilizadores/templates/utilizadores/lista.html:173
 msgid "Editar"
 msgstr "Edit"
 
@@ -154,7 +170,7 @@ msgstr "Language"
 msgid "Fuso horário"
 msgstr "Time zone"
 
-#: configuracoes/templates/configuracoes/editar.html:4 templates/base.html:73
+#: configuracoes/templates/configuracoes/editar.html:4 templates/base.html:371
 msgid "Configurações"
 msgstr "Settings"
 
@@ -163,14 +179,191 @@ msgid "Configurações do salão"
 msgstr "Salon settings"
 
 #: configuracoes/templates/configuracoes/editar.html:23
-#: funcionarios/templates/funcionarios/form.html:36
-#: marcacoes/templates/marcacoes/form.html:131
+#: funcionarios/templates/funcionarios/form.html:127
+#: marcacoes/templates/marcacoes/form.html:256
 msgid "Guardar"
 msgstr "Save"
 
 #: configuracoes/views.py:16
 msgid "Configurações guardadas com sucesso."
 msgstr "Settings saved successfully."
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:5
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:21
+#| msgid "Eliminar funcionário"
+msgid "Eliminar ausência"
+msgstr "Delete absence"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:28
+#| msgid "Tem a certeza de que pretende excluir este cliente?"
+msgid "Tem a certeza de que pretende eliminar esta ausência?"
+msgstr "Are you sure you want to delete this absence?"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:36
+#: funcionarios/templates/funcionarios/ausencia_form.html:20
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:35
+#: utilizadores/templates/utilizadores/minha_agenda.html:18
+#| msgid "Funcionário"
+msgid "Funcionário:"
+msgstr "Staff member:"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:41
+msgid "Tipo:"
+msgstr "Type:"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:46
+msgid "Período:"
+msgstr "Period:"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:62
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:45
+#| msgid "Horário"
+msgid "Horário:"
+msgstr "Time:"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:66
+#: funcionarios/templates/funcionarios/ausencias_lista.html:128
+#: funcionarios/templates/funcionarios/detalhe.html:596
+#| msgid "Dia anterior"
+msgid "Dia inteiro"
+msgstr "All day"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:78
+#| msgid "Ativo"
+msgid "Motivo:"
+msgstr "Reason:"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:87
+#: funcionarios/templates/funcionarios/ausencias_lista.html:148
+#: funcionarios/templates/funcionarios/detalhe.html:615
+#| msgid "Observações"
+msgid "Sem observação"
+msgstr "No note"
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:101
+msgid ""
+"Depois de eliminada, esta ausência terá de ser registada novamente caso seja"
+" necessária."
+msgstr ""
+"Once deleted, this absence will have to be registered again if needed."
+
+#: funcionarios/templates/funcionarios/ausencia_confirmar_eliminar.html:116
+#| msgid "Sim, eliminar"
+msgid "Sim, eliminar ausência"
+msgstr "Yes, delete absence"
+
+#: funcionarios/templates/funcionarios/ausencia_form.html:30
+#| msgid "Informações profissionais"
+msgid "Informações da ausência"
+msgstr "Absence details"
+
+#: funcionarios/templates/funcionarios/ausencia_form.html:141
+msgid "Horário da ausência parcial"
+msgstr "Partial absence hours"
+
+#: funcionarios/templates/funcionarios/ausencia_form.html:148
+msgid "Preencha as horas apenas quando a ausência não ocupar o dia inteiro."
+msgstr "Fill in the hours only when the absence does not cover the whole day."
+
+#: funcionarios/templates/funcionarios/ausencia_form.html:216
+msgid "Guardar ausência"
+msgstr "Save absence"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:5
+#: funcionarios/templates/funcionarios/detalhe.html:775
+msgid "Ausências"
+msgstr "Absences"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:15
+msgid "Folgas e ausências"
+msgstr "Time off and absences"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:30
+#: funcionarios/templates/funcionarios/detalhe.html:649
+#: funcionarios/views.py:504
+msgid "Registar ausência"
+msgstr "Register absence"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:38
+#: funcionarios/templates/funcionarios/horarios_lista.html:38
+#| msgid "Editar funcionário"
+msgid "Voltar ao funcionário"
+msgstr "Back to staff member"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:51
+msgid "Ausências registadas"
+msgstr "Registered absences"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:67
+#: funcionarios/templates/funcionarios/detalhe.html:538
+msgid "Tipo"
+msgstr "Type"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:68
+#: funcionarios/templates/funcionarios/detalhe.html:539
+msgid "Período"
+msgstr "Period"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:69
+#: funcionarios/templates/funcionarios/detalhe.html:406
+#: funcionarios/templates/funcionarios/detalhe.html:540
+#: funcionarios/templates/funcionarios/detalhe.html:685
+#: utilizadores/templates/utilizadores/minha_agenda.html:128
+msgid "Horário"
+msgstr "Time"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:70
+#: funcionarios/templates/funcionarios/detalhe.html:541
+#| msgid "Ativo"
+msgid "Motivo"
+msgstr "Reason"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:86
+#: funcionarios/templates/funcionarios/detalhe.html:555
+msgid "Folga"
+msgstr "Day off"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:92
+#: funcionarios/templates/funcionarios/detalhe.html:561
+msgid "Férias"
+msgstr "Holiday"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:98
+#: funcionarios/templates/funcionarios/detalhe.html:567
+msgid "Doença"
+msgstr "Sick leave"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:171
+#: funcionarios/templates/funcionarios/detalhe.html:783
+#: funcionarios/templates/funcionarios/horarios_lista.html:146
+#: funcionarios/templates/funcionarios/lista.html:97
+msgid "Eliminar"
+msgstr "Delete"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:198
+msgid "Nenhuma ausência registada"
+msgstr "No absences registered"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:202
+#| msgid "Não existem marcações futuras para esta funcionária."
+msgid ""
+"Não existem folgas, férias ou outras ausências registadas para este "
+"funcionário."
+msgstr ""
+"There are no days off, holidays or other absences registered for this staff "
+"member."
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:210
+msgid "Registar primeira ausência"
+msgstr "Register first absence"
+
+#: funcionarios/templates/funcionarios/ausencias_lista.html:225
+msgid ""
+"As ausências serão utilizadas para impedir marcações nos períodos em que o "
+"funcionário não estiver disponível."
+msgstr ""
+"Absences are used to prevent appointments during periods when the staff "
+"member is unavailable."
 
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:4
 #: funcionarios/templates/funcionarios/confirmar_eliminar.html:11
@@ -186,146 +379,441 @@ msgstr "Are you sure you want to delete <b>%(nome)s</b>?"
 msgid "Sim, eliminar"
 msgstr "Yes, delete"
 
-#: funcionarios/templates/funcionarios/detalhe.html:4
-#: funcionarios/templates/funcionarios/detalhe.html:15
+#: funcionarios/templates/funcionarios/detalhe.html:5
+#: funcionarios/templates/funcionarios/detalhe.html:24
 msgid "Detalhes do funcionário"
 msgstr "Staff details"
 
-#: funcionarios/templates/funcionarios/detalhe.html:7
+#: funcionarios/templates/funcionarios/detalhe.html:10
 msgid "Não indicado"
 msgstr "Not provided"
 
-#: funcionarios/templates/funcionarios/detalhe.html:8
+#: funcionarios/templates/funcionarios/detalhe.html:11
 msgid "Não indicada"
 msgstr "Not provided"
 
-#: funcionarios/templates/funcionarios/detalhe.html:9
+#: funcionarios/templates/funcionarios/detalhe.html:12
+#: utilizadores/templates/utilizadores/meu_perfil.html:316
+#: utilizadores/templates/utilizadores/meu_perfil.html:396
+#: utilizadores/templates/utilizadores/meu_perfil.html:417
+#: utilizadores/templates/utilizadores/minha_agenda.html:181
 msgid "Não definido"
 msgstr "Not defined"
 
-#: funcionarios/templates/funcionarios/detalhe.html:21
+#: funcionarios/templates/funcionarios/detalhe.html:35
+#| msgid "Ver horários"
+msgid "Gerir horários"
+msgstr "Manage schedules"
+
+#: funcionarios/templates/funcionarios/detalhe.html:43
+msgid "Gerir ausências"
+msgstr "Manage absences"
+
+#: funcionarios/templates/funcionarios/detalhe.html:51
+#: templates/registration/password_change_form.html:131
+#: utilizadores/templates/utilizadores/form.html:29
 msgid "Voltar"
 msgstr "Back"
 
-#: funcionarios/templates/funcionarios/detalhe.html:29
+#: funcionarios/templates/funcionarios/detalhe.html:69
 msgid "Informações profissionais"
 msgstr "Professional information"
 
-#: funcionarios/templates/funcionarios/detalhe.html:56
+#: funcionarios/templates/funcionarios/detalhe.html:82
+#: funcionarios/templates/funcionarios/form.html:33
+#: utilizadores/templates/utilizadores/meu_perfil.html:216
+#| msgid "Novo funcionário"
+msgid "Fotografia da funcionária"
+msgstr "Staff member photo"
+
+#: funcionarios/templates/funcionarios/detalhe.html:151
 #: funcionarios/templates/funcionarios/lista.html:55
+#: utilizadores/templates/utilizadores/meu_perfil.html:283
 msgid "Função"
 msgstr "Role"
 
-#: funcionarios/templates/funcionarios/detalhe.html:66
-#: funcionarios/templates/funcionarios/detalhe.html:139
+#: funcionarios/templates/funcionarios/detalhe.html:162
+#: funcionarios/templates/funcionarios/detalhe.html:408
+#: funcionarios/templates/funcionarios/detalhe.html:689
+#: funcionarios/templates/funcionarios/horarios_lista.html:71
 #: funcionarios/templates/funcionarios/lista.html:57 marcacoes/models.py:44
 #: marcacoes/templates/marcacoes/agenda.html:57
+#: relatorios/templates/servicos.html:43 relatorios/templates/servicos.html:92
+#: utilizadores/templates/utilizadores/lista.html:97
+#: utilizadores/templates/utilizadores/meu_perfil.html:325
+#: utilizadores/templates/utilizadores/minha_agenda.html:66
+#: utilizadores/templates/utilizadores/minha_agenda.html:144
 msgid "Estado"
 msgstr "Status"
 
-#: funcionarios/templates/funcionarios/detalhe.html:71
+#: funcionarios/templates/funcionarios/detalhe.html:167
+#: funcionarios/templates/funcionarios/detalhe.html:448
+#: funcionarios/templates/funcionarios/horario_form.html:1214
+#: funcionarios/templates/funcionarios/horarios_lista.html:115
 #: funcionarios/templates/funcionarios/lista.html:75 marcacoes/models.py:16
 #: servicos/templates/servicos/confirmar_exclusao.html:34
 #: servicos/templates/servicos/lista.html:35
+#: utilizadores/templates/utilizadores/lista.html:158
+#: utilizadores/templates/utilizadores/meu_perfil.html:333
 msgid "Ativo"
 msgstr "Active"
 
-#: funcionarios/templates/funcionarios/detalhe.html:75
+#: funcionarios/templates/funcionarios/detalhe.html:171
+#: funcionarios/templates/funcionarios/detalhe.html:454
+#: funcionarios/templates/funcionarios/horarios_lista.html:121
 #: funcionarios/templates/funcionarios/lista.html:79
 #: servicos/templates/servicos/confirmar_exclusao.html:36
 #: servicos/templates/servicos/lista.html:39
+#: utilizadores/templates/utilizadores/lista.html:162
+#: utilizadores/templates/utilizadores/meu_perfil.html:339
 msgid "Inativo"
 msgstr "Inactive"
 
-#: funcionarios/templates/funcionarios/detalhe.html:84
+#: funcionarios/templates/funcionarios/detalhe.html:183
+#: marcacoes/templates/marcacoes/form.html:140
+#: utilizadores/templates/utilizadores/meu_perfil.html:462
 msgid "Serviços que presta"
 msgstr "Services provided"
 
-#: funcionarios/templates/funcionarios/detalhe.html:93
+#: funcionarios/templates/funcionarios/detalhe.html:198
 msgid "Nenhum serviço associado."
 msgstr "No services assigned."
 
-#: funcionarios/templates/funcionarios/detalhe.html:103 marcacoes/models.py:50
-#: templates/base.html:60 templates/home.html:94
-msgid "Marcações"
-msgstr "Appointments"
+#: funcionarios/templates/funcionarios/detalhe.html:223
+#| msgid "Próximas marcações"
+msgid "Resumo das marcações"
+msgstr "Appointments summary"
 
-#: funcionarios/templates/funcionarios/detalhe.html:112
-msgid "marcação associada"
-msgid_plural "marcações associadas"
-msgstr[0] "appointment associated"
-msgstr[1] "appointments associated"
+#: funcionarios/templates/funcionarios/detalhe.html:235
+#| msgid "marcação associada"
+#| msgid_plural "marcações associadas"
+msgid "marcação no total"
+msgid_plural "marcações no total"
+msgstr[0] "appointment in total"
+msgstr[1] "appointments in total"
 
-#: funcionarios/templates/funcionarios/detalhe.html:125
+#: funcionarios/templates/funcionarios/detalhe.html:253
+#| msgid "Próximas marcações"
+msgid "Próximas"
+msgstr "Upcoming"
+
+#: funcionarios/templates/funcionarios/detalhe.html:269
+#| msgid "Realizada"
+msgid "Realizadas"
+msgstr "Completed"
+
+#: funcionarios/templates/funcionarios/detalhe.html:285
+#| msgid "Cancelada"
+msgid "Canceladas"
+msgstr "Cancelled"
+
+#: funcionarios/templates/funcionarios/detalhe.html:301
+#| msgid "Faltou"
+msgid "Faltas"
+msgstr "No-shows"
+
+#: funcionarios/templates/funcionarios/detalhe.html:319
+#| msgid "Próximas marcações"
+msgid "Próxima marcação"
+msgstr "Next appointment"
+
+#: funcionarios/templates/funcionarios/detalhe.html:328
+msgid "às"
+msgstr "at"
+
+#: funcionarios/templates/funcionarios/detalhe.html:352
+#| msgid "Não existem marcações futuras para esta funcionária."
+msgid "Não existem marcações futuras."
+msgstr "There are no upcoming appointments."
+
+#: funcionarios/templates/funcionarios/detalhe.html:382
+#: funcionarios/templates/funcionarios/horarios_lista.html:51
+#| msgid "Horário selecionado"
+msgid "Horário semanal"
+msgstr "Weekly schedule"
+
+#: funcionarios/templates/funcionarios/detalhe.html:390
+#: funcionarios/templates/funcionarios/detalhe.html:523
+msgid "Gerir"
+msgstr "Manage"
+
+#: funcionarios/templates/funcionarios/detalhe.html:405
+#: mapa/templates/mapa/mapa.html:74
+msgid "Dia"
+msgstr "Day"
+
+#: funcionarios/templates/funcionarios/detalhe.html:407
+#: funcionarios/templates/funcionarios/horario_form.html:940
+#: funcionarios/templates/funcionarios/horarios_lista.html:70
+msgid "Intervalo"
+msgstr "Break"
+
+#: funcionarios/templates/funcionarios/detalhe.html:438
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:64
+#: funcionarios/templates/funcionarios/horarios_lista.html:105
+#: utilizadores/templates/utilizadores/meu_perfil.html:623
+msgid "Sem intervalo"
+msgstr "No break"
+
+#: funcionarios/templates/funcionarios/detalhe.html:480
+#| msgid "Ainda não há funcionários registados."
+msgid "Ainda não existe um horário de trabalho registado."
+msgstr "No work schedule has been registered yet."
+
+#: funcionarios/templates/funcionarios/detalhe.html:488
+#: funcionarios/templates/funcionarios/horarios_lista.html:30
+#| msgid "Adicionar"
+msgid "Adicionar horário"
+msgstr "Add schedule"
+
+#: funcionarios/templates/funcionarios/detalhe.html:515
+#| msgid "Próximas marcações"
+msgid "Próximas ausências"
+msgstr "Upcoming absences"
+
+#: funcionarios/templates/funcionarios/detalhe.html:641
+#| msgid "Não existem horários disponíveis neste dia."
+msgid "Não existem próximas ausências registadas."
+msgstr "No upcoming absences registered."
+
+#: funcionarios/templates/funcionarios/detalhe.html:671
 msgid "Próximas marcações"
 msgstr "Upcoming appointments"
 
-#: funcionarios/templates/funcionarios/detalhe.html:134
+#: funcionarios/templates/funcionarios/detalhe.html:684
 #: marcacoes/templates/marcacoes/pendentes.html:35
+#: relatorios/templates/servicos.html:89
+#: utilizadores/templates/utilizadores/minha_agenda.html:49
 msgid "Data"
 msgstr "Date"
 
-#: funcionarios/templates/funcionarios/detalhe.html:135
-msgid "Horário"
-msgstr "Time"
-
-#: funcionarios/templates/funcionarios/detalhe.html:136 marcacoes/models.py:36
+#: funcionarios/templates/funcionarios/detalhe.html:686 marcacoes/models.py:36
 #: marcacoes/templates/marcacoes/agenda.html:53
 #: marcacoes/templates/marcacoes/pendentes.html:37
+#: relatorios/templates/servicos.html:90
+#: utilizadores/templates/utilizadores/minha_agenda.html:132
 msgid "Cliente"
 msgstr "Client"
 
-#: funcionarios/templates/funcionarios/detalhe.html:137 marcacoes/models.py:40
+#: funcionarios/templates/funcionarios/detalhe.html:687 marcacoes/models.py:40
 #: marcacoes/templates/marcacoes/agenda.html:54
 #: marcacoes/templates/marcacoes/pendentes.html:38
+#: relatorios/templates/servicos.html:91
+#: utilizadores/templates/utilizadores/minha_agenda.html:136
 msgid "Serviço"
 msgstr "Service"
 
-#: funcionarios/templates/funcionarios/detalhe.html:138
+#: funcionarios/templates/funcionarios/detalhe.html:688
 msgid "Mesa/Posto"
 msgstr "Table/Station"
 
-#: funcionarios/templates/funcionarios/detalhe.html:180
+#: funcionarios/templates/funcionarios/detalhe.html:743
 msgid "Não existem marcações futuras para esta funcionária."
 msgstr "There are no upcoming appointments for this staff member."
 
-#: funcionarios/templates/funcionarios/detalhe.html:189
+#: funcionarios/templates/funcionarios/detalhe.html:759
 msgid "Editar funcionário"
 msgstr "Edit staff member"
 
-#: funcionarios/templates/funcionarios/detalhe.html:194
-#: funcionarios/templates/funcionarios/lista.html:97
-msgid "Eliminar"
-msgstr "Delete"
+#: funcionarios/templates/funcionarios/detalhe.html:767
+#| msgid "Horário"
+msgid "Horários"
+msgstr "Schedules"
+
+#: funcionarios/templates/funcionarios/form.html:28
+msgid "Fotografia atual"
+msgstr "Current photo"
+
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:5
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:19
+#: funcionarios/templates/funcionarios/horarios_lista.html:143
+#| msgid "Eliminar funcionário"
+msgid "Eliminar horário"
+msgstr "Delete schedule"
+
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:27
+#| msgid "Tem a certeza de que pretende excluir este cliente?"
+msgid "Tem a certeza de que pretende eliminar este horário de trabalho?"
+msgstr "Are you sure you want to delete this work schedule?"
+
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:40
+msgid "Dia da semana:"
+msgstr "Day of the week:"
+
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:53
+#: utilizadores/templates/utilizadores/meu_perfil.html:607
+msgid "Intervalo:"
+msgstr "Break:"
+
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:78
+msgid ""
+"Depois de eliminado, este horário terá de ser criado novamente caso seja "
+"necessário."
+msgstr "Once deleted, this schedule will have to be created again if needed."
+
+#: funcionarios/templates/funcionarios/horario_confirmar_eliminar.html:93
+#| msgid "Sim, eliminar"
+msgid "Sim, eliminar horário"
+msgstr "Yes, delete schedule"
+
+#: funcionarios/templates/funcionarios/horario_form.html:591
+#: marcacoes/models.py:38 marcacoes/templates/marcacoes/agenda.html:56
+#: marcacoes/templates/marcacoes/pendentes.html:39
+msgid "Funcionário"
+msgstr "Staff member"
+
+#: funcionarios/templates/funcionarios/horario_form.html:610
+#| msgid "Configurações do salão"
+msgid "Configuração do horário"
+msgstr "Schedule settings"
+
+#: funcionarios/templates/funcionarios/horario_form.html:653
+msgid "Dias de trabalho"
+msgstr "Working days"
+
+#: funcionarios/templates/funcionarios/horario_form.html:663
+#| msgid "Selecione um funcionário."
+msgid "Selecione os dias em que o funcionário trabalha."
+msgstr "Select the days the staff member works."
+
+#: funcionarios/templates/funcionarios/horario_form.html:723
+msgid "Período de trabalho"
+msgstr "Working hours"
+
+#: funcionarios/templates/funcionarios/horario_form.html:728
+msgid "Defina a hora de entrada e a hora de saída."
+msgstr "Set the start and end times."
+
+#: funcionarios/templates/funcionarios/horario_form.html:763
+msgid "Diminuir hora"
+msgstr "Decrease hour"
+
+#: funcionarios/templates/funcionarios/horario_form.html:777
+msgid "Aumentar hora"
+msgstr "Increase hour"
+
+#: funcionarios/templates/funcionarios/horario_form.html:795
+#| msgid "Duração (minutos)"
+msgid "Diminuir minutos"
+msgstr "Decrease minutes"
+
+#: funcionarios/templates/funcionarios/horario_form.html:809
+msgid "Aumentar minutos"
+msgstr "Increase minutes"
+
+#: funcionarios/templates/funcionarios/horario_form.html:820
+#: funcionarios/templates/funcionarios/horario_form.html:915
+msgid "Os minutos avançam em intervalos de 5 minutos."
+msgstr "Minutes advance in 5-minute steps."
+
+#: funcionarios/templates/funcionarios/horario_form.html:950
+#| msgid "Adicionar"
+msgid "Adicionar intervalo"
+msgstr "Add break"
+
+#: funcionarios/templates/funcionarios/horario_form.html:954
+msgid "Ative esta opção quando existir uma pausa durante o dia."
+msgstr "Enable this option when there is a break during the day."
+
+#: funcionarios/templates/funcionarios/horario_form.html:1067
+#: funcionarios/templates/funcionarios/horario_form.html:1168
+msgid "Limpar"
+msgstr "Clear"
+
+#: funcionarios/templates/funcionarios/horario_form.html:1196
+#| msgid "Horário"
+msgid "Horário ativo"
+msgstr "Active schedule"
+
+#: funcionarios/templates/funcionarios/horario_form.html:1200
+msgid "Os dias selecionados ficarão disponíveis para marcações."
+msgstr "The selected days will be available for appointments."
+
+#: funcionarios/templates/funcionarios/horario_form.html:1240
+#| msgid "Ver horários"
+msgid "Guardar horários"
+msgstr "Save schedules"
+
+#: funcionarios/templates/funcionarios/horario_form.html:1242
+#| msgid "Ver horários"
+msgid "Guardar horário"
+msgstr "Save schedule"
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:5
+#: funcionarios/templates/funcionarios/horarios_lista.html:15
+msgid "Horários de trabalho"
+msgstr "Work schedules"
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:67
+msgid "Dia da semana"
+msgstr "Day of the week"
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:68
+#| msgid "Entrar"
+msgid "Entrada"
+msgstr "Start"
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:69
+msgid "Saída"
+msgstr "End"
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:134
+#: funcionarios/views.py:391
+#| msgid "Editar funcionário"
+msgid "Editar horário"
+msgstr "Edit schedule"
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:173
+#| msgid "Nenhum horário selecionado."
+msgid "Nenhum horário registado"
+msgstr "No schedule registered"
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:177
+msgid "Adicione os dias e horários de trabalho deste funcionário."
+msgstr "Add this staff member's working days and hours."
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:185
+msgid "Adicionar primeiro horário"
+msgstr "Add first schedule"
+
+#: funcionarios/templates/funcionarios/horarios_lista.html:200
+msgid "Cada funcionário pode ter apenas um horário por dia da semana."
+msgstr "Each staff member can only have one schedule per day of the week."
 
 #: funcionarios/templates/funcionarios/lista.html:4
-#: funcionarios/templates/funcionarios/lista.html:8 templates/base.html:63
+#: funcionarios/templates/funcionarios/lista.html:8 templates/base.html:279
 #: templates/home.html:111
 msgid "Funcionários"
 msgstr "Staff"
 
-#: funcionarios/templates/funcionarios/lista.html:12
+#: funcionarios/templates/funcionarios/lista.html:12 funcionarios/views.py:188
 msgid "Novo funcionário"
 msgstr "New staff member"
 
 #: funcionarios/templates/funcionarios/lista.html:28
+#: utilizadores/templates/utilizadores/lista.html:62
+#: utilizadores/templates/utilizadores/minha_agenda.html:75
 msgid "Todos os estados"
 msgstr "All statuses"
 
 #: funcionarios/templates/funcionarios/lista.html:33
+#: utilizadores/templates/utilizadores/lista.html:69
 msgid "Apenas ativos"
 msgstr "Active only"
 
 #: funcionarios/templates/funcionarios/lista.html:38
+#: utilizadores/templates/utilizadores/lista.html:76
 msgid "Apenas inativos"
 msgstr "Inactive only"
 
 #: funcionarios/templates/funcionarios/lista.html:45
+#: utilizadores/templates/utilizadores/lista.html:83
+#: utilizadores/templates/utilizadores/minha_agenda.html:97
 msgid "Filtrar"
 msgstr "Filter"
 
 #: funcionarios/templates/funcionarios/lista.html:56
-#: servicos/templates/servicos/lista.html:4 templates/base.html:62
+#: servicos/templates/servicos/lista.html:4 templates/base.html:270
 msgid "Serviços"
 msgstr "Services"
 
@@ -341,7 +829,7 @@ msgstr "No staff members have been registered yet."
 
 #: funcionarios/templates/registration/login.html:4
 #: funcionarios/templates/registration/login.html:11
-#: funcionarios/templates/registration/login.html:50 templates/base.html:82
+#: funcionarios/templates/registration/login.html:50 templates/base.html:401
 msgid "Entrar"
 msgstr "Log in"
 
@@ -349,7 +837,9 @@ msgstr "Log in"
 msgid "Utilizador ou password incorretos."
 msgstr "Incorrect username or password."
 
-#: funcionarios/templates/registration/login.html:26
+#: funcionarios/templates/registration/login.html:26 utilizadores/forms.py:65
+#: utilizadores/forms.py:148 utilizadores/templates/utilizadores/lista.html:93
+#: utilizadores/templates/utilizadores/meu_perfil.html:375
 msgid "Utilizador"
 msgstr "Username"
 
@@ -357,27 +847,75 @@ msgstr "Username"
 msgid "Password"
 msgstr "Password"
 
-#: funcionarios/views.py:75
+#: funcionarios/views.py:175
 msgid "Funcionário criado com sucesso."
 msgstr "Staff member created successfully."
 
-#: funcionarios/views.py:99
+#: funcionarios/views.py:211
 msgid "Funcionário atualizado."
 msgstr "Staff member updated."
 
-#: funcionarios/views.py:119
+#: funcionarios/views.py:224
+#, python-format
+msgid "Editar %(nome)s"
+msgstr "Edit %(nome)s"
+
+#: funcionarios/views.py:246
 msgid "Funcionário eliminado."
 msgstr "Staff member deleted."
 
-#: funcionarios/views.py:123
+#: funcionarios/views.py:253
+#| msgid ""
+#| "Não é possível eliminar: este funcionário tem marcações associadas. Em "
+#| "alternativa, desativa-o."
 msgid ""
 "Não é possível eliminar: este funcionário tem marcações associadas. Em "
-"alternativa, desativa-o."
+"alternativa, desative-o."
 msgstr ""
-"This staff member cannot be deleted because they have associated "
-"appointments. Deactivate them instead."
+"Cannot delete: this staff member has associated appointments. Deactivate "
+"them instead."
 
-#: mapa/templates/mapa/mapa.html:4 templates/base.html:64
+#: funcionarios/views.py:335
+#| msgid "Funcionário criado com sucesso."
+msgid "Os horários de trabalho foram criados com sucesso."
+msgstr "The work schedules were created successfully."
+
+#: funcionarios/views.py:351
+#| msgid "Ver horários"
+msgid "Adicionar horários"
+msgstr "Add schedules"
+
+#: funcionarios/views.py:376
+#| msgid "Funcionário atualizado."
+msgid "Horário de trabalho atualizado."
+msgstr "Work schedule updated."
+
+#: funcionarios/views.py:413
+#| msgid "Horário selecionado"
+msgid "Horário de trabalho eliminado."
+msgstr "Work schedule deleted."
+
+#: funcionarios/views.py:490
+#| msgid "Funcionário criado com sucesso."
+msgid "Ausência registada com sucesso."
+msgstr "Absence registered successfully."
+
+#: funcionarios/views.py:528
+#| msgid "Funcionário atualizado."
+msgid "Ausência atualizada."
+msgstr "Absence updated."
+
+#: funcionarios/views.py:543
+#| msgid "Editar funcionário"
+msgid "Editar ausência"
+msgstr "Edit absence"
+
+#: funcionarios/views.py:564
+#| msgid "Funcionário eliminado."
+msgid "Ausência eliminada."
+msgstr "Absence deleted."
+
+#: mapa/templates/mapa/mapa.html:4 templates/base.html:288
 msgid "Mapa do Salão"
 msgstr "Salon Map"
 
@@ -399,12 +937,9 @@ msgid "Mesas livres"
 msgstr "Available tables"
 
 #: mapa/templates/mapa/mapa.html:60
+#: utilizadores/templates/utilizadores/minha_agenda.html:111
 msgid "Marcações do dia"
 msgstr "Appointments today"
-
-#: mapa/templates/mapa/mapa.html:74
-msgid "Dia"
-msgstr "Day"
 
 #: mapa/templates/mapa/mapa.html:104
 msgid "Livre"
@@ -431,31 +966,31 @@ msgid "Postos"
 msgstr "Stations"
 
 #: marcacoes/models.py:29 marcacoes/templates/marcacoes/agenda.html:77
+#: relatorios/templates/servicos.html:114
 msgid "Marcada"
 msgstr "Booked"
 
 #: marcacoes/models.py:30 marcacoes/templates/marcacoes/agenda.html:71
 #: marcacoes/templates/marcacoes/agenda.html:88
 #: marcacoes/templates/marcacoes/pendentes.html:55
+#: relatorios/templates/servicos.html:111
 msgid "Realizada"
 msgstr "Completed"
 
 #: marcacoes/models.py:31 marcacoes/templates/marcacoes/agenda.html:73
+#: relatorios/templates/servicos.html:117
 msgid "Cancelada"
 msgstr "Cancelled"
 
 #: marcacoes/models.py:32 marcacoes/templates/marcacoes/agenda.html:75
 #: marcacoes/templates/marcacoes/agenda.html:93
 #: marcacoes/templates/marcacoes/pendentes.html:60
+#: relatorios/templates/servicos.html:120
 msgid "Faltou"
 msgstr "No-show"
 
-#: marcacoes/models.py:38 marcacoes/templates/marcacoes/agenda.html:56
-#: marcacoes/templates/marcacoes/pendentes.html:39
-msgid "Funcionário"
-msgstr "Staff member"
-
 #: marcacoes/models.py:42
+#: utilizadores/templates/utilizadores/minha_agenda.html:140
 msgid "Mesa / Posto"
 msgstr "Station"
 
@@ -464,12 +999,17 @@ msgid "Data e hora"
 msgstr "Date and time"
 
 #: marcacoes/models.py:45
+#: utilizadores/templates/utilizadores/minha_agenda.html:148
 msgid "Notas"
 msgstr "Notes"
 
 #: marcacoes/models.py:49
 msgid "Marcação"
 msgstr "Appointment"
+
+#: marcacoes/models.py:50 templates/base.html:252 templates/home.html:94
+msgid "Marcações"
+msgstr "Appointments"
 
 #: marcacoes/models.py:88
 #, python-format
@@ -536,45 +1076,65 @@ msgstr "Station"
 msgid "Não há marcações para este dia."
 msgstr "No appointments for this day."
 
-#: marcacoes/templates/marcacoes/form.html:7
+#: marcacoes/templates/marcacoes/form.html:10
 msgid "Selecione o funcionário, o serviço e o dia."
 msgstr "Select the staff member, service and day."
 
-#: marcacoes/templates/marcacoes/form.html:8
+#: marcacoes/templates/marcacoes/form.html:11
 msgid "A procurar horários disponíveis..."
 msgstr "Searching available times..."
 
-#: marcacoes/templates/marcacoes/form.html:9
+#: marcacoes/templates/marcacoes/form.html:12
 msgid "Não existem horários disponíveis neste dia."
 msgstr "No available times on this day."
 
-#: marcacoes/templates/marcacoes/form.html:10
+#: marcacoes/templates/marcacoes/form.html:13
 msgid "Não foi possível consultar os horários."
 msgstr "Could not load the available times."
 
-#: marcacoes/templates/marcacoes/form.html:11
-#: marcacoes/templates/marcacoes/form.html:109
+#: marcacoes/templates/marcacoes/form.html:14
+#: marcacoes/templates/marcacoes/form.html:222
 msgid "Horário selecionado"
 msgstr "Selected time"
 
-#: marcacoes/templates/marcacoes/form.html:12
-#: marcacoes/templates/marcacoes/form.html:116
+#: marcacoes/templates/marcacoes/form.html:15
+#: marcacoes/templates/marcacoes/form.html:229
 msgid "Nenhum horário selecionado."
 msgstr "No time selected."
 
-#: marcacoes/templates/marcacoes/form.html:64
+#: marcacoes/templates/marcacoes/form.html:16
+#: utilizadores/templates/utilizadores/meu_perfil.html:260
+#| msgid "Não definido"
+msgid "Função não definida"
+msgstr "Role not set"
+
+#: marcacoes/templates/marcacoes/form.html:17
+#| msgid "Nenhum serviço associado."
+msgid "Nenhum serviço associado"
+msgstr "No service associated"
+
+#: marcacoes/templates/marcacoes/form.html:85
+#| msgid "Horário selecionado"
+msgid "Profissional selecionada"
+msgstr "Selected professional"
+
+#: marcacoes/templates/marcacoes/form.html:97
+msgid "Fotografia da profissional"
+msgstr "Professional's photo"
+
+#: marcacoes/templates/marcacoes/form.html:164
 msgid "Escolher data e horário"
 msgstr "Choose date and time"
 
-#: marcacoes/templates/marcacoes/form.html:74
+#: marcacoes/templates/marcacoes/form.html:177
 msgid "Dia pretendido"
 msgstr "Preferred day"
 
-#: marcacoes/templates/marcacoes/form.html:90
+#: marcacoes/templates/marcacoes/form.html:197
 msgid "Ver horários"
 msgstr "View times"
 
-#: marcacoes/templates/marcacoes/form.html:99
+#: marcacoes/templates/marcacoes/form.html:209
 msgid "Escolha o funcionário, o serviço e o dia."
 msgstr "Choose the staff member, service and day."
 
@@ -646,6 +1206,40 @@ msgstr "Edit appointment"
 msgid "Marcação alterada para %(estado)s."
 msgstr "Appointment changed to %(estado)s."
 
+#: relatorios/forms.py:43
+msgid "A data final deve ser igual ou posterior à data inicial."
+msgstr "The end date must be the same as or later than the start date."
+
+#: relatorios/templates/servicos.html:4 relatorios/templates/servicos.html:12
+#: templates/base.html:297
+msgid "Relatório de Serviços"
+msgstr "Services Report"
+
+#: relatorios/templates/servicos.html:24
+msgid "Data inicial"
+msgstr "Start date"
+
+#: relatorios/templates/servicos.html:32
+msgid "Data final"
+msgstr "End date"
+
+#: relatorios/templates/servicos.html:66
+msgid "Pesquisar"
+msgstr "Search"
+
+#: relatorios/templates/servicos.html:79
+#| msgid "Registados"
+msgid "Resultado"
+msgstr "Result"
+
+#: relatorios/templates/servicos.html:93
+msgid "Valor"
+msgstr "Amount"
+
+#: relatorios/templates/servicos.html:135
+msgid "Total"
+msgstr "Total"
+
 #: servicos/templates/servicos/confirmar_exclusao.html:4
 msgid "Excluir Serviço"
 msgstr "Delete Service"
@@ -695,12 +1289,10 @@ msgid "Navegação de páginas"
 msgstr "Page navigation"
 
 #: templates/_paginacao.html:9 templates/_paginacao.html:14
-#| msgid "Dia anterior"
 msgid "Anterior"
 msgstr "Previous"
 
 #: templates/_paginacao.html:31 templates/_paginacao.html:36
-#| msgid "Dia seguinte"
 msgid "Seguinte"
 msgstr "Next"
 
@@ -709,7 +1301,54 @@ msgstr "Next"
 msgid "Página %(atual)s de %(total)s"
 msgstr "Page %(atual)s of %(total)s"
 
-#: templates/base.html:78
+#: templates/base.html:232
+msgid "Abrir menu"
+msgstr "Open menu"
+
+#: templates/base.html:309
+#: utilizadores/templates/utilizadores/meu_perfil.html:185
+#: utilizadores/templates/utilizadores/minha_agenda.html:5
+#: utilizadores/templates/utilizadores/minha_agenda.html:14
+#| msgid "Agenda"
+msgid "Minha Agenda"
+msgstr "My Schedule"
+
+#: templates/base.html:319
+#: utilizadores/templates/utilizadores/meu_perfil.html:5
+#: utilizadores/templates/utilizadores/meu_perfil.html:170
+msgid "Meu Perfil"
+msgstr "My Profile"
+
+#: templates/base.html:337
+msgid "Alterar a minha palavra-passe"
+msgstr "Change my password"
+
+#: templates/base.html:340 templates/registration/password_change_form.html:5
+#: templates/registration/password_change_form.html:44
+msgid "Alterar palavra-passe"
+msgstr "Change password"
+
+#: templates/base.html:347
+#| msgid "Utilizador"
+msgid "Gerir utilizadores"
+msgstr "Manage users"
+
+#: templates/base.html:350 utilizadores/templates/utilizadores/lista.html:4
+#: utilizadores/templates/utilizadores/lista.html:10
+#| msgid "Utilizador"
+msgid "Utilizadores"
+msgstr "Users"
+
+#: templates/base.html:358
+msgid "Abrir painel administrativo"
+msgstr "Open admin panel"
+
+#: templates/base.html:361
+#| msgid "Editar marcação"
+msgid "Administração"
+msgstr "Administration"
+
+#: templates/base.html:387
 msgid "Sair"
 msgstr "Log out"
 
@@ -804,17 +1443,323 @@ msgstr[1] "%(n)s to close"
 msgid "Profissionais do salão."
 msgstr "Salon professionals."
 
+#: templates/registration/password_change_done.html:5
+#: templates/registration/password_change_done.html:21
+msgid "Palavra-passe alterada"
+msgstr "Password changed"
+
+#: templates/registration/password_change_done.html:33
+#| msgid "Serviço excluído com sucesso."
+msgid "Alteração concluída com sucesso!"
+msgstr "Change completed successfully!"
+
+#: templates/registration/password_change_done.html:37
+msgid "A sua nova palavra-passe já está ativa. A sessão atual foi mantida."
+msgstr "Your new password is now active. Your current session was kept."
+
+#: templates/registration/password_change_done.html:46
+msgid "Voltar ao meu perfil"
+msgstr "Back to my profile"
+
+#: templates/registration/password_change_done.html:54
+msgid "Voltar ao início"
+msgstr "Back to home"
+
+#: templates/registration/password_change_form.html:51
+msgid ""
+"Introduza a palavra-passe atual e escolha uma nova palavra-passe segura."
+msgstr "Enter your current password and choose a new, secure password."
+
+#: templates/registration/password_change_form.html:114
+msgid "Guardar nova palavra-passe"
+msgstr "Save new password"
+
+#: templates/registration/password_change_form.html:123
+msgid "Voltar ao perfil"
+msgstr "Back to profile"
+
+#: utilizadores/forms.py:42 utilizadores/forms.py:125
+msgid "Grupo de acesso"
+msgstr "Access group"
+
+#: utilizadores/forms.py:43 utilizadores/forms.py:126
+#| msgid "Selecione um serviço."
+msgid "Selecione um grupo"
+msgstr "Select a group"
+
+#: utilizadores/forms.py:48 utilizadores/forms.py:131
+#: utilizadores/templates/utilizadores/lista.html:96
+#| msgid "Funcionário atualizado."
+msgid "Funcionário associado"
+msgstr "Associated staff member"
+
+#: utilizadores/forms.py:50 utilizadores/forms.py:133
+#| msgid "Nenhum serviço associado."
+msgid "Nenhum funcionário associado"
+msgstr "No staff member associated"
+
+#: utilizadores/forms.py:67 utilizadores/forms.py:150
+msgid "Apelido"
+msgstr "Surname"
+
+#: utilizadores/forms.py:69 utilizadores/forms.py:152
+msgid "Conta ativa"
+msgstr "Active account"
+
+#: utilizadores/middleware.py:126
+msgid "Não tem permissão para aceder ao painel administrativo."
+msgstr "You do not have permission to access the admin panel."
+
+#: utilizadores/middleware.py:156
+msgid "Esta página está disponível apenas para Administradores."
+msgstr "This page is available to Administrators only."
+
+#: utilizadores/middleware.py:183
+msgid "A sua conta ainda não possui um grupo de acesso autorizado."
+msgstr "Your account does not yet have an authorised access group."
+
+#: utilizadores/permissoes.py:122
+msgid "Não tem permissão para aceder a esta página."
+msgstr "You do not have permission to access this page."
+
+#: utilizadores/permissoes.py:135
+msgid "Esta área está disponível apenas para a Receção e Administradores."
+msgstr "This area is available to Reception and Administrators only."
+
+#: utilizadores/permissoes.py:151
+msgid "Esta conta ainda não está associada a um funcionário."
+msgstr "This account is not yet linked to a staff member."
+
+#: utilizadores/templates/utilizadores/form.html:18
+msgid "Crie uma conta e defina o respetivo grupo de acesso."
+msgstr "Create an account and set its access group."
+
+#: utilizadores/templates/utilizadores/form.html:20
+msgid "Atualize os dados, o grupo e o estado da conta."
+msgstr "Update the details, group and status of the account."
+
+#: utilizadores/templates/utilizadores/form.html:36
+msgid "Dados do novo utilizador"
+msgstr "New user details"
+
+#: utilizadores/templates/utilizadores/form.html:38
+#| msgid "Utilizador"
+msgid "Dados do utilizador"
+msgstr "User details"
+
+#: utilizadores/templates/utilizadores/form.html:60
+msgid "Acesso e associação"
+msgstr "Access and association"
+
+#: utilizadores/templates/utilizadores/form.html:68
+msgid "Definir password"
+msgstr "Set password"
+
+#: utilizadores/templates/utilizadores/form.html:133
+#| msgid "Utilizador"
+msgid "Criar utilizador"
+msgstr "Create user"
+
+#: utilizadores/templates/utilizadores/form.html:135
+msgid "Guardar alterações"
+msgstr "Save changes"
+
+#: utilizadores/templates/utilizadores/form.html:153
+#| msgid "Notas"
+msgid "Nota:"
+msgstr "Note:"
+
+#: utilizadores/templates/utilizadores/form.html:156
+msgid "A alteração da password será feita posteriormente numa página própria."
+msgstr "The password can be changed later on a dedicated page."
+
+#: utilizadores/templates/utilizadores/lista.html:14
+msgid "Gestão das contas e dos grupos de acesso."
+msgstr "Management of accounts and access groups."
+
+#: utilizadores/templates/utilizadores/lista.html:22 utilizadores/views.py:160
+#| msgid "Utilizador"
+msgid "Novo utilizador"
+msgstr "New user"
+
+#: utilizadores/templates/utilizadores/lista.html:33
+#| msgid "Procurar por nome..."
+msgid "Procurar por utilizador, nome ou email..."
+msgstr "Search by username, name or email..."
+
+#: utilizadores/templates/utilizadores/lista.html:40
+#| msgid "Todos os estados"
+msgid "Todos os grupos"
+msgstr "All groups"
+
+#: utilizadores/templates/utilizadores/lista.html:95
+msgid "Grupo"
+msgstr "Group"
+
+#: utilizadores/templates/utilizadores/lista.html:120
+#| msgid "Utilizador"
+msgid "Superutilizador"
+msgstr "Superuser"
+
+#: utilizadores/templates/utilizadores/lista.html:140
+msgid "Sem grupo"
+msgstr "No group"
+
+#: utilizadores/templates/utilizadores/lista.html:191
+msgid "Desativar"
+msgstr "Deactivate"
+
+#: utilizadores/templates/utilizadores/lista.html:198
+#| msgid "Ativo"
+msgid "Ativar"
+msgstr "Activate"
+
+#: utilizadores/templates/utilizadores/lista.html:205
+msgid "Conta atual"
+msgstr "Current account"
+
+#: utilizadores/templates/utilizadores/lista.html:217
+msgid "Não foram encontrados utilizadores."
+msgstr "No users found."
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:174
+msgid "Consulte os dados da sua conta e do seu perfil profissional."
+msgstr "View your account details and professional profile."
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:203
+#| msgid "Informações profissionais"
+msgid "Dados profissionais"
+msgstr "Professional details"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:295
+#| msgid "Não definido"
+msgid "Não definida"
+msgstr "Not set"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:365
+msgid "Dados da conta"
+msgstr "Account details"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:384
+msgid "Nome completo"
+msgstr "Full name"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:426
+msgid "Conta"
+msgstr "Account"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:434
+#| msgid "Ativo"
+msgid "Ativa"
+msgstr "Active"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:440
+#| msgid "Inativo"
+msgid "Inativa"
+msgstr "Inactive"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:496
+#| msgid "Não existem marcações futuras para esta funcionária."
+msgid "Ainda não existem serviços associados a este funcionário."
+msgstr "There are no services associated with this staff member yet."
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:524
+msgid "Meu horário de trabalho"
+msgstr "My work schedule"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:528
+msgid "Consulte os seus dias de trabalho, horários e intervalos."
+msgstr "View your working days, hours and breaks."
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:560
+msgid "Dia de trabalho"
+msgstr "Working day"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:573
+#| msgid "Entrar"
+msgid "Entrada:"
+msgstr "Start:"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:590
+msgid "Saída:"
+msgstr "End:"
+
+#: utilizadores/templates/utilizadores/meu_perfil.html:646
+msgid "O seu horário de trabalho ainda não foi configurado."
+msgstr "Your work schedule has not been set up yet."
+
+#: utilizadores/templates/utilizadores/minha_agenda.html:28
+#| msgid "A seguir, hoje"
+msgid "Ver hoje"
+msgstr "View today"
+
+#: utilizadores/templates/utilizadores/minha_agenda.html:37
+#| msgid "Voltar à agenda"
+msgid "Filtrar agenda"
+msgstr "Filter schedule"
+
+#: utilizadores/templates/utilizadores/minha_agenda.html:219
+msgid "Sem notas"
+msgstr "No notes"
+
+#: utilizadores/templates/utilizadores/minha_agenda.html:234
+#| msgid "Não há marcações para este dia."
+msgid "Não existem marcações para esta data."
+msgstr "There are no appointments for this date."
+
+#: utilizadores/templates/utilizadores/minha_agenda.html:238
+msgid "Escolha outra data ou altere o filtro de estado."
+msgstr "Choose another date or change the status filter."
+
+#: utilizadores/views.py:46
+msgid "Apenas um superutilizador pode alterar esta conta."
+msgstr "Only a superuser can change this account."
+
+#: utilizadores/views.py:143
+#, python-format
+#| msgid "Cliente criado com sucesso."
+msgid "O utilizador %(username)s foi criado com sucesso."
+msgstr "User %(username)s was created successfully."
+
+#: utilizadores/views.py:199 utilizadores/views.py:255
+msgid "Não pode desativar a própria conta."
+msgstr "You cannot deactivate your own account."
+
+#: utilizadores/views.py:209
+#, python-format
+msgid "O utilizador %(username)s foi atualizado."
+msgstr "User %(username)s was updated."
+
+#: utilizadores/views.py:226
+#| msgid "Utilizador"
+msgid "Editar utilizador"
+msgstr "Edit user"
+
+#: utilizadores/views.py:271
+#, python-format
+msgid "A conta de %(username)s foi ativada."
+msgstr "%(username)s's account was activated."
+
+#: utilizadores/views.py:275
+#, python-format
+msgid "A conta de %(username)s foi desativada."
+msgstr "%(username)s's account was deactivated."
+
+#: utilizadores/views.py:307
+msgid "Não tem permissão para consultar esta agenda."
+msgstr "You do not have permission to view this schedule."
+
+#: utilizadores/views.py:334
+#| msgid "A duração do serviço é inválida."
+msgid "A data indicada não é válida."
+msgstr "The date provided is not valid."
+
+#: utilizadores/views.py:415
+msgid "Esta página está disponível apenas para funcionários."
+msgstr "This page is available to staff members only."
+
 #, python-format
 #~ msgid "%(n)s marcação de dias anteriores por fechar"
 #~ msgid_plural "%(n)s marcações de dias anteriores por fechar"
 #~ msgstr[0] "%(n)s appointment from previous days to close"
 #~ msgstr[1] "%(n)s appointments from previous days to close"
-
-#~ msgid "Nome completo"
-#~ msgstr "Full name"
-
-#~ msgid "Observações"
-#~ msgstr "Notes"
-
-#~ msgid "Duração (minutos)"
-#~ msgstr "Duration (minutes)"
