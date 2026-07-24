@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% trans "Relatório de Serviços" %}{% endblock %}
+
+{% block conteudo %}
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+        <h4 class="mb-0">
+            {% trans "Relatório de Serviços" %}
+        </h4>
+    </div>
+
+    <div class="card-body">
+
+        <form method="get">
+
+            <div class="row">
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">
+                        {% trans "Data inicial" %}
+                    </label>
+                    {{ form.data_inicial }}
+                    {{ form.data_inicial.errors }}
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">
+                        {% trans "Data final" %}
+                    </label>
+                    {{ form.data_final }}
+                    {{ form.data_final.errors }}
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    {% trans "Estado" %}
+                </label>
+
+                <div class="row">
+                    {% for checkbox in form.estados %}
+                    <div class="col-md-3">
+
+                        <div class="form-check">
+                            {{ checkbox.tag }}
+                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                {{ checkbox.choice_label }}
+                            </label>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary">
+                <i class="bi bi-search"></i>
+                {% trans "Pesquisar" %}
+            </button>
+
+        </form>
+
+    </div>
+
+    {% if marcacoes %}
+
+    <div class="card mt-4 shadow-sm">
+
+        <div class="card-header">
+            <h5 class="mb-0">
+                {% trans "Resultado" %}
+            </h5>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-striped table-hover align-middle mb-0">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>{% trans "Data" %}</th>
+                        <th>{% trans "Cliente" %}</th>
+                        <th>{% trans "Serviço" %}</th>
+                        <th>{% trans "Estado" %}</th>
+                        <th class="text-end">{% trans "Valor" %}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for marcacao in marcacoes %}
+
+                    <tr>
+
+                        <td>{{ marcacao.inicio|date:"d/m/Y" }}</td>
+
+                        <td>{{ marcacao.cliente.nome }}</td>
+
+                        <td>{{ marcacao.servico.nome }}</td>
+
+                        <td>
+                            {% if marcacao.estado == "realizada" %}
+                            <span class="badge bg-success">{% trans "Realizada" %}</span>
+
+                            {% elif marcacao.estado == "marcada" %}
+                            <span class="badge bg-primary">{% trans "Marcada" %}</span>
+
+                            {% elif marcacao.estado == "cancelada" %}
+                            <span class="badge bg-danger">{% trans "Cancelada" %}</span>
+
+                            {% elif marcacao.estado == "faltou" %}
+                            <span class="badge bg-warning text-dark">{% trans "Faltou" %}</span>
+
+                            {% endif %}
+                        </td>
+
+                        <td class="text-end">
+                            {{ marcacao.servico.preco }} €
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -303,11 +303,11 @@ Salao-Beleza-MTR/
 - [x] Testes automáticos (23)
 - [x] Dados de exemplo partilhados
 - [x] Atalho de arranque com ícone
+- [x] Páginas de Serviços e Preçário
+- [x] Relatório de atendimentos por período
 
 **Em curso**
 
-- [ ] Páginas de Serviços e Preçário
-- [ ] Relatório de atendimentos por período
 - [ ] Tradução completa da interface (marcação das frases em todos os módulos)
 - [ ] Manual de utilização
 - [ ] Preparação da apresentação final
