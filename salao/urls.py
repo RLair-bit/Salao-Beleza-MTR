@@ -44,6 +44,10 @@ urlpatterns = [
         include("configuracoes.urls"),
     ),
     path(
+        "relatorios/",
+        include("relatorios.urls"),
+    ),
+    path(
         "",
         inicio,
         name="home",
