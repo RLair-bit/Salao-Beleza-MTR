@@ -1,13 +1,13 @@
 # Sistema de Gestão de Salão de Beleza
 
-Aplicação web para a receção de um salão de beleza gerir clientes, funcionários, serviços e marcações, com relatórios de atendimento.
+Aplicação web para a receção de um salão de beleza gerir clientes, funcionários, serviços e marcações, com controlo de acesso por perfis e interface multilingue.
 
 ![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-6.0-092E20?logo=django&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white)
 ![Idiomas](https://img.shields.io/badge/idiomas-PT%20|%20ES%20|%20EN%20|%20FR-0ea5e9)
-![Testes](https://img.shields.io/badge/testes-23%20a%20passar-16a34a)
+![Testes](https://img.shields.io/badge/testes-44%20a%20passar-16a34a)
 ![Estado](https://img.shields.io/badge/estado-em%20desenvolvimento-yellow)
 
 ---
@@ -15,8 +15,8 @@ Aplicação web para a receção de um salão de beleza gerir clientes, funcion�
 ## Índice
 
 - [Sobre o projeto](#sobre-o-projeto)
-- [Estado atual](#estado-atual)
 - [Funcionalidades](#funcionalidades)
+- [Perfis de acesso](#perfis-de-acesso)
 - [Idiomas e fuso horário](#idiomas-e-fuso-horário)
 - [Tecnologias](#tecnologias)
 - [Porquê estas tecnologias](#porquê-estas-tecnologias)
@@ -24,8 +24,11 @@ Aplicação web para a receção de um salão de beleza gerir clientes, funcion�
 - [Como executar](#como-executar)
 - [Configuração da base de dados](#configuração-da-base-de-dados)
 - [Testes](#testes)
+- [Traduções](#traduções)
 - [Estrutura do projeto](#estrutura-do-projeto)
+- [Convenções da equipa](#convenções-da-equipa)
 - [Roadmap](#roadmap)
+- [Limitações conhecidas](#limitações-conhecidas)
 - [Equipa](#equipa)
 - [Licença](#licença)
 
@@ -37,99 +40,75 @@ Projeto final desenvolvido no âmbito do curso **Técnico/a de Informática — 
 
 O objetivo é criar uma aplicação de **gestão de salão de beleza**, pensada para ser usada na **receção**: registar clientes e funcionários, definir os serviços e o preçário, e sobretudo **gerir as marcações** do dia a dia.
 
-- **Público-alvo:** receção do salão (rececionista e responsável)
+- **Público-alvo:** receção do salão, responsável e profissionais
 - **Módulo central:** Marcações
 - **Formador:** Tiago Dias
 
 ---
 
-## Estado atual
+## Funcionalidades
 
-**Base do sistema**
+### Marcações
 
-- Projeto Django configurado e ligado a uma base de dados MySQL.
-- Modelos de dados das cinco entidades: Cliente, Serviço, Funcionário, Marcação e Posto.
-- Área de administração com todos os modelos registados, incluindo filtros, pesquisa e navegação por datas.
-- Interface comum a toda a aplicação, com barra de navegação, mensagens de confirmação e tema visual próprio.
-- Idioma e fuso horário do projeto em português europeu (Europe/Lisbon), configuráveis pelo utilizador.
+Agenda diária com navegação entre dias e filtro por funcionário. Criação e edição de marcações com escolha de cliente, funcionário, serviço, mesa e horário, e alteração de estado a partir da agenda (realizada, faltou, cancelada).
 
-**Marcações**
+Ao criar uma marcação, o sistema **calcula e apresenta os horários disponíveis**, tendo em conta a duração do serviço e as marcações já existentes.
 
-- Agenda diária com navegação entre dias, filtro por funcionário e contagem de marcações.
-- Criação e edição de marcações, com escolha de cliente, funcionário, serviço, mesa e horário.
-- Alteração de estado a partir da agenda: realizada, faltou ou cancelada.
-- **Regras de negócio implementadas e testadas:** o sistema recusa marcações sobrepostas para o mesmo funcionário e para a mesma mesa, com base na duração do serviço.
-- Painel inicial assinala as marcações em atraso (já passaram da hora e continuam por fechar) e as que estão a decorrer.
-- Testes automáticos que verificam estas regras.
+> **Regras de negócio principais:** o sistema impede que o mesmo funcionário seja marcado para dois clientes à mesma hora, e que a mesma mesa seja ocupada por duas marcações em simultâneo. Ambas têm em conta a duração definida para cada serviço. Marcações canceladas não bloqueiam o horário.
 
-**Clientes**
+O painel inicial assinala as marcações **em atraso** (já passaram da hora e continuam por fechar) e as que estão **a decorrer**. Existe ainda um aviso para marcações de **dias anteriores** que ficaram por resolver, com página própria para as fechar rapidamente.
 
-- Registo, edição e listagem de clientes, com pesquisa por nome.
-- Eliminação de clientes, com proteção contra a remoção de clientes que tenham marcações associadas.
-- Mensagens de confirmação nas operações efetuadas.
+### Clientes
 
-**Funcionários**
+Registo, edição e listagem com pesquisa por nome. Eliminação com página de confirmação e proteção contra a remoção de clientes que tenham marcações associadas.
 
-- Registo, edição e listagem de profissionais, com pesquisa e ordenação alfabética.
-- Filtro por estado ativo ou inativo e associação aos serviços que cada profissional presta.
-- Proteção contra eliminação de funcionários com marcações associadas.
-- Página de detalhe com dados profissionais, serviços prestados, total de marcações e próximas marcações.
+### Funcionários
 
-**Acesso ao sistema**
+Registo, edição, listagem e página de detalhe dos profissionais, com pesquisa, filtro por estado e ordenação alfabética. Cada funcionário tem **horários de trabalho** e **ausências** configuráveis (folgas, férias, doença), fotografia e associação aos serviços que presta. Proteção contra eliminação de funcionários com marcações associadas.
 
-- Página de entrada com autenticação, saída de sessão e redirecionamento adequado em ambos os casos.
-- Todas as páginas de gestão são protegidas: acessíveis apenas a utilizadores autenticados.
-- O menu de navegação só é apresentado a quem tem sessão iniciada.
+### Serviços e Preçário
 
-**Definições do Salão**
+Catálogo de serviços com nome, preço, duração e estado ativo/inativo. A duração definida aqui alimenta o cálculo de conflitos nas marcações.
 
-- Aba de definições onde o responsável configura o nome do salão, contactos, morada, horário de funcionamento, idioma e fuso horário.
-- O nome do salão é refletido em toda a aplicação (cabeçalho e título das páginas).
+### Utilizadores e acesso
 
-**Mapa do Salão**
+Gestão de contas com **três perfis de acesso** (ver secção seguinte), alteração da própria palavra-passe e área pessoal para os profissionais, onde cada um consulta a sua agenda, o seu horário de trabalho e o resumo do dia — incluindo o total faturado nos atendimentos concluídos.
 
-- Vista das oito mesas do salão, com seleção da data a consultar.
-- Identificação das mesas livres e ocupadas, com as respetivas marcações.
-- Cartões de resumo com o total de mesas, mesas ocupadas, mesas livres e número de marcações do dia.
+### Relatórios
 
-**Painel inicial**
+Relatório de serviços por período, com apuramento dos respetivos totais.
 
-- Página de entrada da aplicação com os indicadores do dia: marcações agendadas, já realizadas, receita e próximas marcações.
+### Mapa do Salão
 
-**Arranque em Windows**
+Vista das oito mesas do salão, com seleção da data a consultar, identificação das mesas livres e ocupadas, e cartões de resumo com os totais do dia.
 
-- Ficheiro de atalho com ícone que ativa o ambiente, inicia o servidor e abre a aplicação no browser.
+### Definições do Salão
 
-Em desenvolvimento: módulo de serviços e preçário, relatório de atendimentos, tradução completa da interface e manual de utilização.
+Aba onde o responsável configura o nome do salão, contactos, morada, horário de funcionamento, idioma e fuso horário. O nome escolhido reflete-se em toda a aplicação.
 
 ---
 
-## Funcionalidades
+## Perfis de acesso
 
-- **Cadastro de Clientes** — nome, contacto, email e observações.
-- **Cadastro de Funcionários** — profissionais do salão e os serviços que prestam.
-- **Cadastro de Utilizadores** — contas de acesso à aplicação (receção e administração), com autenticação.
-- **Serviços e Preçário** — serviços oferecidos, com preço e duração estimada.
-- **Marcações** — agendar um serviço para um cliente, com funcionário, mesa, data e hora.
-- **Mapa do Salão** — visualização dos postos de trabalho e respetiva ocupação.
-- **Definições do Salão** — nome, contactos, horário, idioma e fuso horário configuráveis numa aba própria.
-- **Relatório de atendimentos** — resumo dos atendimentos realizados num período à escolha.
+O acesso às páginas é controlado por grupos, através de um middleware próprio.
 
-> **Regras de negócio principais:** o sistema impede que o mesmo funcionário seja marcado para dois clientes à mesma hora, e que a mesma mesa seja ocupada por duas marcações em simultâneo. Ambas têm em conta a duração definida para cada serviço.
+| Perfil | Acesso |
+|---|---|
+| **Administrador** | Acesso completo, incluindo definições do salão e gestão de contas de utilizador |
+| **Receção** | Áreas operacionais: marcações, clientes, serviços, funcionários, mapa do salão e relatórios |
+| **Funcionário** | Apenas a própria agenda, o próprio horário e o próprio perfil |
+
+Os grupos são criados automaticamente por uma migração, ficando disponíveis em todas as instalações sem configuração manual.
 
 ---
 
 ## Idiomas e fuso horário
 
-A aplicação está preparada para funcionar em vários idiomas e fusos horários, configuráveis na aba de **Definições** sem necessidade de alterar código.
+A aplicação funciona em **quatro idiomas** — Português (Portugal), Español, English e Français — configuráveis na aba de Definições, sem alterar código. Estão traduzidas **353 frases** por idioma.
 
-**Idiomas disponíveis:** Português (Portugal), Español, English e Français.
+O **fuso horário** é igualmente configurável, com opções agrupadas por continente (Europa, África, América, Ásia e Oceânia).
 
-**Fusos horários:** vários por continente (Europa, África, América, Ásia e Oceânia), com destaque para o horário de Lisboa por omissão.
-
-A tradução da interface assenta no sistema de internacionalização (i18n) do Django. As frases da aplicação são marcadas nos modelos com `{% trans %}` e `{% blocktrans %}` (templates) e `gettext` (Python), e as traduções ficam nos catálogos da pasta `locale/`, compilados com o `gettext`.
-
-> **Nota:** a alteração de fuso horário aplica-se de imediato a todas as horas apresentadas. A tradução da interface depende de as frases estarem marcadas e traduzidas nos catálogos; frases ainda não traduzidas são apresentadas em português.
+A tradução assenta no sistema de internacionalização (i18n) do Django: as frases são marcadas nos templates com `{% trans %}` e `{% blocktrans %}` e no Python com `gettext`, e as traduções ficam nos catálogos da pasta `locale/`.
 
 ---
 
@@ -141,6 +120,7 @@ A tradução da interface assenta no sistema de internacionalização (i18n) do 
 | Framework | Django 6 |
 | Base de dados | MySQL 8 (via PyMySQL) |
 | Interface | HTML + Bootstrap 5 e Bootstrap Icons |
+| Imagens | Pillow |
 | Internacionalização | Django i18n + GNU gettext |
 | Controlo de versões | Git + GitHub |
 
@@ -184,7 +164,7 @@ source venv/bin/activate
 # 3. Instalar as dependências
 pip install -r requirements.txt
 
-# 4. Aplicar as migrações à base de dados
+# 4. Aplicar as migrações (cria também os grupos de acesso)
 python manage.py migrate
 
 # 4.1 Carregar os dados de exemplo (opcional)
@@ -193,8 +173,8 @@ python manage.py loaddata dados_exemplo.json
 # 5. Criar um utilizador administrador
 python manage.py createsuperuser
 
-# 6. Compilar as traduções (uma vez, para a interface multilíngue)
-python manage.py compilemessages
+# 6. Compilar as traduções
+python manage.py compilemessages --ignore=venv
 
 # 7. Arrancar o servidor de desenvolvimento
 python manage.py runserver
@@ -204,7 +184,7 @@ A aplicação fica disponível em **http://127.0.0.1:8000** e a área de adminis
 
 > Em Windows, depois desta configuração inicial, a aplicação pode ser iniciada com um duplo clique no ficheiro `MTR-Gestão.bat`, que ativa o ambiente, arranca o servidor e abre o browser automaticamente.
 
-> O acesso à aplicação exige autenticação. Utilizar a conta de administração criada no passo 5, ou outra criada a partir da área de administração.
+> **Contas de utilizador:** o superutilizador criado no passo 5 tem acesso completo. Para criar contas de Receção ou Funcionário, usar a página de gestão de utilizadores, atribuindo o grupo correspondente. As contas do perfil Funcionário devem ser associadas ao respetivo registo de funcionário para acederem à área pessoal.
 
 ---
 
@@ -221,25 +201,29 @@ FLUSH PRIVILEGES;
 
 Estas credenciais correspondem às que estão definidas em `salao/settings.py` e devem ser iguais em todas as máquinas da equipa, para que o ficheiro não tenha de ser alterado por cada pessoa.
 
-> **Nota:** trata-se de uma base de dados local de desenvolvimento, sem dados reais. Numa fase posterior, as credenciais serão movidas para um ficheiro `.env` fora do repositório.
-
 ---
 
 ## Testes
 
-O projeto inclui **23 testes automáticos**, distribuídos por duas áreas:
+O projeto inclui **44 testes automáticos**, distribuídos por três módulos:
 
-**Marcações (16 testes)**
+**Marcações (24 testes)**
 
-- *Regras de negócio:* aceita marcação válida; recusa sobreposição do mesmo funcionário; recusa mesa já ocupada; aceita marcações seguidas; marcação cancelada liberta o horário; funcionário livre noutra mesa e hora; edição da própria marcação não colide consigo mesma.
-- *Propriedades:* `fim` = início + duração do serviço; `em_atraso` quando já passou e continua marcada; `a_decorrer` quando está dentro da duração; marcação futura não está em atraso nem a decorrer; marcação realizada nunca está em atraso.
-- *Acesso:* a agenda exige login (reencaminha sem sessão); a agenda abre com sessão iniciada.
+- *Regras de negócio (7):* aceita marcação válida; recusa sobreposição do mesmo funcionário; recusa mesa já ocupada; aceita marcações seguidas; marcação cancelada liberta o horário; funcionários diferentes em mesas diferentes; edição não colide consigo mesma.
+- *Propriedades (5):* `fim` = início + duração do serviço; `em_atraso` quando já passou e continua marcada; `a_decorrer` quando está dentro da duração; marcação futura não está em atraso; marcação realizada nunca está em atraso.
+- *Acesso (3):* a agenda e a página de pendentes exigem login e abrem com sessão iniciada.
+- *Pendentes antigas (5):* conta as marcações por fechar de dias anteriores; marcações de hoje não contam; marcações antigas já resolvidas não contam; a página lista as pendentes; contas anónimas não recebem contagem.
+- *Paginação (4):* primeira e segunda páginas com o número correto de registos; o total reflete todos os registos e não apenas a página; página inválida devolve a última.
 
-**Definições (9 testes)**
+**Definições (11 testes)**
 
-- *Modelo:* valor por omissão do nome; guardar força sempre o mesmo registo (nunca duplica); não se apaga; idioma e fuso por omissão corretos.
-- *Acesso e gravação:* exige login; abre com sessão; grava as alterações submetidas.
-- *Idioma e fuso:* mudar o fuso altera a hora apresentada; mudar o idioma altera o nome do mês.
+- *Modelo (4):* valor por omissão do nome; guardar força sempre o mesmo registo (nunca duplica); não se apaga; idioma e fuso por omissão corretos.
+- *Acesso e gravação (4):* exige login; abre com sessão; grava as alterações submetidas; o nome do salão aparece no cabeçalho.
+- *Idioma e fuso (3):* mudar o fuso altera a hora apresentada; mudar o idioma altera o nome do mês; a interface fica traduzida.
+
+**Clientes (9 testes)**
+
+- Criação, edição, eliminação e listagem de clientes; validação do formulário; pesquisa por nome; e verificação das rotas.
 
 Para os executar:
 
@@ -254,6 +238,41 @@ GRANT ALL PRIVILEGES ON `test\_salao\_beleza`.* TO 'salao'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
+> **Nota para quem escrever testes novos:** desde a introdução do controlo de acesso por perfis, as contas de teste têm de pertencer a um grupo, caso contrário o middleware bloqueia o acesso e o teste falha. Para as áreas operacionais usa-se `Receção`; para as definições e gestão de utilizadores, `Administrador`.
+>
+> ```python
+> from django.contrib.auth.models import Group, User
+>
+> utilizador = User.objects.create_user("rececao", password="teste12345")
+> utilizador.groups.add(Group.objects.get(name="Receção"))
+> self.client.login(username="rececao", password="teste12345")
+> ```
+
+---
+
+## Traduções
+
+As traduções ficam em `locale/<idioma>/LC_MESSAGES/django.po`, com os ficheiros compilados (`.mo`) versionados no repositório para que a aplicação funcione sem passos adicionais depois de um `git pull`.
+
+**Para acrescentar textos novos:**
+
+```bash
+# 1. Marcar as frases no código
+#    Templates: {% load i18n %} e {% trans "Texto" %}
+#    Views:     from django.utils.translation import gettext as _
+#    Modelos:   from django.utils.translation import gettext_lazy as _
+
+# 2. Recolher as frases para os catálogos
+python manage.py makemessages -l pt_PT -l es -l en -l fr --ignore=venv
+
+# 3. Preencher os msgstr vazios nos ficheiros .po
+
+# 4. Compilar
+python manage.py compilemessages --ignore=venv
+```
+
+> Se uma frase não traduzir depois de compilada, verificar se está marcada como `#, fuzzy` no ficheiro `.po` — o Django ignora traduções aproximadas. Apagar essa linha e recompilar.
+
 ---
 
 ## Estrutura do projeto
@@ -264,19 +283,53 @@ Salao-Beleza-MTR/
 │   ├── settings.py
 │   └── urls.py
 ├── clientes/           # App: cadastro de clientes
-├── funcionarios/       # App: cadastro de funcionários e autenticação
+├── funcionarios/       # App: profissionais, horários e ausências
+├── utilizadores/       # App: contas, perfis de acesso e área pessoal
 ├── servicos/           # App: serviços e preçário
 ├── marcacoes/          # App: marcações e postos (módulo central)
 ├── mapa/               # App: mapa de ocupação das mesas
-├── relatorios/         # App: relatório de atendimentos
-├── configuracoes/      # App: definições do salão (nome, idioma, fuso, horário)
-├── templates/          # Templates HTML partilhados
+├── relatorios/         # App: relatório de serviços por período
+├── configuracoes/      # App: definições do salão
+├── templates/          # Templates partilhados (base, painel, paginação)
 ├── locale/             # Catálogos de tradução (pt-pt, es, en, fr)
+├── media/              # Ficheiros carregados (fotografias dos funcionários)
 ├── dados_exemplo.json  # Dados de teste partilhados pela equipa
 ├── MTR-Gestão.bat      # Atalho de arranque para Windows
 ├── requirements.txt
 └── manage.py
 ```
+
+> **Convenção de templates:** os templates de cada app ficam em `<app>/templates/<app>/`. A subpasta repetida não é redundante — é o que permite ao Django distinguir ficheiros com o mesmo nome em apps diferentes (por exemplo, `form.html` existe em clientes, serviços e marcações). Sem ela, o Django serve o primeiro que encontrar segundo a ordem de `INSTALLED_APPS`.
+
+---
+
+## Convenções da equipa
+
+**Git e coordenação**
+
+- Cada app tem o seu próprio `app_name` nas rotas.
+- `makemigrations` apenas na própria app; quem recebe alterações corre só `migrate`.
+- `salao/urls.py`, `salao/settings.py` e `templates/base.html` são partilhados: fazer **Pull antes** de editar e avisar a equipa depois.
+- Mensagens de commit em português, sem acentos, verbo no presente ("Adiciona...", "Corrige...", "Atualiza...").
+- Nunca fazer *force push*.
+
+**Depois de cada Pull**
+
+```bash
+pip install -r requirements.txt
+python manage.py migrate
+```
+
+**Ao criar uma app nova**
+
+1. Registá-la em `INSTALLED_APPS`.
+2. Registá-la em `salao/urls.py`.
+3. Colocar os templates em `<app>/templates/<app>/`.
+4. Confirmar que os campos indicados no formulário existem no modelo.
+
+**Ao instalar uma biblioteca nova**
+
+Acrescentá-la ao `requirements.txt` no mesmo commit — caso contrário o projeto deixa de arrancar em máquinas onde essa biblioteca não esteja instalada.
 
 ---
 
@@ -285,32 +338,56 @@ Salao-Beleza-MTR/
 **Concluído**
 
 - [x] Configuração do projeto e ligação ao MySQL
-- [x] Modelos de dados (Cliente, Serviço, Funcionário, Marcação, Posto)
+- [x] Modelos de dados (Cliente, Serviço, Funcionário, Marcação, Posto, Configuração, Horário de Trabalho, Ausência)
 - [x] Área de administração
 - [x] Validação de marcações sobrepostas (funcionário e mesa)
 - [x] Estrutura base da interface e identidade visual
 - [x] Agenda, criação, edição e estados das Marcações
 - [x] Navegação por dias e filtro por funcionário na agenda
+- [x] Cálculo de horários disponíveis ao marcar
 - [x] Marcações em atraso e a decorrer assinaladas no painel
+- [x] Aviso e página de marcações por fechar de dias anteriores
 - [x] Páginas de Clientes (listar, criar, editar, pesquisar, eliminar)
-- [x] Páginas de Funcionários, com detalhe e filtros
+- [x] Páginas de Serviços e Preçário
+- [x] Páginas de Funcionários, com detalhe, filtros, fotografia, horários e ausências
 - [x] Autenticação de utilizadores e proteção de todas as páginas
+- [x] Perfis de acesso (Administrador, Receção, Funcionário)
+- [x] Gestão de contas e alteração da própria palavra-passe
+- [x] Área pessoal do funcionário com agenda, horário e resumo do dia
+- [x] Relatório de serviços por período
 - [x] Mapa de ocupação das mesas
 - [x] Painel inicial com indicadores do dia
-- [x] Aba de Definições (nome do salão, contactos, horário, idioma, fuso horário)
-- [x] Idioma e fuso horário configuráveis
-- [x] Suporte de internacionalização (PT, ES, EN, FR)
-- [x] Testes automáticos (23)
+- [x] Aba de Definições (nome, contactos, horário, idioma, fuso horário)
+- [x] Interface traduzida em quatro idiomas (353 frases)
+- [x] Paginação da agenda e da lista de pendentes
+- [x] Testes automáticos (44)
 - [x] Dados de exemplo partilhados
 - [x] Atalho de arranque com ícone
-- [x] Páginas de Serviços e Preçário
-- [x] Relatório de atendimentos por período
 
 **Em curso**
 
-- [ ] Tradução completa da interface (marcação das frases em todos os módulos)
+- [ ] Relatórios por perfil: atividade própria no perfil Funcionário; pesquisa por profissional e por cliente no perfil Receção
+- [ ] Uniformização da interface (tipografia, ícones, menu lateral, paginação compacta)
+- [ ] Reorganização das definições (palavra-passe e gestão de utilizadores)
+- [ ] Validação em dispositivos móveis
+- [ ] Testes automáticos nos módulos ainda sem cobertura
+- [ ] Paginação nas listas de clientes, serviços e funcionários
 - [ ] Manual de utilização
 - [ ] Preparação da apresentação final
+
+---
+
+## Limitações conhecidas
+
+Esta é uma aplicação de desenvolvimento, com dados fictícios e destinada a ser executada localmente. Para uma colocação em produção seria necessário:
+
+- Mover a chave secreta e as credenciais da base de dados para variáveis de ambiente (`.env`), em vez de as manter no ficheiro de configurações.
+- Desativar o modo de depuração (`DEBUG = False`) e definir os domínios autorizados em `ALLOWED_HOSTS`.
+- Servir a aplicação através de HTTPS, com cookies seguros e HSTS ativos.
+- Substituir o servidor de desenvolvimento por um servidor adequado a produção.
+- Alojar localmente os ficheiros do Bootstrap, atualmente carregados de um servidor externo.
+
+O comando `python manage.py check --deploy` lista estes pontos em detalhe.
 
 ---
 
@@ -318,9 +395,9 @@ Salao-Beleza-MTR/
 
 | Nome | Responsabilidades | GitHub |
 |---|---|---|
-| Rita | Marcações, painel inicial, definições, internacionalização, estrutura base da interface, testes e gestão do repositório | [@RLair-bit](https://github.com/RLair-bit) |
-| Ticiana | Clientes, Serviços e Preçário, relatório de atendimentos | [@ticianacbd](https://github.com/ticianacbd) |
-| Micaele | Funcionários, autenticação de utilizadores, mapa do salão | [@micanatahajlucas-ux](https://github.com/micanatahajlucas-ux) |
+| Rita | Marcações, painel, definições, internacionalização, testes, paginação e gestão do repositório | [@RLair-bit](https://github.com/RLair-bit) |
+| Ticiana | Clientes, Serviços e Preçário, relatórios | [@ticianacbd](https://github.com/ticianacbd) |
+| Micaele | Funcionários, horários e ausências, autenticação, perfis de acesso, mapa do salão | [@micanatahajlucas-ux](https://github.com/micanatahajlucas-ux) |
 
 ---
 
