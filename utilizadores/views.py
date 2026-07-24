@@ -406,8 +406,8 @@ def minha_agenda(request):
 @login_required
 def meu_perfil(request):
     """
-    Mostra os dados profissionais e da conta
-    do funcionário autenticado.
+    Mostra os dados profissionais, os dados da conta,
+    os serviços e o horário de trabalho do funcionário.
     """
     if not e_funcionario(request.user):
         raise PermissionDenied(
@@ -423,11 +423,22 @@ def meu_perfil(request):
 
     servicos = funcionario.servicos.all()
 
+    horarios_trabalho = (
+        funcionario.horarios
+        .filter(
+            ativo=True
+        )
+        .order_by(
+            "dia_semana"
+        )
+    )
+
     return render(
         request,
         "utilizadores/meu_perfil.html",
         {
             "funcionario": funcionario,
             "servicos": servicos,
+            "horarios_trabalho": horarios_trabalho,
         },
     )
