@@ -130,6 +130,12 @@
 
                     {% endfor %}
                 </tbody>
+                <tfoot class="table-dark">
+                    <tr>
+                        <th colspan="4" class="text-end">{% trans "Total" %}</th>
+                        <th class="text-end">{{ total }} €</th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
